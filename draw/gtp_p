@@ -1,0 +1,6 @@
+heatmap set -50 50 10
+play B Q16
+play B D4
+play B Q4
+play B D16
+heatmap policy

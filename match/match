@@ -1,0 +1,25 @@
+# no handicap
+CMD=/Users/zliu/go/leela-zero/leelaz-dual-se
+RESIGN=30
+THREAD=1
+GAMES=4
+
+WEIGHT_1=/Users/zliu/go/weights/4x32/4b32f.gz
+PLAYOUT_1=1500
+
+#WEIGHT_2=/Users/zliu/go/weights/5x64/35.gz
+WEIGHT_2=/Users/zliu/go/train/4b32f/leelaz-model-6000.txt
+PLAYOUT_2=4500
+
+SGFNAME=4b32f-p1500_v_6000-p4500-4
+
+PARA="-verbose -auto -games $GAMES -alternate -size 19 -komi 7.5 -sgffile $SGFNAME -time 7200m"
+BLACK="$CMD -g --cpu-only --noponder --timemanage off -t$THREAD -r$RESIGN -w $WEIGHT_1 -p$PLAYOUT_1"
+WHITE="$CMD -g --cpu-only --noponder --timemanage off -t$THREAD -r$RESIGN -w $WEIGHT_2 -p$PLAYOUT_2"
+
+# handicap
+#BLACK="/Users/zliu/go/leela-zero/leelaz-dual-se -g -w /Users/zliu/go/weights/5x64/5b64f.gz -t1 --cpu-only -p480 --noponder --timemanage off -r70" 
+#WHITE="/Users/zliu/go/leela-zero/leelaz-dual-se -g -w /Users/zliu/go/weights/OZ/OZ14.gz    -t1 --cpu-only -p96  --noponder --timemanage off -r0 --ra 0.25"
+#PARA="-openings /Users/zliu/github/Webgo/sgf/handicap/h4/ -verbose -auto -games 10 -size 19 -komi 0 -sgffile 5b64f-p480-h4_v_OZ14-p96-10 -time 7200m"
+
+java -jar gogui-twogtp.jar -black "$BLACK" -white "$WHITE" $PARA

@@ -1,4 +1,4 @@
-heatmap set -150 150 0.5
+heatmap set -200 200 1
 play B Q16
 heatmap rate 0
 
@@ -17,6 +17,11 @@ heatmap rate 0
 undo
 play B D10
 play B Q10
+heatmap rate 0
+
+play B K16
+play B K10
+play B K4
 heatmap rate 0
 
 heatmap history

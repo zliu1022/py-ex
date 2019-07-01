@@ -21,6 +21,7 @@ def main():
     y4 = []
     y5 = []
     y6 = []
+    y7 = []
     with open(in_filename) as input_file:
         lines = input_file.read().splitlines()
     found = 0
@@ -40,6 +41,7 @@ def main():
                 y3.append(n[4])
                 y4.append(n[5])
                 y5.append(n[6])
+                y6.append(n[7])
     input_file.close()
 
     if found==0:
@@ -54,10 +56,11 @@ def main():
     plt.plot(x,y3, "lawngreen", label="4 black stone")
     plt.plot(x,y4, "blue", label="5 black stone")
     plt.plot(x,y5, "blueviolet", label="6 black stone")
+    plt.plot(x,y6, "violet", label="9 black stone")
 
     x_tmp = np.array(x)
-    y6 = 1/(1+np.exp(-x_tmp/10))
-    plt.plot(x,y6, "black", linestyle=':', label="sigmoid")
+    y7 = 1/(1+np.exp(-x_tmp/10))
+    plt.plot(x,y7, "black", linestyle=':', label="sigmoid")
 
     plt.axhline(0.5)
 

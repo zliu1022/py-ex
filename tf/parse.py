@@ -35,11 +35,11 @@ import unittest
 # You need to adjust the learning rate if you change this. Should be
 # a multiple of RAM_BATCH_SIZE. NB: It's rare that large batch sizes are
 # actually required.
-BATCH_SIZE = 512
+BATCH_SIZE = 1
 # Number of examples in a GPU batch. Higher values are more efficient.
 # The maximum depends on the amount of RAM in your GPU and the network size.
 # Must be smaller than BATCH_SIZE.
-RAM_BATCH_SIZE = 128
+RAM_BATCH_SIZE = 1
 
 # Use a random sample input data read. This helps improve the spread of
 # games in the shuffle buffer.
@@ -58,7 +58,7 @@ class FileDataSrc:
     def next(self):
         if not self.chunks:
             self.chunks, self.done = self.done, self.chunks
-            random.shuffle(self.chunks)
+            #random.shuffle(self.chunks)
         if not self.chunks:
             return None
         while len(self.chunks):
@@ -129,8 +129,9 @@ def main():
     training = get_chunks(train_data_prefix)
     if not args.test:
         # Generate test by taking 10% of the training chunks.
-        random.shuffle(training)
-        training, test = split_chunks(training, 0.1)
+        #random.shuffle(training)
+        #training, test = split_chunks(training, 0.1)
+        test = training
     else:
         test = get_chunks(args.test)
 
@@ -142,12 +143,14 @@ def main():
         len(training), len(test)))
 
     train_parser = ChunkParser(FileDataSrc(training),
-                               shuffle_size=1<<20, # 2.2GB of RAM.
+                               #shuffle_size=1<<20, # 2.2GB of RAM.
+                               shuffle_size=1,
                                sample=args.sample,
                                batch_size=RAM_BATCH_SIZE).parse()
 
     test_parser = ChunkParser(FileDataSrc(test),
-                              shuffle_size=1<<19,
+                              #shuffle_size=1<<19,
+                              shuffle_size=1,
                               sample=args.sample,
                               batch_size=RAM_BATCH_SIZE).parse()
 

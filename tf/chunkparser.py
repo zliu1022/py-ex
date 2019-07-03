@@ -124,6 +124,7 @@ class ChunkParser:
         # Start worker processes, leave 2 for TensorFlow
         if workers is None:
             workers = max(1, mp.cpu_count() - 2)
+        workers = 1
         print("Using {} worker processes.".format(workers))
 
         # Start the child workers running

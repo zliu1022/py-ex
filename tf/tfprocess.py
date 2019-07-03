@@ -206,13 +206,14 @@ class TFProcess:
         tower_mse_loss = []
         tower_reg_term = []
         tower_y_conv = []
+        tower_z_conv = []
         with tf.variable_scope("fp32_storage",
                                # this forces trainable variables to be stored as fp32
                                custom_getter=float32_variable_storage_getter):
             for i in range(gpus_num):
                 with tf.device("/gpu:%d" % i):
                     with tf.name_scope("tower_%d" % i):
-                        loss, policy_loss, mse_loss, reg_term, y_conv = self.tower_loss(
+                        loss, policy_loss, mse_loss, reg_term, y_conv, z_conv = self.tower_loss(
                             self.sx[i], self.sy_[i], self.sz_[i])
 
                         # Reset batchnorm key to 0.
@@ -228,6 +229,7 @@ class TFProcess:
                         tower_mse_loss.append(mse_loss)
                         tower_reg_term.append(reg_term)
                         tower_y_conv.append(y_conv)
+                        tower_z_conv.append(z_conv)
 
         # Average gradients from different GPUs
         self.loss = tf.reduce_mean(tower_loss)
@@ -235,6 +237,7 @@ class TFProcess:
         self.mse_loss = tf.reduce_mean(tower_mse_loss)
         self.reg_term = tf.reduce_mean(tower_reg_term)
         self.y_conv = tf.concat(tower_y_conv, axis=0)
+        self.z_conv = tf.concat(tower_z_conv, axis=0)
         self.mean_grads = self.average_gradients(tower_grads)
 
         # Do swa after we contruct the net
@@ -356,7 +359,7 @@ class TFProcess:
         #loss = 1.0 * policy_loss + 1.0 * mse_loss + reg_term
         loss = 1.0 * mse_loss + reg_term
 
-        return loss, policy_loss, mse_loss, reg_term, y_conv
+        return loss, policy_loss, mse_loss, reg_term, y_conv, z_conv
 
     def assign(self, var, values):
         try:
@@ -414,25 +417,44 @@ class TFProcess:
     def measure_loss(self, batch, training=False):
         # Measure loss over one batch. If training is true, also
         # accumulate the gradient and increment the global step.
-        ops = [self.policy_loss, self.mse_loss, self.reg_term, self.accuracy ]
+        ops = [self.policy_loss, self.mse_loss, self.reg_term, self.accuracy, self.y_conv, self.z_conv]
         if training:
             ops += [self.grad_op, self.step_op],
+        print("input")
+        print("planes_len:  ", len(batch[0]))
+        print("probs_len:   ", len(batch[1]))
+        print("winner:      ", batch[2])
         r = self.session.run(ops, feed_dict={self.training: training,
                            self.planes: batch[0],
                            self.probs: batch[1],
                            self.winner: batch[2]})
+        print("")
+        print("output")
+        print("policy_loss:", r[0])
+        print("mse:        ", r[1])
+        print("reg:        ", r[2])
+        print("accuracy:   ", r[3])
+        print("")
+        p = r[4][0]
+        print("policy:     ", len(p))
+        for i in range(19):
+            for j in range(19):
+                print("{}".format(p[i*19+j])),
+            print("")
+        print("winrate:    ", r[5])
         # Google's paper scales mse by 1/4 to a [0,1] range, so we do the same here
         return {'policy': r[0], 'mse': r[1]/4., 'reg': r[2],
                 'accuracy': r[3], 'total': r[0]+r[1]+r[2] }
 
     def process(self, train_data, test_data):
-        info_steps=250
+        info_steps=1
         stats = Stats()
         timer = Timer()
         while True:
             batch = next(train_data)
             # Measure losses and compute gradients for this batch.
             losses = self.measure_loss(batch, training=True)
+            print("losses: ", losses)
             stats.add(losses)
             # fetch the current global step.
             steps = tf.train.global_step(self.session, self.global_step)
@@ -452,10 +474,9 @@ class TFProcess:
                 self.train_writer.add_summary(
                     tf.Summary(value=summaries), steps)
                 stats.clear()
+                break
 
-                time.sleep(30)
-
-            if steps % 2000 == 0:
+            if steps % 1 == 0:
                 test_stats = Stats()
                 test_batches = 200 # reduce sample mean variance by ~28x
                 for _ in range(0, test_batches):
@@ -472,6 +493,7 @@ class TFProcess:
                         test_stats.mean('mse')))
 
                 # Write out current model and checkpoint
+                '''
                 path = os.path.join(os.getcwd(), "leelaz-model")
                 save_path = self.saver.save(self.session, path, global_step=steps)
                 print("Model saved in file: {}".format(save_path))
@@ -486,9 +508,12 @@ class TFProcess:
 
                 #save_path = self.saver.save(self.session, path, global_step=steps)
                 #print("Model saved in file: {}".format(save_path))
+                '''
 
-            if steps == 10000:
-                os._exit(0)
+            if steps == 1:
+                while True:
+                    batch = next(train_data)
+                break
 
     def save_leelaz_weights(self, filename):
         with open(filename, "w") as file:

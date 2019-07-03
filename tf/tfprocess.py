@@ -437,10 +437,12 @@ class TFProcess:
         print("")
         p = r[4][0]
         print("policy:     ", len(p))
+        '''
         for i in range(19):
             for j in range(19):
                 print("{}".format(p[i*19+j])),
             print("")
+        '''
         print("winrate:    ", r[5])
         # Google's paper scales mse by 1/4 to a [0,1] range, so we do the same here
         return {'policy': r[0], 'mse': r[1]/4., 'reg': r[2],

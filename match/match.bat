@@ -1,7 +1,6 @@
 @echo on
 
 @rem public variable
-@set THREAD_NUM=4
 @set BOARD_SIZE=19
 @set KOMI=7.5
 @set GAME_TIME=7200m
@@ -11,6 +10,8 @@
 @rem default engine parameters
 @set ZEN_RESIGN=0.0
 @set LZ_RESIGN=1
+@set ZEN_THREAD_NUM=4
+@set LZ_THREAD_NUM=4
 @set ZEN_INTERVAL=15
 @set LZ_INTERVAL=6000
 

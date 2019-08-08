@@ -6,19 +6,19 @@
 )
 
 @if not "%2"=="0.13-cpu" @(
-  @set lz_para=-g -d -r%LZ_RESIGN% -t%THREAD_NUM% --noponder --timemanage off
+  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
 ) else (
-  @set lz_para=-g -d -r%LZ_RESIGN% -t%THREAD_NUM% --noponder --timemanage off
+  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
 )
 @if not "%6"=="0.13-cpu" @(
-  @set lz_para=-g -d -r%LZ_RESIGN% -t%THREAD_NUM% --noponder --timemanage off
+  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
 ) else (
-  @set lz_para=-g -d -r%LZ_RESIGN% -t%THREAD_NUM% --noponder --timemanage off
+  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
 )
 
 @rem zen7 parameters
 @set zen_cmd=c:\python27\python.exe c:\github\Webgo\svr\zen7.py
-@set zen_para=-t8 -r%ZEN_RESIGN% --interval %ZEN_INTERVAL%
+@set zen_para=-t%ZEN_THREAD_NUM% -r%ZEN_RESIGN% --interval %ZEN_INTERVAL%
 
 @if "%1"=="LZ" @(
   @set lz_ver=%2

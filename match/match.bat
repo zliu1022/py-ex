@@ -82,10 +82,11 @@ call onematch LZ 0.17-0429 C:\go\weight\15x192\157.gz p400 LZ 0.17-0429 C:\go\we
 @set ZEN_LABEL2=
 @set ZEN_SPEC2=
 @set ROUND=100
-@set ZEN7=ZEN v1 7 15000
+@set ZEN7=ZEN v1 7 7500
 @set THREAD_NUM=1
-call onematch LZ 0.13-cpu C:\go\weight\15x192\157.gz p200 %ZEN7%
-call onematch LZ 0.13-cpu C:\go\weight\15x192\157.gz p300 %ZEN7%
+call onematch LZ dual C:\go\weight\15x192\157.gz p200 %ZEN7%
+call onematch LZ dual C:\go\weight\15x192\157.gz p300 %ZEN7%
+
 call onematch LZ 0.13-cpu C:\go\weight\15x192\157.gz p400 %ZEN7%
 @set ZEN7=ZEN v1 7 7500
 @set ROUND=40

@@ -16,11 +16,15 @@ in_fd  = open(in_filename)
 out_fd = open(out_filename, "w")
 
 title_str = "#GAME	RES_B	RES_W	RES_R	ALT	DUP	LEN	TIME_B	TIME_W	CPU_B	CPU_W	ERR	ERR_MSG"
-base_url = "http://10.12.29.102/wgo/webgo.html?sgf=157_v_zen7/157-p200_v_zen7-s7500-100-"
+
+name = "157-p200_v_zen7-s7500-100"
+base_url = "http://10.12.29.102/wgo/webgo.html?sgf=157_v_zen7/" + name + "-"
 
 def main():
 
-    out_str = "<html>\n" + "<body>\n" + "<table>\n"
+    out_str = "<html>\n" + "<body>\n" + \
+        "<h1>" + name + "</h1>" + \
+        "<table>\n"
     out_fd.write(out_str)
 
     stat_total = 0
@@ -43,7 +47,10 @@ def main():
                 else:
                     out_str = "<tr onClick=\"doLink('" + base_url + items[0] + ".sgf" + "');\">\n"
                 for i in range(0,9,1):
-                    out_str += "    <td>" + items[i] + "</td>\n"
+                    if i==3 and items[3][0]<>items[2][0]:
+                        out_str += "    <td style=\"color: red;\">" + items[i] + "</td>\n"
+                    else:
+                        out_str += "    <td>" + items[i] + "</td>\n"
 
                 if no<>19:
                     stat_total += 1
@@ -72,8 +79,15 @@ def main():
             break
 
     out_str = "</table>\n"
+    out_str +=  "<h2>total game: %d</h2>" % stat_total
+    out_str +=  "<h2>157-p200 win: %d(b) %d(w)</h2>" % (stat_bb,stat_bw)
+    out_str +=  "<h2>Zen7-s7500 win: %d(w) %d(b)</h2>" % (stat_ww,stat_wb)
+    out_str +=  "<h2>157-p200 winrate: %.1f%% %.1f%% %.1f%%<h2>" % (100.0*(stat_bb+stat_bw)/stat_total, 100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb))
+
     out_str += "<style type=text/css>\n" + \
-        "table{ background: white; color: black; font-size: 30px; width: 100%\n}\n" + \
+        "html{ font-family: Calibri, Tahoma, Arial;}\n" + \
+        "h1{ text-align: center; padding: 30px;}\n" + \
+        "table{ background: white; color: black; font-size: 30px; width: 100%}\n" + \
         "tr{height: 100px; border-bottom: 1px solid; border-top: 1px solid;}\n" + \
         "td{height: 100px; border-bottom: 1px solid; }\n" + \
         "</style>\n"
@@ -83,9 +97,6 @@ def main():
 
     in_fd.close()
     out_fd.close()
-    
-    print "total: ", stat_total, " black win: ", stat_bb,stat_bw, " white win: ", stat_ww,stat_wb
-    print "black winrate: %.1f%% %.1f%% %.1f%%" % (100.0*(stat_bb+stat_bw)/stat_total, 100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb))
 
 if __name__ == "__main__":
     main()

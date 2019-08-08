@@ -1,0 +1,105 @@
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-0.sgf B+2.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-1.sgf B+33.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-10.sgf W+1.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-11.sgf W+3.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-12.sgf W+0.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-13.sgf W+5.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-14.sgf B+40.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-15.sgf W+11.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-16.sgf B+27.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-17.sgf W+7.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-18.sgf B+2.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-19.sgf B+171.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-2.sgf B+12.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-20.sgf B+46.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-21.sgf W+6.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-22.sgf W+24.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-23.sgf B+72.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-24.sgf W+1.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-25.sgf B+1.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-26.sgf B+6.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-27.sgf W+7.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-28.sgf W+38.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-29.sgf W+41.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-3.sgf W+3.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-30.sgf B+35.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-31.sgf W+19.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-32.sgf B+9.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-33.sgf W+45.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-34.sgf B+7.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-4.sgf B+0.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-5.sgf W+32.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-6.sgf B+31.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-7.sgf W+7.5 Zen7:0.4 157
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-8.sgf B+13.5 157 Zen7:0.4
+= 
+
+c:\www\wgo\sgf\157_v_zen7\157-p200_v_zen7-s7500-100-9.sgf B+1.5 Zen7:0.4 157
+= 
+

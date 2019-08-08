@@ -1,0 +1,56 @@
+# Black: 157
+# BlackCommand: c:\go\leela-zero\leelaz-dual.exe -g -d -r10 -t1 --noponder --timemanage off -p200 -w C:\go\weight\15x192\157.gz
+# BlackLabel: 157
+# BlackVersion: 0.17
+# Date: August 5, 2019 6:07:29 PM CST
+# Host: TVU-RBYJRC241
+# Komi: 7.5
+# Referee: Zen7
+# RefereeCommand: c:\python27\python.exe c:\github\Webgo\svr\zen7.py -n7 -dc:\go\zen7\zen.dll
+# RefereeLabel: Zen7:0.4
+# RefereeVersion: 0.4
+# Size: 19
+# White: Zen7
+# WhiteCommand: c:\python27\python.exe c:\github\Webgo\svr\zen7.py -t8 -r0.1 --interval 15 -n7 -dc:\go\zen7\zen.dll -s7500 
+# WhiteLabel: Zen7:0.4
+# WhiteVersion: 0.4
+# Xml: 0
+#
+#GAME	RES_B	RES_W	RES_R	ALT	DUP	LEN	TIME_B	TIME_W	CPU_B	CPU_W	ERR	ERR_MSG
+0	B+R	B+R	B+2.5	0	-	295	2709.8	2857	0	0	0	
+1	W+R	W+R	W+33.5	1	-	171	1617	1044.5	0	0	0	
+2	B+R	B+R	B+12.5	0	-	237	2288.5	1881.6	0	0	0	
+3	B+R	B+R	B+3.5	1	-	274	2695.2	2460.7	0	0	0	
+4	B+R	B+R	B+0.5	0	-	207	1920.5	2449.3	0	0	0	
+5	B+R	B+R	B+32.5	1	-	184	1818.5	2139.1	0	0	0	
+6	B+R	B+R	B+31.5	0	-	221	2169.9	2713.7	0	0	0	
+7	B+R	B+R	B+7.5	1	-	206	2042.1	1942.1	0	0	0	
+8	B+R	B+R	B+13.5	0	-	197	1917.2	1837.8	0	0	0	
+9	W+8.0	W+1.5	W+1.5	1	-	308	2876.8	2710.8	0	0	0	
+10	W+R	W+R	W+1.5	0	-	228	2199.3	1888.1	0	0	0	
+11	B+R	B+R	B+3.5	1	-	294	2572.1	3423	0	0	0	
+12	B+R	B+R	W+0.5	0	-	221	2038.7	1968.4	0	0	0	
+13	B+R	B+R	B+5.5	1	-	258	2505.5	2071.3	0	0	0	
+14	B+R	B+R	B+40.5	0	-	217	2077	3317.8	0	0	0	
+15	B+R	B+R	B+11.5	1	-	180	1740.3	1606.6	0	0	0	
+16	B+R	B+R	B+27.5	0	-	269	2564.6	2417	0	0	0	
+17	B+R	B+R	B+7.5	1	-	206	2079.1	2410.1	0	0	0	
+18	B+R	B+R	B+2.5	0	-	305	2857	3297.3	0	0	0	
+19	W+R	W+R	W+171.5	1	-	103	1088.2	640.2	0	0	0	
+20	B+R	B+R	B+46.5	0	-	251	2263.7	2484.1	0	0	0	
+21	B+R	B+R	B+6.5	1	-	218	2038	1736.6	0	0	0	
+22	W+R	W+R	W+24.5	0	-	142	1340.6	1098.7	0	0	0	
+23	W+R	W+R	W+72.5	1	-	193	1887.7	1428.5	0	0	0	
+24	B+R	B+R	W+1.5	0	-	231	2127.4	2092.4	0	0	0	
+25	W+3.0	W+1.5	W+1.5	1	-	324	2951.5	2531.7	0	0	0	
+26	B+R	B+R	B+6.5	0	-	241	2291.7	3063.3	0	0	0	
+27	B+R	B+R	B+7.5	1	-	270	2627	2953.9	0	0	0	
+28	W+R	W+R	W+38.5	0	-	116	1181.8	695.1	0	0	0	
+29	B+R	B+R	B+41.5	1	-	352	3359.3	6805.2	0	0	0	
+30	B+R	B+R	B+35.5	0	-	201	1954	2129.8	0	0	0	
+31	B+R	B+R	B+19.5	1	-	234	2234	2156.2	0	0	0	
+32	B+R	B+R	B+9.5	0	-	333	3140.1	2720.5	0	0	0	
+33	B+R	B+R	B+45.5	1	-	242	2325.9	1697.7	0	0	0	
+34	B+R	B+R	B+7.5	0	-	243	2323.8	2461	0	0	0	
+35	B+R	B+R		1	-	204	1945.5	1838.3	0	0	0	
+36	W+R	W+R		0	-	228	2261.2	2146.8	0	0	0	

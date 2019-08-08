@@ -8,10 +8,10 @@
 @set ROUND=4
 
 @rem default engine parameters
-@set ZEN_RESIGN=0.0
-@set LZ_RESIGN=1
-@set ZEN_THREAD_NUM=4
-@set LZ_THREAD_NUM=4
+@set ZEN_RESIGN=0.1
+@set LZ_RESIGN=10
+@set ZEN_THREAD_NUM=8
+@set LZ_THREAD_NUM=1
 @set ZEN_INTERVAL=15
 @set LZ_INTERVAL=6000
 

@@ -13,7 +13,7 @@ out_filename = sys.argv[2]
 in_fd  = open(in_filename)
 
 title_str = "#GAME	RES_B	RES_W	RES_R	ALT	DUP	LEN	TIME_B	TIME_W	CPU_B	CPU_W	ERR	ERR_MSG"
-name = "157-p200_v_zen7-s7500-100"
+name = in_filename[0: in_filename.find(".score",0)]
 name_len = len(name)
 score = ["" for i in range(100)]
 print len(score)

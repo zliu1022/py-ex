@@ -1,13 +1,13 @@
 echo off
 set DIR="%cd%"
-set DIR="c:\www\wgo\sgf"
-set name=157-p200_v_zen7-s7500-100
+set DIR="c:\www\wgo\sgf\157_v_zen7"
+set name=157-p300_v_zen7-s7500-100
 
 del cmd_sgflist
 
-for /R %DIR% %%f in (%name%*.sgf) do ( 
-echo loadsgf %%f
-echo loadsgf %%f >> cmd_sgflist
+@for /R %DIR% %%f in (%name%*.sgf) do @( 
+@echo loadsgf %%f
+@echo loadsgf %%f >> cmd_sgflist
 )
 
 echo quit >> cmd_sgflist

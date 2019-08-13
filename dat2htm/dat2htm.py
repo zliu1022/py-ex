@@ -56,13 +56,15 @@ def main():
                     #if i==3 and items[3][0]<>items[2][0]: # label red: zen7 score is error with winrate
                     if i==3 and items[2][0]=="W":          # label red: white win
                         out_str += "    <td style=\"color: red;\">" + items[i] + "</td>\n"
+                    elif no<>19 and i==6 and int(items[6])<91:
+                        out_str += "    <td style=\"color: blue;\">" + items[i] + "</td>\n"
                     else:
                         out_str += "    <td>" + items[i] + "</td>\n"
 
                 # line19 in dat file is title
                 if no<>19:
                     stat_total += 1
-                    if items[3].find("B+",0)==0:
+                    if items[2].find("B+",0)==0:
                         if items[4].find("0",0)==0:
                             stat_bb += 1
                         else:

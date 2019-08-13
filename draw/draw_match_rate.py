@@ -49,11 +49,11 @@ def main():
                 continue
             if num[0]=="Zen7-0.4":
                 #print num
-                x.append(num[3])
-                y0.append(num[7].strip('%'))
+                x.append(int(num[3]))
+                y0.append(float(num[7].strip('%')))
             if num[0][0:8]=="0.17-157":
                 #print num
-                y1.append(num[7].strip('%'))
+                y1.append(float(num[7].strip('%')))
     if found==0:
         print "not found Game"
         return
@@ -76,10 +76,10 @@ def draw_plot():
 
     plt.legend(loc='best')
     t1name = in_filename.strip(".log")
-    #print "t1name: ", t1name
+    print "t1name: ", t1name
     print found
     t2name = t1name + ("-%d" % (found-1))
-    #print "t2name: ", t2name
+    print "t2name: ", t2name
     plt.title(t2name)
     plt.xlabel('move')
     plt.ylabel('winrate')

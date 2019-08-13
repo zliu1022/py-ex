@@ -22,12 +22,13 @@ player1 = name[0: name.find("_v_",0)]
 player2 = name[name.find("_v_",0)+3: in_filename.find("-100",0)]
 print name, player1, player2
 base_url = "http://10.12.29.102/wgo/webgo.html?sgf=157_v_zen7/" + name + "-"
+base_img_url = "http://10.12.29.102/wgo/sgf/157_v_zen7/" + name + "-"
 
 def main():
 
     out_str = "<html>\n" + "<body>\n" + \
-        "<h1>" + name + "</h1>" + \
-        "<table>\n"
+        "<h1>" + name + "</h1>\n" + \
+        "<table>\n<tbody>\n"
     out_fd.write(out_str)
 
     stat_total = 0
@@ -85,6 +86,8 @@ def main():
                     out_str += "    <td style=\"text-align: center;\">"+ ">" + "</td>\n"
 
                 out_str += "</tr>\n\n"
+                if no<>19:
+                    out_str += "<tr>\n<th colspan=\"9\">\n<img src=\"" + base_img_url + items[0] + ".png" + "\" />\n</th>\n</tr>\n\n"
 
                 out_fd.write(out_str)
 
@@ -92,7 +95,7 @@ def main():
         if not line:
             break
 
-    out_str = "</table>\n"
+    out_str = "</table>\n</tbody>\n"
     out_str +=  "<h2>total game: %d @ %.1f hours</h2>" % (stat_total, (stat_btime+stat_wtime)/3600.0)
     out_str +=  "<h2>%s win: %d(b) %d(w)</h2>" % (player1, stat_bb,stat_bw)
     out_str +=  "<h2>%s win: %d(w) %d(b)</h2>" % (player2, stat_ww,stat_wb)
@@ -105,7 +108,6 @@ def main():
     out_str += "<style type=text/css>\n" + \
         "html{ font-family: Calibri, Tahoma, Arial;}\n" + \
         "h1{ text-align: center; padding: 30px;}\n" + \
-        "h2{ font-size: 1em;}\n" + \
         "table{ background: white; color: black; font-size: 30px; width: 100%}\n" + \
         "tr{height: 100px; border-bottom: 1px solid; border-top: 1px solid;}\n" + \
         "td{height: 100px; border-bottom: 1px solid; }\n" + \

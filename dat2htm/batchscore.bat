@@ -1,7 +1,7 @@
 echo off
 set DIR="%cd%"
 set DIR="c:\www\wgo\sgf\157_v_zen7"
-set name=157-p300_v_zen7-s7500-100
+@rem set name=157-p300_v_zen7-s15000-100
 
 del cmd_sgflist
 

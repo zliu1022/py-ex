@@ -25,14 +25,16 @@
 @set LEELAZ_40b=LZ 0.13-cpu-1210 D:\go\weight\40x256\207.gz v50
 
 @rem define zen
-@set ZEN7=ZEN v1 7 2500
+@set ZEN7=ZEN v1 7 7500
 @set ZEN6=ZEN v1 6 15000
 
+@rem when use top visits, all these should be set empty
 @set ZEN_LABEL1=
 @set ZEN_LABEL2=
 @set ZEN_SPEC1=
 @set ZEN_SPEC2=
 
+@rem default parameters will not be used, just for reference
 @set ZEN6_PARA_DEFAULT=--maxsim 1000000000 --amaf 1.0 --prior 1.0 --dcnn 1
 @set ZEN6_PARA_7d=--maxsim 12000 --amaf 1.0 --prior 1.0 --dcnn 1
 @set ZEN6_PARA_6d=--maxsim  3000 --amaf 1.0 --prior 1.0 --dcnn 1
@@ -63,57 +65,42 @@
 @set LEELAZ13=LZ 0.13-cpu-0307 D:\go\weight\size13\207_13.gz v64
 call onematch %ZEN7% %LEELAZ13%
 
+@rem example to set zen different levels
+@set ZEN6=ZEN v1 6 999999999
+@set ZEN7=ZEN v1 7 999999999
+
+@set ZEN_LABEL2=7d
+@set ZEN_SPEC2=%ZEN6_PARA_7d%
+call onematch %LEELAZ_4b% %ZEN6%
+@set ZEN_SPEC2=%ZEN7_PARA_7d%
+call onematch %LEELAZ_4b% %ZEN7%
+
+@set ROUND=40
+@set ZEN_LABEL1=7d
+@set ZEN_LABEL2=7d
+@set ZEN_SPEC1=%ZEN6_PARA_7d%
+@set ZEN_SPEC2=%ZEN7_PARA_7d%
+call onematch %ZEN6% %ZEN7%
+
 @set ROUND=100
-call onematch LZ 0.17-0429 C:\go\weight\15x192\d351f06e446ba10697bfd2977b4be52c3de148032865eaaf9efc9796aea95a0c.gz p100 %ZEN7%
-call onematch LZ 0.17-0429 C:\go\weight\15x192\d351f06e446ba10697bfd2977b4be52c3de148032865eaaf9efc9796aea95a0c.gz p200 %ZEN7%
-call onematch LZ 0.17-0429 C:\go\weight\15x192\d351f06e446ba10697bfd2977b4be52c3de148032865eaaf9efc9796aea95a0c.gz p300 %ZEN7%
+call onematch LZ 0.17-0429 C:\go\weight\15x192\157.gz p100 %ZEN7%
 
 @set ZEN7=ZEN v1 7 999999999
 @set ZEN_LABEL2=9d
 @set ZEN_SPEC2=%ZEN7_PARA_9d%
 call onematch LZ 0.17-0429 C:\go\weight\15x192\157.gz p100 %ZEN7%
-call onematch LZ 0.17-0429 C:\go\weight\15x192\157.gz p200 %ZEN7%
 
 call onematch LZ 0.17-0429 C:\go\weight\15x192\157.gz p200 LZ 0.17-0429 C:\go\weight\15x192\157.gz p100
-call onematch LZ 0.17-0429 C:\go\weight\15x192\157.gz p300 LZ 0.17-0429 C:\go\weight\15x192\157.gz p200
-call onematch LZ 0.17-0429 C:\go\weight\15x192\157.gz p400 LZ 0.17-0429 C:\go\weight\15x192\157.gz p300
+
+@set ZEN7=ZEN v1 7 7500
+call onematch LZ dual C:\go\weight\15x192\157.gz p300 %ZEN7%
 
 :run
 @set ZEN_LABEL2=
 @set ZEN_SPEC2=
 @set ROUND=100
-@set ZEN7=ZEN v1 7 7500
-@set THREAD_NUM=1
-call onematch LZ dual C:\go\weight\15x192\157.gz p200 %ZEN7%
+@set ZEN7=ZEN v1 7 15000
 call onematch LZ dual C:\go\weight\15x192\157.gz p300 %ZEN7%
 
-call onematch LZ 0.13-cpu C:\go\weight\15x192\157.gz p400 %ZEN7%
-@set ZEN7=ZEN v1 7 7500
-@set ROUND=40
-call onematch LZ 0.13-cpu c:\go\weight\master\GX43.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX42.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX41.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX3B.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX3A.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX39.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX38.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX36.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX35.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX34.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX33.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX32.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX31.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX24.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX22.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\master\GX14.gz v480 %ZEN7%
-
-call onematch LZ 0.13-cpu c:\go\weight\15x192\e8601c38352330a313b99d09792649504767901529410cfbddb1d0f102055652.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\db68982c9a3510323e8d2ab61330ba57f97d93e82a905812785015d1e42f5240.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\8a045bce09a264648434d984464b712f63dbf7d6776e27111f9371da30cd341b.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\f32316820bae3a52227d1c6b8e04ca13c250209c0d782ba3d29bc7d68b71ed2f.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\c0cb605b3dfb366eeec805841495379efc7d206bcd04e95ef4566614100074c5.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\5d6d9c5b1d741b6435aac0d76cf3c6cfce66d289a454c83a4c3e1eda1ded2ab2.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\8c67ecdcadf13cf456337632963b1cfcd59413fb346f1bc636882b0823298511.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\5838db67a1114cde0cfddeb60c1d43e9d03c0002a9351750df8a805f141e71cb.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\02e663b00ec1994d1348cbeffd2c0632e52dbbbbf1f0b9ada7ecf68bc86d862e.gz v480 %ZEN7%
-call onematch LZ 0.13-cpu c:\go\weight\15x192\ba748d402af1bdd101212cbd217025dee866b3fcc996bd16d1a3134d5591a501.gz v480 %ZEN7%
+@set ZEN7=ZEN v1 7 30000
+call onematch LZ dual C:\go\weight\15x192\157.gz p300 %ZEN7%

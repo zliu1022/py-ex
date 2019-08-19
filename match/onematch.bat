@@ -111,7 +111,7 @@
   @set tmpround=%ROUND%
 )
 @set para=-size %BOARD_SIZE% -komi %KOMI% -verbose -auto -games %ROUND% -time %GAME_TIME%
-@set referee=-referee "c:\python27\python.exe c:\github\Webgo\svr\zen7.py -n7 -dc:\go\zen7\zen.dll"
+@set referee=-referee "c:\python27\python.exe c:\github\Webgo\svr\zen7.py -n7 -dc:\go\zen7\zen.dll --referee"
 @set openings=-openings c:\go\openings\%HANDICAP%
 @if "%HANDICAP%"=="" @(
   @set sgftitle=%ai1_label%_v_%ai2_label%-%tmpround%

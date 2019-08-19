@@ -95,15 +95,15 @@ def main():
         if not line:
             break
 
-    out_str = "</table>\n</tbody>\n"
-    out_str +=  "<h2>total game: %d @ %.1f hours</h2>" % (stat_total, (stat_btime+stat_wtime)/3600.0)
-    out_str +=  "<h2>%s win: %d(b) %d(w)</h2>" % (player1, stat_bb,stat_bw)
-    out_str +=  "<h2>%s win: %d(w) %d(b)</h2>" % (player2, stat_ww,stat_wb)
+    out_str = "</tbody>\n</table>\n"
+    out_str +=  "<h2>total game: %d @ %.1f hours</h2>\n" % (stat_total, (stat_btime+stat_wtime)/3600.0)
+    out_str +=  "<h2>%s win: %d(b) %d(w)</h2>\n" % (player1, stat_bb,stat_bw)
+    out_str +=  "<h2>%s win: %d(w) %d(b)</h2>\n" % (player2, stat_ww,stat_wb)
     if (stat_bb+stat_ww)<>0 and (stat_bw+stat_wb)<>0:
-        out_str +=  "<h2>%s winrate: %.1f%% %.1f%% %.1f%%</h2>" % (player1, 100.0*(stat_bb+stat_bw)/stat_total, 100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb))
+        out_str +=  "<h2>%s winrate: %.1f%% %.1f%% %.1f%%</h2>\n" % (player1, 100.0*(stat_bb+stat_bw)/stat_total, 100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb))
     
-    out_str +=  "<h2>%s time:   %.1f hours, each move: %.1fs</h2>" % (player1, stat_btime/3600.0, 1.0*stat_btime/stat_blen)
-    out_str +=  "<h2>%s time: %.1f hours, each move: %.1fs</h2>" % (player2, stat_wtime/3600.0, 1.0*stat_wtime/stat_wlen)
+    out_str +=  "<h2>%s time:   %.1f hours, each move: %.1fs</h2>\n" % (player1, stat_btime/3600.0, 1.0*stat_btime/stat_blen)
+    out_str +=  "<h2>%s time: %.1f hours, each move: %.1fs</h2>\n" % (player2, stat_wtime/3600.0, 1.0*stat_wtime/stat_wlen)
 
     out_str += "<style type=text/css>\n" + \
         "html{ font-family: Calibri, Tahoma, Arial;}\n" + \

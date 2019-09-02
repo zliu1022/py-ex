@@ -20,3 +20,6 @@
 		a.dispatchEvent(e)
 	}
 })(console)
+
+console.save(g_qq, 'g_qq.json');
+console.save(g_qq.psm, 'g_qq.psm.json');

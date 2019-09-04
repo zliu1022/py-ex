@@ -1,18 +1,25 @@
+var filename = '';
+var typename = ['未知0','死活题','手筋题','未知3','布局题','官子题','未知6','未知7','欣赏题','未知9','中盘作战题','模仿题','棋理题'];
+
 var outsgf = function() {
     var f1 = document.getElementById("frame1");
     var new_qq = null;
     var new_location = null;
     var new_document = null;
     if (f1 != null) {
-        console.log('从frame中获取信息');
+        //console.log('从frame中获取信息');
         new_qq = f1.contentWindow.g_qq;
-        new_location = f1.src;
+        new_location = f1.contentWindow.location.href;
         new_document = f1.contentDocument;
     } else {
         new_qq = g_qq;
         new_location = location.href;
         new_document = document;
     }
+    var n = new_location.split("/");
+    //filename = n[3] + '-' + n[4] + '-' + n[n.length - 2] + ".sgf";
+    var n1 = new_document.title.split(" ")[0];
+    filename = new_qq.levelname + '-' + n1 + ".sgf";
 
     var str;
     str = "(;GM[1]FF[4]CA[UTF-8]KM[7.5]SZ[" + new_qq.psm.lu + "]PB[]PW[]";
@@ -29,19 +36,63 @@ var outsgf = function() {
         str += "\n;B[]"
     }*/
 
-    str += '\nC[';
+    str += '\nC[\n';
+    str += 'title:' + new_document.title + '\n';
+    console.log(filename, new_document.title, new_qq.qtypename, new_qq.title, new_qq.levelname, new_qq.name, new_location);
+    console.log(typename[new_qq.qtype], '共', new_qq.options.length, '个选项', new_qq.answers.length, '条答案', new_qq.attr_type, new_qq.clone_pos, new_qq.clone_prepos, new_qq.taotaiid, new_qq.doingtype, new_qq.xuandians);
+    //console.log(new_qq.hasbook, new_qq.bookinfos);
+    //console.log(new_qq.psm.qtype, new_qq.psm.doingtype);
+
     var tmpbread = new_document.getElementsByClassName("breadcrumb")[0];
-    var n = new_location.split("/");
-    var filename = n[3] + '-' + n[4] + '-' + n[n.length - 2] + ".sgf";
-    if (tmpbread && tmpbread.children.length > 3) {
-        console.log(tmpbread.children[0].textContent, tmpbread.children[1].textContent, tmpbread.children[2].textContent);
-        str += tmpbread.children[0].textContent + '\n' + tmpbread.children[1].textContent  + '\n' +tmpbread.children[2].textContent;
+    //var n = new_location.split("/");
+    //var filename = n[3] + '-' + n[4] + '-' + n[n.length - 2] + ".sgf";
+    if (tmpbread) {
+        for (i = 0; i < (tmpbread.children.length - 1); i++) {
+            //console.log('subtitle'+i+':', tmpbread.children[i].textContent);
+            str += tmpbread.children[i].textContent + '\n';
+        }
     }
-    console.log(new_qq.qtypename, new_qq.title, new_qq.levelname);
-    str += new_qq.qtypename+ '\n' + new_qq.title+ '\n' +new_qq.levelname;
+    str += '\n';
+    str += 'qtypename:' + new_qq.qtypename + '\n' + 'title:' + new_qq.title + '\n' + 'levelname:' + new_qq.levelname + '\n' + 'name:' + new_qq.name + '\n';
+
+    //console.log('共', new_qq.options.length, '个选项', new_qq.answers.length, '条答案');
+    //new_qq.psm.options.length
+    str += '\n选项：\n';
+    for (i = 0; i < new_qq.options.length; i++) {
+        var opt = new_qq.options[i];
+        //var opt1 = new_qq.psm.options[i];
+        str += opt.indexname + ' ' + opt.content + opt.isok + '\n';
+    }
     str += ']';
 
-    console.log('共', new_qq.answers.length, '条答案');
+    if (new_qq.qtype == 11) {
+
+        if (new_qq.clone_prepos.length) {
+            str += "\n(\nAB";
+            for (i = 0; i < new_qq.clone_prepos[0].length; i++) {
+                var clone = new_qq.clone_prepos[0][i];
+                str += '[' + clone + ']';
+            }
+            str += "\nAW";
+            for (i = 0; i < new_qq.clone_prepos[1].length; i++) {
+                var clone = new_qq.clone_prepos[1][i];
+                str += '[' + clone + ']';
+            }
+            str += '\n';
+        }
+
+        for (i = 0; i < new_qq.clone_pos.length; i++) {
+            var clone = new_qq.clone_pos[i];
+            //str += '[' + clone +':'+ (i+1) + ']' ;
+            if (new_qq.blackfirst == true) {
+                str += ";" + ((i % 2 == 0) ? "B" : "W") + "[" + clone + "]";
+            } else {
+                str += ";" + ((i % 2 == 0) ? "W" : "B") + "[" + clone + "]";
+            }
+        }
+        str += '\n)';
+    }
+
     //console.log("nu step isdest st ty v ok bad change error name");
     for (i = 0; i < new_qq.answers.length; i++) {
         var an = new_qq.answers[i];
@@ -63,10 +114,10 @@ var outsgf = function() {
         }
         pv += ')';
 
-        console.log('no.', an.nu, an.stepcount, an.isdest, status, type, an.v, prn_pv, ':', an.ok_count, an.bad_count, an.change_count, an.error_count, an.username);
+        //console.log('no.', an.nu, an.stepcount, an.isdest, status, type, an.v, prn_pv, ':', an.ok_count, an.bad_count, an.change_count, an.error_count, an.username);
         //if(new_qq.answers[i].isdest==true){
         //if (new_qq.answers[i].nu == 1) {
-        if (new_qq.answers[i].ty == 1 && new_qq.answers[i].st==2) {
+        if (new_qq.answers[i].ty == 1 && new_qq.answers[i].st == 2) {
             str += pv;
         }
     }
@@ -76,34 +127,12 @@ var outsgf = function() {
 }
 
 var savesgf = function() {
-    var f1 = document.getElementById("frame1");
-    var new_qq = null;
-    var new_location = null;
-    var new_document = null;
-    if (f1 != null) {
-        new_qq = f1.contentWindow.g_qq;
-        new_location = f1.src;
-        new_document = f1.contentDocument;
-    } else {
-        new_qq = g_qq;
-        new_location = location.href;
-        new_document = document;
-    }
-
-    var tmpbread = new_document.getElementsByClassName("breadcrumb")[0];
-    var n = new_location.split("/");
-    var filename = n[3] + '-' + n[4] + '-' + n[n.length - 2] + ".sgf";
-    /*
-    if (tmpbread && tmpbread.children.length > 3) {
-        console.log(tmpbread.children[0].textContent, tmpbread.children[1].textContent, tmpbread.children[2].textContent);
-    }
-    console.log(new_qq.qtypename, new_qq.title, new_qq.levelname);*/
-
     var data = outsgf();
     if (!data) {
         console.error('Console.save: No data')
         return;
     }
+    //console.log('filename:', filename);
     if (!filename)
         filename = 'console.json'
     if (typeof data === "object") {
@@ -132,18 +161,21 @@ var listsgf = function() {
     }
 }
 
-var timeout = 1;
+var timemid = 10;
+//随机等待的时间中位数 10
+var timerange = 16;
+//随机等待的时间范围 16
 var count = 0;
-var maxcount = 3;
+var maxcount = 99;
 var current = location.href;
 nextpage();
 
 function nextpage() {
     count++;
-    console.log('下载第 ' + count + ' 题');
+    console.log('\n下载第 ' + count + ' 题');
 
-    //outsgf();
-    savesgf();
+    outsgf();
+    //savesgf();
 
     if (count >= maxcount) {
         console.log('count超出范围，停止');
@@ -175,13 +207,14 @@ function nextpage() {
         }
     }
 
+    var timeout = Math.random() * timerange - (timerange / 2) + timemid;
     if (t1 != null) {
         current = t1.href;
         console.log('从document直接获取，启动', timeout, '秒定时器，跳转到下一题', current);
         setTimeout('nextpage()', 1000 * timeout);
     } else if (t2 != null) {
         current = t2.href;
-        console.log('从frame间接获取，启动', timeout, '秒定时器，跳转到下一题', current);
+        //console.log('从frame间接获取，启动', timeout, '秒定时器，跳转到下一题', current);
         setTimeout('nextpage()', 1000 * timeout);
     } else {
         console.log('没有下一页了，停止');

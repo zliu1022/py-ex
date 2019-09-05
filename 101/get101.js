@@ -1,5 +1,7 @@
+"use strict";
+
 var filename = '';
-var typename = ['未知0','死活题','手筋题','未知3','布局题','官子题','未知6','未知7','欣赏题','未知9','中盘作战题','模仿题','棋理题'];
+var typename = ['未知0', '死活题', '手筋题', '未知3', '布局题', '官子题', '未知6', '未知7', '欣赏题', '未知9', '中盘作战题', '模仿题', '棋理题'];
 
 var outsgf = function() {
     var f1 = document.getElementById("frame1");
@@ -25,16 +27,33 @@ var outsgf = function() {
     str = "(;GM[1]FF[4]CA[UTF-8]KM[7.5]SZ[" + new_qq.psm.lu + "]PB[]PW[]";
     str += "CP[" + new_location + "]";
 
-    str += "\nAB";
-    for (i = 0; i < new_qq.psm.prepos[0].length; i++)
-        str += "[" + new_qq.psm.prepos[0][i] + "]";
-    str += "\nAW";
-    for (i = 0; i < new_qq.psm.prepos[1].length; i++)
-        str += "[" + new_qq.psm.prepos[1][i] + "]";
-
-    /*if (new_qq.psm.is_start_black != true) {
+    if (new_qq.qtype == 11) {
+        if (new_qq.clone_prepos.length) {
+            str += "\nAB";
+            for (var i = 0; i < new_qq.clone_prepos[0].length; i++) {
+                var clone = new_qq.clone_prepos[0][i];
+                str += '[' + clone + ']';
+            }
+            str += "\nAW";
+            for (var i = 0; i < new_qq.clone_prepos[1].length; i++) {
+                var clone = new_qq.clone_prepos[1][i];
+                str += '[' + clone + ']';
+            }
+            str += '\n';
+        }
+    } else if (new_qq.psm.prepos.length) {
+        str += "\nAB";
+        for (var i = 0; i < new_qq.psm.prepos[0].length; i++)
+            str += "[" + new_qq.psm.prepos[0][i] + "]";
+        str += "\nAW";
+        for (var i = 0; i < new_qq.psm.prepos[1].length; i++)
+            str += "[" + new_qq.psm.prepos[1][i] + "]";
+        /*
+        if (new_qq.psm.is_start_black != true) {
         str += "\n;B[]"
-    }*/
+        }
+        */
+    }
 
     str += '\nC[\n';
     str += 'title:' + new_document.title + '\n';
@@ -47,7 +66,7 @@ var outsgf = function() {
     //var n = new_location.split("/");
     //var filename = n[3] + '-' + n[4] + '-' + n[n.length - 2] + ".sgf";
     if (tmpbread) {
-        for (i = 0; i < (tmpbread.children.length - 1); i++) {
+        for (var i = 0; i < (tmpbread.children.length - 1); i++) {
             //console.log('subtitle'+i+':', tmpbread.children[i].textContent);
             str += tmpbread.children[i].textContent + '\n';
         }
@@ -58,7 +77,7 @@ var outsgf = function() {
     //console.log('共', new_qq.options.length, '个选项', new_qq.answers.length, '条答案');
     //new_qq.psm.options.length
     str += '\n选项：\n';
-    for (i = 0; i < new_qq.options.length; i++) {
+    for (var i = 0; i < new_qq.options.length; i++) {
         var opt = new_qq.options[i];
         //var opt1 = new_qq.psm.options[i];
         str += opt.indexname + ' ' + opt.content + opt.isok + '\n';
@@ -66,22 +85,8 @@ var outsgf = function() {
     str += ']';
 
     if (new_qq.qtype == 11) {
-
-        if (new_qq.clone_prepos.length) {
-            str += "\n(\nAB";
-            for (i = 0; i < new_qq.clone_prepos[0].length; i++) {
-                var clone = new_qq.clone_prepos[0][i];
-                str += '[' + clone + ']';
-            }
-            str += "\nAW";
-            for (i = 0; i < new_qq.clone_prepos[1].length; i++) {
-                var clone = new_qq.clone_prepos[1][i];
-                str += '[' + clone + ']';
-            }
-            str += '\n';
-        }
-
-        for (i = 0; i < new_qq.clone_pos.length; i++) {
+        str += '\n';
+        for (var i = 0; i < new_qq.clone_pos.length; i++) {
             var clone = new_qq.clone_pos[i];
             //str += '[' + clone +':'+ (i+1) + ']' ;
             if (new_qq.blackfirst == true) {
@@ -90,11 +95,11 @@ var outsgf = function() {
                 str += ";" + ((i % 2 == 0) ? "W" : "B") + "[" + clone + "]";
             }
         }
-        str += '\n)';
+        str += '\n';
     }
 
     //console.log("nu step isdest st ty v ok bad change error name");
-    for (i = 0; i < new_qq.answers.length; i++) {
+    for (var i = 0; i < new_qq.answers.length; i++) {
         var an = new_qq.answers[i];
         var type = (an.ty == 1) ? '正解' : (an.ty == 3) ? '失败' : (an.ty == 2) ? '变化' : (an.ty == 4) ? '淘汰' : '未知';
         var status = (an.st == 2) ? '审完' : (an.st == 1) ? '待审' : '未知';
@@ -102,7 +107,7 @@ var outsgf = function() {
         //var pv = '\n(C[第'+an.nu+'答案]';
         var pv = '\n(';
         var prn_pv = (new_qq.blackfirst == true) ? 'B ' : 'W ';
-        for (j = 0; j < new_qq.answers[i].pts.length; j++) {
+        for (var j = 0; j < new_qq.answers[i].pts.length; j++) {
             var x = "ABCDEFGHJKLMNOPQRST"['abcdefghijklmnopqrst'.indexOf(new_qq.answers[i].pts[j].p[0])];
             var y = 19 - 'abcdefghijklmnopqrst'.indexOf(new_qq.answers[i].pts[j].p[1]);
             prn_pv += x + y + ' ';
@@ -139,11 +144,19 @@ var savesgf = function() {
         data = JSON.stringify(data, undefined, 4)
     }
 
+    var e = document.createEvent('MouseEvents');
+    var a = document.createElement('a');
+    var blob = new Blob([data],{
+        type: 'text/json'
+    })
+
+    /*
     var blob = new Blob([data],{
         type: 'text/json'
     })
       , e = document.createEvent('MouseEvents')
       , a = document.createElement('a')
+      */
     a.download = filename
     a.href = window.URL.createObjectURL(blob)
     a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
@@ -153,7 +166,7 @@ var savesgf = function() {
 
 var listsgf = function() {
     var q = document.getElementsByClassName("questionitem");
-    for (i = 0; i < q.length; i++) {
+    for (var i = 0; i < q.length; i++) {
         var t = q[i].children[0].children[0].href;
         console.log(t);
         //location.replace(t.children[0].children[0].href);
@@ -166,16 +179,16 @@ var timemid = 10;
 var timerange = 16;
 //随机等待的时间范围 16
 var count = 0;
-var maxcount = 99;
-var current = location.href;
+var maxcount = 9999;
+//var current = location.href;
 nextpage();
 
 function nextpage() {
     count++;
     console.log('\n下载第 ' + count + ' 题');
 
-    outsgf();
-    //savesgf();
+    //outsgf();
+    savesgf();
 
     if (count >= maxcount) {
         console.log('count超出范围，停止');
@@ -188,7 +201,7 @@ function nextpage() {
     var t2 = null;
     if (t1 == null) {
         var tmpbtn = document.getElementsByClassName("btn btn-info");
-        if (tmpbtn.length != 0 && tmpbtn[0].text == ' 下 一 题 ') {
+        if (tmpbtn.length != 0 && typeof(tmpbtn[0].text)!='undefined' && tmpbtn[0].text == ' 下 一 题 ') {
             t1 = tmpbtn[0];
         } else if (tmpbtn.length != 0 && tmpbtn[1].text == ' 下 一 题 ') {
             t1 = tmpbtn[1];
@@ -199,7 +212,7 @@ function nextpage() {
         t2 = f1.contentDocument.getElementById(pageid);
         if (t2 == null) {
             var tmpbtn = f1.contentDocument.getElementsByClassName("btn btn-info");
-            if (tmpbtn[0].text == ' 下 一 题 ') {
+            if (tmpbtn.length != 0 && typeof(tmpbtn[0].text)!='undefined' && tmpbtn[0].text == ' 下 一 题 ') {
                 t2 = tmpbtn[0];
             } else if (tmpbtn.length > 1 && tmpbtn[1].text == ' 下 一 题 ') {
                 t2 = tmpbtn[1];
@@ -207,6 +220,7 @@ function nextpage() {
         }
     }
 
+    var current = '';
     var timeout = Math.random() * timerange - (timerange / 2) + timemid;
     if (t1 != null) {
         current = t1.href;
@@ -221,13 +235,26 @@ function nextpage() {
         return;
     }
 
-    fr4me = '<frameset id="frameset1" cols=\'*\'>\n<frame id="frame1" src=\'' + current + '\'/>';
-    fr4me += '</frameset>';
+    var fr4me = '<frameset id="frameset1" cols=\'*\'>\n<frame id="frame1" src=\'' + current + '\'/>' + '</frameset>';
+
+    if (f1 != null) {
+        //f1.src = "";
+        f1.src = 'about:blank';
+        f1 = null;
+    }
+    t1 = null;
+    t2 = null;
+    current = null;
+
+    document.write(fr4me);
+    document.close();
+    /*
     with (document) {
         write(fr4me);
         void (close())
     }
     ;
+    */
 }
 
 // if it's previous page, should be below:

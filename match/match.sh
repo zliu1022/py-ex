@@ -1,7 +1,7 @@
 # no handicap
 CMD=/Users/zliu/go/leela-zero/leelaz-dual
 RESIGN=1
-THREAD=4
+THREAD=2
 GAMES=10
 
 #weight 1
@@ -67,4 +67,4 @@ echo para $PARA
 !
 
 java -jar gogui-twogtp.jar -black "$BLACK" -white "$WHITE" $PARA
-#./match.sh handicap >&1 | tee match-201909251550.log
+#./match.sh handicap >&1 2>&1 | tee match-201909251550.log

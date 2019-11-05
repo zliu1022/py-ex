@@ -8,9 +8,11 @@ GAMES=10
 WEIGHT_1=/Users/zliu/go/weights/5x64/35.gz
 PLAYOUT_1=1500
 
+CLOUD_IP=130.211.200.221
 #weight 2
-WEIGHT_2=/Users/zliu/go/weights/OZ/OZ14.gz
-START_KOMI=80
+WEIGHT_2=/Users/zliu/go/weights/OZ/OZ13.gz
+CLOUD_WEIGHT_2=/home/zliu1022/go/OZ13.gz
+START_KOMI=90
 KOMI_STEP=5
 PLAYOUT_2=1200
 
@@ -49,7 +51,7 @@ case $1 in
     #BLACK="$CMD -g --noponder --timemanage off -t$THREAD -r$RESIGN -w $WEIGHT_1 -p$PLAYOUT_1"
     BLACK="java -jar gogui-client.jar 192.168.1.136 8801"
     #WHITE="$CMD -g --noponder --timemanage off -t$THREAD -r$RESIGN -w $WEIGHT_2 -p$PLAYOUT_2 --komi $START_KOMI --kmrate 0.65 --kmstep $KOMI_STEP"
-    WHITE="ssh -i /Users/zliu/outline zliu1022@35.223.182.248 /home/zliu1022/go/leelaz-dual -g --noponder --timemanage off -t$THREAD -r$RESIGN -w /home/zliu1022/go/OZ14.gz -p$PLAYOUT_2 --komi $START_KOMI --kmrate 0.65 --kmstep $KOMI_STEP"
+    WHITE="ssh -i /Users/zliu/outline zliu1022@$CLOUD_IP /home/zliu1022/go/leelaz-dual -g --noponder --timemanage off -t$THREAD -r$RESIGN -w $CLOUD_WEIGHT_2 -p$PLAYOUT_2 --komi $START_KOMI --kmrate 0.65 --kmstep $KOMI_STEP"
     #SGFNAME="$W_NAME1"-p"$PLAYOUT_1"-h4_v_"$W_NAME2"-p"$PLAYOUT_2"-"$GAMES"
     SGFNAME=zen7-s1500-h4_v_"$W_NAME2"-p"$PLAYOUT_2"-"$GAMES"
     PARA="-openings /Users/zliu/github/Webgo/sgf/handicap/h4/ -verbose -auto -games $GAMES -size 19 -komi 0 -sgffile $SGFNAME -time 7200m"

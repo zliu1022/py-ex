@@ -1,0 +1,9 @@
+komi 0
+time_settings 0 1 0
+play B Q16
+play B D4
+play B Q4
+play B D16
+
+genmove white
+showboard

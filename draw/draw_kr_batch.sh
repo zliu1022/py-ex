@@ -1,13 +1,15 @@
 #!/bin/bash
-currentdir=/Users/zliu/Downloads/gameweight
+currentdir=./
+#lzdir=/home/zliu1022/go
+lzdir=/Users/zliu/go/leela-zero
 echo "Drawing winrate curve in ""$currentdir"
 
-for f in $currentdir/*
+for f in $currentdir/*.gz
 do
 #fn=$(basename "$f" | cut -d'.' -f1) #get just the filename no extension
 fn=$(basename "$f")".kr"
 echo $f, $fn
-cat gtp_0 | /Users/zliu/go/leela-zero/leelaz-dual -g -w "$f" > "$fn" 2>&1
+cat gtp_0 | $lzdir/leelaz-dual -g -w "$f" > "$fn" 2>&1
 done
 
 for f in $currentdir/*

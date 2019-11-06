@@ -1,8 +1,83 @@
+loadsgf /Users/zliu/github/leela-zero/build/ladder.sgf 20
+move N16
+result escape FAIL
+
+loadsgf /Users/zliu/github/leela-zero/build/ladder1.sgf
+move N16
+result capture SUCC
+
+#escape fail, total 3 stone lists, complex
+loadsgf /Users/zliu/github/leela-zero/build/ladder.sgf
+move F4
+result escape FAIL
+
+#escape fail
+#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-2.sgf 32
+
+#escape
+#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-2.sgf 36
+
+#escape
+#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-3.sgf 22
+
+#escape
+#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-4.sgf 36
+
+#escape
+#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-4.sgf 68
+
+#escape
+#loadsgf /Users/zliu/go/match/02/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 44
+
+#escape
+#loadsgf /Users/zliu/go/match/02/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 52
+
+#escape
+#loadsgf /Users/zliu/go/match/02/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 54
+
+#escape
+#loadsgf /Users/zliu/go/match/02/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 92
+
+#loadsgf /Users/zliu/go/match/03/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 52
+#loadsgf /Users/zliu/go/match/03/zen7-s1500-h4_v_OZ14-p1200-10-2.sgf 168
+
+#capture fail
+#loadsgf /Users/zliu/go/match/03/zen7-s1500-h4_v_OZ14-p1200-10-4.sgf 68
+
+#escape succ
+#loadsgf /Users/zliu/go/match/03/zen7-s1500-h4_v_OZ14-p1200-10-4.sgf 69
+
+#loadsgf /Users/zliu/go/match/03/zen7-s1500-h4_v_OZ14-p1200-10-6.sgf 56
+#loadsgf /Users/zliu/go/match/03/zen7-s1500-h4_v_OZ14-p1200-10-6.sgf 62
+
+#escape
+#loadsgf /Users/zliu/go/match/tmp/zen7-s1500-h4_v_OZ12-p1200-10-0.sgf 20
+
+#loadsgf /Users/zliu/go/match/tmp/zen7-s1500-h4_v_OZ12-p1200-10-0.sgf 48
+#loadsgf /Users/zliu/go/match/tmp/zen7-s1500-h4_v_OZ12-p1200-10-0.sgf 50
+#loadsgf /Users/zliu/go/match/tmp/zen7-s1500-h4_v_OZ12-p1200-10-0.sgf 52
+#loadsgf /Users/zliu/go/match/tmp/zen7-s1500-h4_v_OZ12-p1200-10-0.sgf 54
+#loadsgf /Users/zliu/go/match/tmp/zen7-s1500-h4_v_OZ12-p1200-10-0.sgf 86
+
+#loadsgf /Users/zliu/go/match/tmp/zen7-s1500-h4_v_OZ12-p1200-10-5.sgf 38
+
+#loadsgf /Users/zliu/go/sgf/ladder/ladder-throw-in.sgf
+
+#yike-征子特训
+
+loadsgf /Users/zliu/go/sgf/ladder/00389.sgf 1
+move G15
+result capture SUCC
+
+loadsgf /Users/zliu/go/sgf/ladder/00388.sgf 1
+move N16
+result capture FAIL
+
+loadsgf /Users/zliu/go/sgf/ladder/00387.sgf 1
+move E15
+result capture SUCC
+
 loadsgf /Users/zliu/go/sgf/ladder/9K-Q-42809.sgf 1
 move P15
 result capture FAIL
-
-loadsgf ladder.sgf 20
-move N16
-result escape FAIL
 

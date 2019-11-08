@@ -78,6 +78,6 @@ move E15
 result capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/9K-Q-42809.sgf 1
-move P15
-result capture FAIL
+move Q16
+result capture SUCC
 

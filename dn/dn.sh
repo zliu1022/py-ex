@@ -7,6 +7,18 @@ dn_large(){
 # small file: https://unix.stackexchange.com/questions/136371/how-to-download-a-folder-from-google-drive-using-terminal/148674
 #wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=FILEID' -O $filename
 
+#another solution
+#https://kobkrit.com/how-to-directly-download-files-from-dropbox-or-google-drive-using-wget-in-terminal-or-in-google-573168195011
+
+id=1EE1E7X0H0_TIxxBQpgx5EXL4AsWu-mGO
+filename=OZ00.gz
+dn_large $id $filename
+
+:<<!
+id=1QC_8y5WmqCfuHSHCNl2kapQhViCLsCSq
+filename=OZ01.gz
+dn_large $id $filename
+
 id=1Hw5SpQXyGTQ73y-JnuR89KTWz-DhDeCP
 filename=OZ05.gz
 dn_large $id $filename
@@ -62,4 +74,4 @@ dn_large $id $filename
 id=1dPXJsnwR2M_IIOGbjReUUQNELUXyBTT3
 filename=OZ18.gz
 dn_large $id $filename
-
+!

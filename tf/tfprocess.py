@@ -48,6 +48,8 @@ def bias_variable(name, shape, dtype, trainable):
 
 def conv2d(x, W, cpuonly=False):
     if cpuonly:
+        print("        conv2d x", x.shape)
+        print("        conv2d W", W.shape)
         return tf.nn.conv2d(x, W, data_format='NHWC',
                         strides=[1, 1, 1, 1], padding='SAME')
     else:
@@ -207,13 +209,17 @@ class TFProcess:
         tower_reg_term = []
         tower_y_conv = []
         tower_z_conv = []
+        tower_bn0_in = []
+        tower_bn0_out = []
+        tower_bn0_relu = []
         with tf.variable_scope("fp32_storage",
                                # this forces trainable variables to be stored as fp32
                                custom_getter=float32_variable_storage_getter):
             for i in range(gpus_num):
+                print("gpus_num ", i)
                 with tf.device("/gpu:%d" % i):
                     with tf.name_scope("tower_%d" % i):
-                        loss, policy_loss, mse_loss, reg_term, y_conv, z_conv = self.tower_loss(
+                        loss, policy_loss, mse_loss, reg_term, y_conv, z_conv, bn0_in, bn0_out, bn0_relu = self.tower_loss(
                             self.sx[i], self.sy_[i], self.sz_[i])
 
                         # Reset batchnorm key to 0.
@@ -230,6 +236,9 @@ class TFProcess:
                         tower_reg_term.append(reg_term)
                         tower_y_conv.append(y_conv)
                         tower_z_conv.append(z_conv)
+                        tower_bn0_in.append(bn0_in)
+                        tower_bn0_out.append(bn0_out)
+                        tower_bn0_relu.append(bn0_relu)
 
         # Average gradients from different GPUs
         self.loss = tf.reduce_mean(tower_loss)
@@ -238,6 +247,9 @@ class TFProcess:
         self.reg_term = tf.reduce_mean(tower_reg_term)
         self.y_conv = tf.concat(tower_y_conv, axis=0)
         self.z_conv = tf.concat(tower_z_conv, axis=0)
+        self.bn0_in = tf.concat(tower_bn0_in, axis=0)
+        self.bn0_out = tf.concat(tower_bn0_out, axis=0)
+        self.bn0_relu = tf.concat(tower_bn0_relu, axis=0)
         self.mean_grads = self.average_gradients(tower_grads)
 
         # Do swa after we contruct the net
@@ -332,7 +344,7 @@ class TFProcess:
         return average_grads
 
     def tower_loss(self, x, y_, z_):
-        y_conv, z_conv = self.construct_net(x)
+        y_conv, z_conv, bn0_in, bn0_out, bn0_relu = self.construct_net(x)
 
         # Cast the nn result back to fp32 to avoid loss overflow/underflow
         if self.model_dtype != tf.float32:
@@ -359,7 +371,16 @@ class TFProcess:
         #loss = 1.0 * policy_loss + 1.0 * mse_loss + reg_term
         loss = 1.0 * mse_loss + reg_term
 
-        return loss, policy_loss, mse_loss, reg_term, y_conv, z_conv
+        print("")
+        print("tower_loss")
+        print("loss:        ", loss)
+        print("policy_loss: ", policy_loss)
+        print("mse_loss:    ", mse_loss)
+        print("reg_term:    ", reg_term)
+        print("y_conv:      ", y_conv)
+        print("z_conv:      ", z_conv)
+        print("")
+        return loss, policy_loss, mse_loss, reg_term, y_conv, z_conv, bn0_in, bn0_out, bn0_relu
 
     def assign(self, var, values):
         try:
@@ -415,35 +436,179 @@ class TFProcess:
         optimistic_restore(self.session, file)
 
     def measure_loss(self, batch, training=False):
+        print("weight value check, len", len(self.weights), 'training', training)
+
+        for e, weights in enumerate(self.weights):
+            if isinstance(weights, str):
+                weights = tf.get_default_graph().get_tensor_by_name(weights)
+                print('isinstance')
+                print(e, weights.name, weights.shape)
+            else:
+                print(e, weights.name, weights.shape, weights.shape.ndims)
+        print('')
+
+        print("line 2 ", self.weights[0].shape)
+        cc = self.session.run(self.weights[0])
+        for i in range(3):
+            for j in range(3):
+                print(cc[i][j][0][0], end=' ')
+            print('')
+        print('')
+
+        print("line 3 bias", self.weights[1].shape)
+        cc = self.session.run(self.weights[1])
+        for j in range(3):
+            print(cc[j], end=' ')
+        print('')
+
+        print("line 4 mean", self.weights[2].shape)
+        cc = self.session.run(self.weights[2])
+        for j in range(3):
+            print(cc[j], end=' ')
+        print('')
+
+        print("line 5 variance", self.weights[3].shape)
+        cc = self.session.run(self.weights[3])
+        for j in range(3):
+            print(cc[j], end=' ')
+        print('')
+
+        print("line 51 random %.9f" % self.session.run(self.weights[49]))
+
         # Measure loss over one batch. If training is true, also
         # accumulate the gradient and increment the global step.
-        ops = [self.policy_loss, self.mse_loss, self.reg_term, self.accuracy, self.y_conv, self.z_conv]
+        ops = [self.policy_loss, self.mse_loss, self.reg_term, self.accuracy, self.y_conv, self.z_conv, self.bn0_in, self.bn0_out, self.bn0_relu]
         if training:
             ops += [self.grad_op, self.step_op],
         print("input")
         print("planes_len:  ", len(batch[0]))
+        '''
+        # should be -1,18,19,19
+        for num in range(0, 18):
+            print("line ", num+1)
+            for i in range(0,361):
+                print(batch[0][num*361+i], end=' ')
+            print("")
+            print("")
+        print("")
+        '''
         print("probs_len:   ", len(batch[1]))
+        '''
+        # why there are 4 policy?
+        for num in range(0, 4):
+            print("line ", num+1)
+            for i in range(0,19):
+                for j in range(0,19):
+                    print(batch[1][num*362+i*19+j], end=' ')
+                print("")
+            print("")
+        print("")
+        '''
         print("winner:      ", batch[2])
+        print("")
         r = self.session.run(ops, feed_dict={self.training: training,
                            self.planes: batch[0],
                            self.probs: batch[1],
                            self.winner: batch[2]})
+        print("output", len(r))
+        for i in range(0, len(r)):
+            print("r[",i,"] type: ", type(r[i]), "size: ", r[i].size, "shape: ", r[i].shape, "ndim: ", r[i].ndim, "dtype: ", r[i].dtype)
+            if i==8: break
         print("")
-        print("output")
-        print("policy_loss:", r[0])
-        print("mse:        ", r[1])
-        print("reg:        ", r[2])
-        print("accuracy:   ", r[3])
-        print("")
-        p = r[4][0]
-        print("policy:     ", len(p))
-        '''
-        for i in range(19):
-            for j in range(19):
-                print("{}".format(p[i*19+j])),
+
+        print("policy_loss: ", r[0])
+        print("mse_loss:    ", r[1])
+        print("reg_term:    ", r[2])
+        print("accuracy:    ", r[3])
+
+        print("y_conv:      ", r[4].shape)
+        y = r[4][0]
+        for i in range(0,19):
+            for j in range(0,19):
+                print('%+2.3f' % (y[i*19+j]), end=' ')
             print("")
+        y1 = (np.exp(y)/sum(np.exp(y)))
+        print("")
+        for i in range(0,19):
+            for j in range(0,19):
+                print('%3.0f' % (1000*y1[i*19+j]), end=' ')
+            print("")
+
+        z_tmp = r[5][0]
+        print("z_conv:      %.9f %.9f %.9f" % (z_tmp, math.tan(z_tmp), (1+math.tan(math.tan(z_tmp)))/2))
+        print('')
+
         '''
-        print("winrate:    ", r[5])
+        1 fp32_storage/bn0/batch_normalization/beta:0 (32,) 1
+        2 fp32_storage/bn0/batch_normalization/moving_mean:0 (32,) 1
+        3 fp32_storage/bn0/batch_normalization/moving_variance:0 (32,) 1
+        '''
+        bn0_beta = tf.get_default_graph().get_tensor_by_name('fp32_storage/bn0/batch_normalization/beta:0')
+        bn0_mean = tf.get_default_graph().get_tensor_by_name('fp32_storage/bn0/batch_normalization/moving_mean:0')
+        bn0_var = tf.get_default_graph().get_tensor_by_name('fp32_storage/bn0/batch_normalization/moving_variance:0')
+
+        print('check bn...')
+
+        bn0_beta = self.session.run(bn0_beta)
+        print('bn0_beta', bn0_beta[0], bn0_beta.shape)
+        bn0_mean = self.session.run(bn0_mean)
+        print('bn0_mean', bn0_mean[0], bn0_mean.shape)
+        bn0_var = self.session.run(bn0_var)
+        print('bn0_var', bn0_var[0], bn0_var.shape)
+        print('')
+
+        prn_sz = 19
+        # bn0_in (1, 19, 19, 32)
+        print('input before bn0')
+        print('r[6]', r[6].shape)
+        arr = r[6][0,:,:,0]
+        print('arr ', arr.shape)
+        for i in range(0,prn_sz):
+            for j in range(0,prn_sz):
+                print('%.3f' % arr[i][j], end=' ')
+            print("")
+        print("")
+
+        print('expect output after bn0, recalculate mean and var, but use input beta, training = True')
+        arr_mean = np.mean(arr)
+        print('new_mean', arr_mean)
+        arr_var = np.var(arr)
+        print('new_var ', arr_var)
+        new_arr = (arr - arr_mean)/np.sqrt(arr_var) + bn0_beta[0]
+        for i in range(0,prn_sz):
+            for j in range(0,prn_sz):
+                print('%.3f' % new_arr[i][j], end=' ')
+            print("")
+        print("")
+
+        print('expect output after bn0, use input mean and var and beta')
+        new_arr = (arr - bn0_mean[0])/np.sqrt(bn0_var[0]+1e-5) + bn0_beta[0]
+        for i in range(0,prn_sz):
+            for j in range(0,prn_sz):
+                print('%.3f' % new_arr[i][j], end=' ')
+            print("")
+        print("")
+
+        # bn0_out (1, 19, 19, 32)
+        print('output after bn0')
+        arr = r[7][0][:,:,0]
+        for i in range(0,prn_sz):
+            for j in range(0,prn_sz):
+                print('%.3f' % arr[i][j], end=' ')
+            print("")
+        print("")
+
+        # bn0_relu (1, 19, 19, 32)
+        '''
+        print('bn0_relu')
+        arr = r[8][0]
+        for i in range(0,19):
+            for j in range(0,19):
+                print('%3.3f' % arr[i][j][0], end=' ')
+            print("")
+        print("")
+        '''
+
         # Google's paper scales mse by 1/4 to a [0,1] range, so we do the same here
         return {'policy': r[0], 'mse': r[1]/4., 'reg': r[2],
                 'accuracy': r[3], 'total': r[0]+r[1]+r[2] }
@@ -455,8 +620,10 @@ class TFProcess:
         while True:
             batch = next(train_data)
             # Measure losses and compute gradients for this batch.
-            losses = self.measure_loss(batch, training=True)
+            losses = self.measure_loss(batch, training=False)
             print("losses: ", losses)
+            print("break mandatory")
+            break
             stats.add(losses)
             # fetch the current global step.
             steps = tf.train.global_step(self.session, self.global_step)
@@ -582,8 +749,13 @@ class TFProcess:
             if self.cpuonly:
                 net = tf.layers.batch_normalization(
                         net,
-                        epsilon=1e-5, axis=3, fused=True,
-                        center=True, scale=False,
+                        epsilon=1e-5, 
+                        axis=3, fused=True,
+                        center=True, 
+                        scale=False,
+                        beta_initializer=tf.constant_initializer(0.0),
+                        #moving_mean_initializer=tf.constant_initializer(mean),
+                        #moving_variance_initializer=tf.constant_initializer(var),
                         training=self.training,
                         trainable=trainable,
                         reuse=self.reuse_var)
@@ -613,10 +785,48 @@ class TFProcess:
         self.add_weights(W_conv)
 
         net = inputs
+        print("    conv_block input ", net)
         net = conv2d(net, W_conv, self.cpuonly)
+        print("    conv_block conv2d ", net)
         net = self.batch_norm(net, trainable)
+        print("    conv_block batch_norm ", net)
         net = tf.nn.relu(net)
+        print("    conv_block relu ", net)
         return net
+
+    def conv_first_block(self, inputs, filter_size, input_channels, output_channels, name, trainable):
+        W_conv = weight_variable(
+            name,
+            [filter_size, filter_size, input_channels, output_channels],
+            self.model_dtype, trainable)
+
+        self.add_weights(W_conv)
+
+        net = inputs
+        net = conv2d(net, W_conv, self.cpuonly)
+        bn0_in = net
+        net = self.batch_norm(net, trainable)
+        bn0_out = net
+        net = tf.nn.relu(net)
+        bn0_relu = net
+        return net, bn0_in, bn0_out, bn0_relu
+
+    def conv_block_value(self, inputs, filter_size, input_channels, output_channels, name, trainable):
+        W_conv = weight_variable(
+            name,
+            [filter_size, filter_size, input_channels, output_channels],
+            self.model_dtype, trainable)
+
+        self.add_weights(W_conv)
+
+        net = inputs
+        net = conv2d(net, W_conv, self.cpuonly)
+        bn0_in = net
+        net = self.batch_norm(net, trainable)
+        bn0_out = net
+        net = tf.nn.relu(net)
+        #return net
+        return net, bn0_in, bn0_out
 
     def residual_block(self, inputs, channels, name, trainable):
         net = inputs
@@ -646,52 +856,68 @@ class TFProcess:
     def construct_net(self, planes):
         # NCHW format
         # batch, 18 channels, 19 x 19
+        x_planes = tf.reshape(planes, [-1, 18, 19, 19])
+        print("x_planes", x_planes.shape)
         if self.cpuonly:
-            x_planes = tf.reshape(planes, [-1, 19, 19, 18])
-        else:
-            x_planes = tf.reshape(planes, [-1, 18, 19, 19])
+            x_planes = tf.transpose(x_planes, perm=[0, 2, 3, 1]) #x_planes = tf.reshape(planes, [-1, 19, 19, 18])
+            print("x_planes", x_planes)
+            print("x_planes", x_planes.shape)
 
+        print("construct_net input:", x_planes)
         # Input convolution
-        flow = self.conv_block(x_planes, filter_size=3,
+        flow, bn0_in, bn0_out, bn0_relu = self.conv_first_block(x_planes, filter_size=3,
                                input_channels=18,
                                output_channels=self.RESIDUAL_FILTERS,
                                name="first_conv", trainable=False)
+        print("construct_net input->conv:", flow)
         # Residual tower
         for i in range(0, self.RESIDUAL_BLOCKS):
             block_name = "res_" + str(i)
             flow = self.residual_block(flow, self.RESIDUAL_FILTERS,
                                        name=block_name, trainable=False)
+        print("construct_net 4*resudial:", flow)
 
         # Policy head
         conv_pol = self.conv_block(flow, filter_size=1,
                                    input_channels=self.RESIDUAL_FILTERS,
                                    output_channels=2,
                                    name="policy_head", trainable=False)
+        print("construct_net policy head:", conv_pol.shape)
+        conv_pol = tf.transpose(conv_pol, perm=[0, 3, 1, 2])
+        print("construct_net policy head:", conv_pol.shape)
         h_conv_pol_flat = tf.reshape(conv_pol, [-1, 2 * 19 * 19])
+        print("construct_net policy head:", h_conv_pol_flat.shape)
         W_fc1 = weight_variable("w_fc_1", [2 * 19 * 19, (19 * 19) + 1], self.model_dtype, trainable=False)
         b_fc1 = bias_variable("b_fc_1", [(19 * 19) + 1], self.model_dtype, trainable=False)
         self.add_weights(W_fc1)
         self.add_weights(b_fc1)
         h_fc1 = tf.add(tf.matmul(h_conv_pol_flat, W_fc1), b_fc1)
+        print("construct_net h_fc1:", h_fc1.shape)
 
         # Value head
-        conv_val = self.conv_block(flow, filter_size=1,
+        conv_val, v_in, v_out = self.conv_block_value(flow, filter_size=1,
                                    input_channels=self.RESIDUAL_FILTERS,
                                    output_channels=1,
                                    name="value_head", trainable=True)
+        print("construct_net value head:", conv_val.shape)
+        print("construct_net value head:", v_in.shape)
+        print("construct_net value head:", v_out.shape)
         h_conv_val_flat = tf.reshape(conv_val, [-1, 19 * 19])
         W_fc2 = weight_variable("w_fc_2", [19 * 19, 256], self.model_dtype, trainable=True)
         b_fc2 = bias_variable("b_fc_2", [256], self.model_dtype, trainable=True)
         self.add_weights(W_fc2)
         self.add_weights(b_fc2)
         h_fc2 = tf.nn.relu(tf.add(tf.matmul(h_conv_val_flat, W_fc2), b_fc2))
+        print("construct_net h_fc2:", h_fc2.shape)
         W_fc3 = weight_variable("w_fc_3", [256, 1], self.model_dtype, trainable=True)
         b_fc3 = bias_variable("b_fc_3", [1], self.model_dtype, trainable=True)
         self.add_weights(W_fc3)
         self.add_weights(b_fc3)
         h_fc3 = tf.nn.tanh(tf.add(tf.matmul(h_fc2, W_fc3), b_fc3))
+        print("construct_net h_fc3:", h_fc3.shape)
 
-        return h_fc1, h_fc3
+        return h_fc1, h_fc3, bn0_in, bn0_out, bn0_relu
+        #return h_fc1, h_fc3, v_in, v_out, bn0_relu
 
     def snap_save(self):
         # Save a snapshot of all the variables in the current graph.

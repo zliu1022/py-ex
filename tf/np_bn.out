@@ -1,0 +1,58 @@
+input:      (1, 2, 2)
+  1   2 
+  2   3 
+
+
+demo for np_bn
+input:       (2, 2)
+beta:    1.000000
+np.mean: 2.000000
+np.var:  0.500000
+arr-mean:
+ [[-1.  0.]
+ [ 0.  1.]] 
+
+arr/var:
+
+-1.414199420 0.000000000 
+0.000000000 1.414199420 
+
+result, cost 0.429 ms
+
+
+float32_variable_storage_getter
+bn/batch_normalization/beta
+True
+<tf.Variable 'bn/batch_normalization/beta:0' shape=(1,) dtype=float32_ref>
+bn/batch_normalization/beta/fp16_cast
+Tensor("bn/batch_normalization/beta/fp16_cast:0", shape=(1,), dtype=float64)
+Tensor("bn/batch_normalization/beta/fp16_cast:0", shape=(1,), dtype=float64)
+
+float32_variable_storage_getter
+bn/batch_normalization/moving_mean
+False
+<tf.Variable 'bn/batch_normalization/moving_mean:0' shape=(1,) dtype=float64_ref>
+<tf.Variable 'bn/batch_normalization/moving_mean:0' shape=(1,) dtype=float64_ref>
+
+float32_variable_storage_getter
+bn/batch_normalization/moving_variance
+False
+<tf.Variable 'bn/batch_normalization/moving_variance:0' shape=(1,) dtype=float64_ref>
+<tf.Variable 'bn/batch_normalization/moving_variance:0' shape=(1,) dtype=float64_ref>
+
+inputs_tf      (2, 2, 1) <class 'numpy.ndarray'>
+1.000000000 2.000000000 
+2.000000000 3.000000000 
+
+sess.run(beta) 1.000000000
+Tensor("bn/batch_normalization/beta:0", shape=(1,), dtype=float32_ref)
+sess.run(mean) 2.000000000
+Tensor("bn/batch_normalization/moving_mean:0", shape=(1,), dtype=float64_ref)
+sess.run(var)  0.500000000
+Tensor("bn/batch_normalization/moving_variance:0", shape=(1,), dtype=float64_ref)
+
+cost 10.927 ms
+op_prn      (2, 2, 1) <class 'numpy.ndarray'>
+-0.414199420 1.000000000 
+1.000000000 2.414199420 
+

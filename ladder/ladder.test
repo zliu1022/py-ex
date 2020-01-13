@@ -1,15 +1,15 @@
-loadsgf /Users/zliu/github/leela-zero/build/ladder.sgf 20
-move N16
-result escape FAIL
+loadsgf /Users/zliu/go/sgf/ladder/ladder.sgf 20
+pos N16
+escape FAIL
 
-loadsgf /Users/zliu/github/leela-zero/build/ladder1.sgf
-move N16
-result capture SUCC
+loadsgf /Users/zliu/go/sgf/ladder/ladder1.sgf
+pos N16
+capture SUCC
 
 #escape fail, total 3 stone lists, complex
-loadsgf /Users/zliu/github/leela-zero/build/ladder.sgf
-move F4
-result escape FAIL
+loadsgf /Users/zliu/go/sgf/ladder/ladder.sgf
+pos F4
+escape FAIL
 
 #escape fail
 #loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-2.sgf 32
@@ -66,18 +66,50 @@ result escape FAIL
 #yike-征子特训
 
 loadsgf /Users/zliu/go/sgf/ladder/00389.sgf 1
-move G15
-result capture SUCC
+pos G15
+capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/00388.sgf 1
-move N16
-result capture FAIL
+pos N16
+capture FAIL
 
 loadsgf /Users/zliu/go/sgf/ladder/00387.sgf 1
-move E15
-result capture SUCC
+pos E15
+capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/9K-Q-42809.sgf 1
-move Q16
-result capture SUCC
+pos Q16
+capture SUCC
+
+loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s7500-100-9.sgf 14
+pos D7
+capture FAIL
+
+loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s15000-100-31.sgf 14
+pos G4
+capture FAIL
+
+loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s30000-100-1.sgf 29
+pos F5
+capture SUCC
+
+loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s30000-100-63.sgf 52
+pos E8
+capture FAIL
+
+loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v240_vs_zen7-s7500-40-0.13-1.sgf 120
+pos K9
+capture FAIL
+
+loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v240_vs_zen7-s7500-40-0.13-12.sgf 54
+pos F9
+capture SUCC
+
+loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v480_vs_zen7-s7500-40-0.13-0.sgf 118
+pos D11
+capture SUCC
+
+loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v480_vs_zen7-s7500-40-0.13-19.sgf 74
+pos N16
+capture SUCC
 

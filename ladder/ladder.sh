@@ -18,13 +18,19 @@ while read line
             sgf=${sgfpath##*/}
             path=${sgfpath%/*}
         fi
-        if [[ $line =~ "move" ]]
+        if [[ $line =~ "pos" ]]
         then
-            move=`echo ${line: 5}`
+            move=`echo ${line: 4}`
         fi
-        if [[ $line =~ "result" ]]
+
+        if [[ $line =~ "escape" ]] || [[ $line =~ "capture" ]]
         then
-            exp_ret=`echo ${line: 7}`
+            if [[ $line =~ "escape" ]]
+            then
+                exp_ret=`echo ${line: 7}`
+            else
+                exp_ret=`echo ${line: 8}`
+            fi
             ret=`echo -e "$cmd" | /Users/zliu/github/leela-zero/build/leelaz -g -w ~/go/weights/1.gz 2>&1 | grep "$move"`
             echo "$ret" | grep "$exp_ret" > /dev/null
             if [[ $? == 0 ]] 

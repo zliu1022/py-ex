@@ -25,7 +25,7 @@ def main():
         line = in_fd.readline()
         if len(line)>4:
             items = line.split()
-            name_begin = items[0].find(name, 0)
+            name_begin = items[0].find(name.lower(), 0)
             name_end = items[0].find(".sgf", 0)
             gameno = int(items[0][name_begin+name_len+1:name_end])
             if gameno % 2 == 0:

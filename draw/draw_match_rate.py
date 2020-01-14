@@ -32,7 +32,7 @@ def main():
         if len(num) <=0: continue
         if num[0]=="Game":
             if found<>0:
-                print "Draw Game", found
+                #print "Draw Game", found-1
                 align_data()
                 #if found==21: 
                 draw_plot()
@@ -42,7 +42,7 @@ def main():
                 y2 = []
                 #if found==2: return
             found += 1
-            print "found Game", num[1], found
+            print "Game", num[1]
             continue
         if found<>0:
             if len(num)<6:
@@ -55,15 +55,24 @@ def main():
                 continue
             if num[0][0:8]=="0.17-157":
                 #print num
-                y1.append(float(num[7].strip('%')))
+                if (len(num[8])>=7):
+                    y1.append(float(num[8].strip('%')))
+                else:
+                    y1.append(y1[len(y1)-1])
                 continue
             if num[0]=="Zen7-0.4-Referee":
                 #print num
                 if num[1]=="B":
                     if num[5][0]=="B":
-                        y2.append(float(num[5][1:]))
+                        if found%2<>0:
+                            y2.append(50.0+float(num[5][1:]))
+                        else:
+                            y2.append(50.0-1.0*float(num[5][1:]))
                     else:
-                        y2.append(-1.0*float(num[5][1:]))
+                        if found%2<>0:
+                            y2.append(50.0-1.0*float(num[5][1:]))
+                        else:
+                            y2.append(50.0+float(num[5][1:]))
                 continue
     if found==0:
         print "not found Game"
@@ -75,10 +84,19 @@ def draw_plot():
     global x,y0,y1,y2
     global found
 
+    t1name = in_filename.strip(".log")
+    #print "t1name: ", t1name
+    player1 = t1name[0: t1name.find("_v_",0)]
+    player2 = t1name[t1name.find("_v_",0)+3: in_filename.find("-100",0)]
+    #print player1, player2
+    #print found
+    t2name = t1name + ("-%d" % (found-1))
+    #print "t2name: ", t2name
+
     plt.figure()
-    plt.plot(x,y0, "red", label="Zen7-s15000")
-    plt.plot(x,y1, "blue", label="157-p300")
-    plt.plot(x,y2, "black", label="score")
+    plt.plot(x,y0, "red", label=player2)
+    plt.plot(x,y1, "blue", label=player1)
+    #plt.plot(x,y2, "green", label="score")
 
     plt.axhline(50)
     plt.axhline(90)
@@ -87,11 +105,6 @@ def draw_plot():
     plt.axvline(0)
 
     plt.legend(loc='best')
-    t1name = in_filename.strip(".log")
-    print "t1name: ", t1name
-    print found
-    t2name = t1name + ("-%d" % (found-1))
-    print "t2name: ", t2name
     plt.title(t2name)
     plt.xlabel('move')
     plt.ylabel('winrate')

@@ -23,11 +23,12 @@ player2 = name[name.find("_v_",0)+3: in_filename.find("-100",0)]
 print name, player1, player2
 base_url = "http://10.12.29.102/wgo/webgo.html?sgf=157_v_zen7/" + name + "-"
 base_img_url = "http://10.12.29.102/wgo/sgf/157_v_zen7/" + name + "-"
+base_dnurl = "http://10.12.29.102/wgo/sgf/157_v_zen7/" + name + "-"
 
 def main():
 
     out_str = "<html>\n" + "<body>\n" + \
-        "<h1>" + name + "</h1>\n" + \
+        "<h1><a href=\"#last\">" + name + "</a></h1>\n" + \
         "<table>\n<tbody>\n"
     out_fd.write(out_str)
 
@@ -36,6 +37,9 @@ def main():
     stat_wb = 0; stat_ww = 0
     stat_btime =0.0; stat_wtime = 0.0
     stat_blen =0.0; stat_wlen = 0.0
+    
+    ladder_games = []
+    end_games = []
 
     title_ok = 0
     no = 1
@@ -59,6 +63,7 @@ def main():
                         out_str += "    <td style=\"color: red;\">" + items[i] + "</td>\n"
                     elif no<>19 and i==6 and int(items[6])<91:
                         out_str += "    <td style=\"color: blue;\">" + items[i] + "</td>\n"
+                        ladder_games.append(items[0])
                     else:
                         out_str += "    <td>" + items[i] + "</td>\n"
 
@@ -79,6 +84,8 @@ def main():
                     stat_blen += float(items[6])/2.0
                     stat_wtime += float(items[8])
                     stat_wlen += float(items[6])/2.0
+                    if (len(items[1])>=4):
+                        end_games.append(items[0])
 
                 if no==19:
                     out_str += "    <td style=\"padding: 50px;\">" + "" + "</td>\n"
@@ -96,14 +103,32 @@ def main():
             break
 
     out_str = "</tbody>\n</table>\n"
-    out_str +=  "<h2>total game: %d @ %.1f hours</h2>\n" % (stat_total, (stat_btime+stat_wtime)/3600.0)
-    out_str +=  "<h2>%s win: %d(b) %d(w)</h2>\n" % (player1, stat_bb,stat_bw)
-    out_str +=  "<h2>%s win: %d(w) %d(b)</h2>\n" % (player2, stat_ww,stat_wb)
+    out_str +=  "<h2 id=\"last\">%d games @ %.1f hours, each %.1f hours</h2>\n" % (stat_total, (stat_btime+stat_wtime)/3600.0, (stat_btime+stat_wtime)/3600.0/stat_total)
+    out_str +=  "<h2>%s %d(b) %d(w) %.1fhours@%.1fs</h2>\n" % (player1, stat_bb,stat_bw, stat_btime/3600.0, 1.0*stat_btime/stat_blen)
+    out_str +=  "<h2>%s %d(w) %d(b) %.1fhours@%.1fs</h2>\n" % (player2, stat_ww,stat_wb, stat_wtime/3600.0, 1.0*stat_wtime/stat_wlen)
     if (stat_bb+stat_ww)<>0 and (stat_bw+stat_wb)<>0:
-        out_str +=  "<h2>%s winrate: %.1f%% %.1f%% %.1f%%</h2>\n" % (player1, 100.0*(stat_bb+stat_bw)/stat_total, 100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb))
+        out_str +=  "<h2>%s rate: %.1f%% %.1f%% %.1f%%</h2>\n" % (player1, 100.0*(stat_bb+stat_bw)/stat_total, 100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb))
     
-    out_str +=  "<h2>%s time:   %.1f hours, each move: %.1fs</h2>\n" % (player1, stat_btime/3600.0, 1.0*stat_btime/stat_blen)
-    out_str +=  "<h2>%s time: %.1f hours, each move: %.1fs</h2>\n" % (player2, stat_wtime/3600.0, 1.0*stat_wtime/stat_wlen)
+    #out_str +=  "<h2>%s time:   %.1f hours @ %.1fs</h2>\n" % (player1, stat_btime/3600.0, 1.0*stat_btime/stat_blen)
+    #out_str +=  "<h2>%s time: %.1f hours @ %.1fs</h2>\n" % (player2, stat_wtime/3600.0, 1.0*stat_wtime/stat_wlen)
+    
+    print 'ladder_games: ', len(ladder_games), ladder_games
+    out_str += "\n<h2>ladder games %d</h2>\n" % len(ladder_games)
+    out_str += "<table>\n<tbody>\n"
+    for i in range(0,len(ladder_games),1):
+        out_str += "<tr onClick=\"doLink('" + base_dnurl + ladder_games[i] + ".sgf" + "');\">\n"
+        out_str += "<td>" + ladder_games[i] + ".sgf</td>\n"
+        out_str += "</tr>\n"
+    out_str += "</tbody>\n</table>\n"
+    
+    print 'end_games: ', len(end_games), end_games
+    out_str += "\n<h2>end_games %d</h2>\n" % len(end_games)
+    out_str += "<table>\n<tbody>\n"
+    for i in range(0,len(end_games),1):
+        out_str += "<tr onClick=\"doLink('" + base_dnurl + end_games[i] + ".sgf" + "');\">\n"
+        out_str += "<td>" + end_games[i] + ".sgf</td>\n"
+        out_str += "</tr>\n"
+    out_str += "</tbody>\n</table>\n"
 
     out_str += "<style type=text/css>\n" + \
         "html{ font-family: Calibri, Tahoma, Arial;}\n" + \

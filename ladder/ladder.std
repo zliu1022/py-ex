@@ -1,0 +1,24 @@
+loadsgf /Users/zliu/go/sgf/ladder/ladder1.sgf
+check N16 capture SUCC avoid
+
+loadsgf ladder_std_capture_dual_fail.sgf
+check C11 capture FAIL avoid D11 D10
+
+loadsgf ladder_std_capture_dual.sgf
+check C11 capture SUCC
+
+loadsgf ladder_std_capture_dual_fail1.sgf
+check C11 capture FAIL
+
+loadsgf ladder_std_capture_fail.sgf
+check Q16 capture FAIL
+
+loadsgf ladder_std_capture_succ.sgf
+check Q16 capture SUCC
+
+loadsgf ladder_std_escape_fail.sgf
+check Q16 escape FAIL avoid Q15
+
+loadsgf ladder_std_escape_succ.sgf
+check Q16 escape SUCC
+

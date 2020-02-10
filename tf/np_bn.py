@@ -90,17 +90,21 @@ if __name__ == '__main__':
 
     new_arr = arr - mean
     print('arr-mean:\n', new_arr, '\n')
+
     if (var==0):
         new_arr = new_arr/1e-5
     else:
         new_arr = new_arr/np.sqrt(var+1e-5)
-
-    print('arr/var:\n')
+    print('(arr-mean)/var:\n')
     for x in range(in_H):
         for y in range(in_W):
             print("%3.9f" % new_arr[x][y], end=' ')
         print('')
     print('')
+
+    new_arr = new_arr + beta
+    print('(arr-mean)/var + beta:\n', new_arr, '\n')
+
     print("result, cost %.3f" % (1000.0*timer.elapsed()),"ms\n")
     print("")
 

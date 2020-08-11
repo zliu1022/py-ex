@@ -1,33 +1,21 @@
-loadsgf /Users/zliu/go/sgf/ladder/ladder.sgf 20
-pos N16
-escape FAIL
-
 loadsgf /Users/zliu/go/sgf/ladder/ladder1.sgf
-pos N16
-capture SUCC
+check N16 capture SUCC
 
 #escape fail, total 3 stone lists, complex
-loadsgf /Users/zliu/go/sgf/ladder/ladder.sgf
-pos F4
-escape FAIL
+loadsgf /Users/zliu/go/sgf/ladder/3ladder.sgf
+check F4 escape FAIL
 
 #escape fail
-#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-2.sgf 32
+loadsgf /Users/zliu/go/sgf/ladder/zen7-s1500-h4_v_OZ14-p1200-10-2.sgf 32
+check N16 escape FAIL avoid W M16
+check Q7 escape FAIL avoid W Q8
+
+loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-4.sgf 68
+check M16 escape FAIL avoid W F10
 
 #escape
-#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-2.sgf 36
-
-#escape
-#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-3.sgf 22
-
-#escape
-#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-4.sgf 36
-
-#escape
-#loadsgf /Users/zliu/go/match/01/zen7-s1500-h4_v_OZ14-p1200-10-4.sgf 68
-
-#escape
-#loadsgf /Users/zliu/go/match/02/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 44
+loadsgf /Users/zliu/go/match/02/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 44
+check D5 escape FAIL avoid W E5
 
 #escape
 #loadsgf /Users/zliu/go/match/02/zen7-s1500-h4_v_OZ14-p1200-10-1.sgf 52
@@ -66,50 +54,46 @@ escape FAIL
 #yike-征子特训
 
 loadsgf /Users/zliu/go/sgf/ladder/00389.sgf 1
-pos G15
-capture SUCC
+check G15 capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/00388.sgf 1
-pos N16
-capture FAIL
+check N16 capture FAIL
 
 loadsgf /Users/zliu/go/sgf/ladder/00387.sgf 1
-pos E15
-capture SUCC
+check E15 capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/9K-Q-42809.sgf 1
-pos Q16
-capture SUCC
+check Q16 capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s7500-100-9.sgf 14
-pos D7
-capture FAIL
+check D7 capture FAIL
 
 loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s15000-100-31.sgf 14
-pos G4
-capture FAIL
+check G4 capture FAIL
 
 loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s30000-100-1.sgf 29
-pos F5
-capture SUCC
+check F5 capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s30000-100-63.sgf 52
-pos E8
-capture FAIL
+check E8 capture FAIL
 
 loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v240_vs_zen7-s7500-40-0.13-1.sgf 120
-pos K9
-capture FAIL
+check K9 capture FAIL
 
 loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v240_vs_zen7-s7500-40-0.13-12.sgf 54
-pos F9
-capture SUCC
+check F9 capture SUCC
 
 loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v480_vs_zen7-s7500-40-0.13-0.sgf 118
-pos D11
-capture SUCC
+check D11 capture SUCC
 
-loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v480_vs_zen7-s7500-40-0.13-19.sgf 74
-pos N16
-capture SUCC
+loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v480_vs_zen7-s7500-40-0.13-19.sgf 74 
+check O16 escape FAIL avoid N16
+check G16 capture FAIL avoid H16
+check N16 capture SUCC avoid XX
+
+loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s7500-200-E-31.sgf 78
+check P4 escape FAIL avoid O5
+
+loadsgf /Users/zliu/go/sgf/ladder/157-p300_v_zen7-s7500-200-E-21.sgf 30
+check E7 capture FAIL avoid #F7
 

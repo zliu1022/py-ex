@@ -9,6 +9,8 @@ check C11 capture SUCC
 
 loadsgf ladder_std_capture_dual_fail1.sgf
 check C11 capture FAIL
+check  B9 capture SUCC
+check B12 capture SUCC
 
 loadsgf ladder_std_capture_fail.sgf
 check Q16 capture FAIL
@@ -21,4 +23,5 @@ check Q16 escape FAIL avoid Q15
 
 loadsgf ladder_std_escape_succ.sgf
 check Q16 escape SUCC
+
 

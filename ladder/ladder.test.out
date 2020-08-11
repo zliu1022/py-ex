@@ -1,0 +1,50 @@
+Using 4 thread(s).
+RNG seed: 10933758758618037766
+BLAS Core: built-in Eigen 3.3.90 library.
+Detecting residual layers...v1...1 channels...0 blocks.
+Initializing CPU-only evaluation.
+Setting max tree size to 4461 MiB and cache size to 495 MiB.
+? unknown command
+
+= 
+
+= 
+
+
+Passes: 0            Black (X) Prisoners: 0
+White (O) to move    White (O) Prisoners: 0
+
+   a b c d e f g h j k l m n o p q r s t 
+19 . . . . . . . . . . . . . . . . . . . 19
+18 . . . . . . . . . . . . . . . . . . . 18
+17 . . . X X . X . . . . . . . . . . . . 17
+16 . . . + O O . . . + . . . . . X . . . 16
+15 . . O . . . . . . . . . . . . . . . . 15
+14 . . . . . . . . . . . . . . . . . . . 14
+13 . . . . . . . . . . . . . . . . . . . 13
+12 . . . . . . . . . . . . . . . . . . . 12
+11 . . . . . . . . . . . . . . . . . . . 11
+10 .(X)X + . . . . . + . . . . . + . . . 10
+ 9 . O X O . . . . . . . . . . . . . . .  9
+ 8 . . O X . . . . . . . . . . . . . . .  8
+ 7 . . O X X . . . . . . . . . . . . . .  7
+ 6 . . X O O . . . . . . . . . . . . . .  6
+ 5 . . X . . . O . . . . . . . . . . . .  5
+ 4 . . X O . . X . . + . . . . . O . . .  4
+ 3 . . O O . X . . . . . . . . . . . . .  3
+ 2 . . . . . . . . . . . . . . . . . . .  2
+ 1 . . . . . . . . . . . . . . . . . . .  1
+   a b c d e f g h j k l m n o p q r s t 
+
+Hash: 561C652BC68E5CB0 Ko-Hash: C60E56397A46309E
+
+Black time: 01:00:00
+White time: 01:00:00
+
+Ladder detect No. 29 W to move
+ E7(152)   3  capture FAIL dep:1~43 fail:0 succ:2 (search dep 48 leaf 386) E7 D8 D7
+avoid_ladder_capture: W F7(153), move:30
+cost 0.006s 6.418ms
+= 
+
+

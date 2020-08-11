@@ -1,0 +1,5 @@
+loadsgf /Users/zliu/go/sgf/ladder/lz-d13c4-v480_vs_zen7-s7500-40-0.13-19.sgf 74 
+check O16 escape FAIL avoid N16
+check G16 capture FAIL avoid H16
+check N16 capture SUCC avoid XX
+

@@ -457,23 +457,23 @@ class TFProcess:
 
         print("line 3 bias", self.weights[1].shape)
         cc = self.session.run(self.weights[1])
-        for j in range(3):
+        for j in range(len(cc)):
             print(cc[j], end=' ')
         print('')
 
         print("line 4 mean", self.weights[2].shape)
         cc = self.session.run(self.weights[2])
-        for j in range(3):
+        for j in range(len(cc)):
             print(cc[j], end=' ')
         print('')
 
         print("line 5 variance", self.weights[3].shape)
         cc = self.session.run(self.weights[3])
-        for j in range(3):
+        for j in range(len(cc)):
             print(cc[j], end=' ')
         print('')
 
-        print("line 51 random %.9f" % self.session.run(self.weights[49]))
+        #print("line 51 random %.9f" % self.session.run(self.weights[49]))
 
         # Measure loss over one batch. If training is true, also
         # accumulate the gradient and increment the global step.
@@ -527,12 +527,25 @@ class TFProcess:
             for j in range(0,19):
                 print('%+2.3f' % (y[i*19+j]), end=' ')
             print("")
+        print('pass: %+2.3f' % (y[18*19+18+1]), end=' ')
+        print("")
+
+        for i in range(0,19):
+            for j in range(0,19):
+                print('%+2.3f' % np.exp(y[i*19+j]), end=' ')
+            print("")
+        print('pass: %+2.3f' % np.exp(y[18*19+18+1]), end=' ')
+        print("")
+        print('sum(np.exp(y): %+2.3f' % sum(np.exp(y)), end=' ')
+        print("")
+
         y1 = (np.exp(y)/sum(np.exp(y)))
         print("")
         for i in range(0,19):
             for j in range(0,19):
                 print('%3.0f' % (1000*y1[i*19+j]), end=' ')
             print("")
+        print('pass: %3.0f' % (1000*y1[18*19+18+1]), end=' ')
 
         z_tmp = r[5][0]
         print("z_conv:      %.9f %.9f %.9f" % (z_tmp, math.tan(z_tmp), (1+math.tan(math.tan(z_tmp)))/2))
@@ -688,7 +701,7 @@ class TFProcess:
         with open(filename, "w") as file:
             # Version tag
             file.write("1")
-            for weights in self.weights:
+            for e,weights in enumerate(self.weights):
                 # Newline unless last line (single bias)
                 file.write("\n")
                 work_weights = None
@@ -719,6 +732,11 @@ class TFProcess:
                     work_weights = weights
                 nparray = work_weights.eval(session=self.session)
                 wt_str = [str(wt) for wt in np.ravel(nparray)]
+                if e==21:
+                    print('22')
+                    print(nparray.shape, nparray.size)
+                    print('%.15f' % nparray[1])
+                    #print(wt_str)
                 file.write(" ".join(wt_str))
 
     def get_batchnorm_key(self):

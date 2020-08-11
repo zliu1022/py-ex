@@ -163,6 +163,11 @@ def main():
 
     if restore_prefix:
         tfprocess.restore(restore_prefix)
+
+    # save weight immediately for check the value
+    #tfprocess.save_leelaz_weights('w')
+    #os._exit(0)
+
     tfprocess.process(train_parser, test_parser)
 
 if __name__ == "__main__":
@@ -203,3 +208,6 @@ class TestParse(unittest.TestCase):
         # clean up: remove temp files.
         for c in chunks:
             os.remove(c)
+
+# Usage:
+# python3 parse.py --cpuonly b 4b32f-0

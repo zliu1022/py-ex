@@ -2,6 +2,7 @@
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 if len(sys.argv)!=2:
     print "komi tools - draw_kr.py : draw komi-rate curve"
@@ -17,6 +18,15 @@ y0 = []
 y1 = []
 y2 = []
 found = 0
+
+#0.17-4b32f()0(7.5 46.67%) B No.   1 0.0s Q16    86 46.6682% 22.86%
+#player1_label="Zen7-0.4"
+player1_label="0.17-4b32f()0(7.5"
+
+#0.17-4b_76000()0(7.5 54.24%) W No.   2 0.1s  D4   143 54.2417% 40.78%
+#player2_label="0.17-157"
+player2_label="0.17-186000()0(7.5"
+
 def main():
     global x,y0,y1,y2
     global found
@@ -48,12 +58,12 @@ def main():
             if len(num)<6:
                 continue
             #print num
-            if num[0]=="Zen7-0.4":
+            if num[0]==player1_label:
                 #print num
-                x.append(int(num[3]))
-                y0.append(float(num[7].strip('%')))
+                x.append(int(num[4]))
+                y0.append(float(num[8].strip('%')))
                 continue
-            if num[0][0:8]=="0.17-157":
+            if num[0]==player2_label:
                 #print num
                 if (len(num[8])>=7):
                     y1.append(float(num[8].strip('%')))
@@ -84,13 +94,17 @@ def draw_plot():
     global x,y0,y1,y2
     global found
 
-    t1name = in_filename.strip(".log")
+    bname = os.path.basename(in_filename)
+    dirname = os.path.dirname(in_filename)
+    t1name = bname.strip(".log")
     #print "t1name: ", t1name
     player1 = t1name[0: t1name.find("_v_",0)]
-    player2 = t1name[t1name.find("_v_",0)+3: in_filename.find("-100",0)]
+    player2 = t1name[t1name.find("_v_",0)+3: bname.find("-200",0)]
     #print player1, player2
     #print found
-    t2name = t1name + ("-%d" % (found-1))
+    if dirname == '':
+        dirname = '.'
+    t2name = dirname + "/" + t1name + ("-%d" % (found-1))
     #print "t2name: ", t2name
 
     plt.figure()
@@ -120,25 +134,25 @@ def align_data():
         delta = len(y1) - len(x)
         for i in range(0,delta):
             y1.pop()
-        print "len> align y1: ", len(x), len(y0), len(y1)
+        #print "len> align y1: ", len(x), len(y0), len(y1)
     if len(y1)<len(x):
         delta = len(x) - len(y1)
         last_y1 = y1[len(y1)-1]
         for i in range(0,delta):
             y1.append(last_y1)
-        print "len< align y1: ", len(x), len(y0), len(y1)
+        #print "len< align y1: ", len(x), len(y0), len(y1)
     
     if len(y2)>len(x):
         delta = len(y2) - len(x)
         for i in range(0,delta):
             y2.pop()
-        print "len> align y2: ", len(x), len(y0), len(y1), len(y2)
-    if len(y2)<len(x):
+        #print "len> align y2: ", len(x), len(y0), len(y1), len(y2)
+    if len(y2)<len(x) and len(y2)!=0:
         delta = len(x) - len(y2)
         last_y2 = y2[len(y2)-1]
         for i in range(0,delta):
             y2.append(last_y2)
-        print "len< align y2: ", len(x), len(y0), len(y1), len(y2)
+        #print "len< align y2: ", len(x), len(y0), len(y1), len(y2)
 
 
 if __name__ == "__main__":

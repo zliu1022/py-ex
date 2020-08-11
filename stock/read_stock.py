@@ -8,8 +8,9 @@ import sys
 import os
 import matplotlib.pyplot as plt
 import math
+from scipy import signal
 
-if len(sys.argv)!=4:
+if len(sys.argv)!=5:
     print("Usage: ")
     print("read_stock.py filename begin_date end_date")
     print('read_stock.py 002475.sz.csv 20170102 20200102')
@@ -66,16 +67,15 @@ class Sim:
                 if high>=sell_p:
                     sell_quantity = 1
                 if low<=buy_p:
-                    #buy_q_new = round(math.exp(self.buy_quantity_weight*buy_avg/low-1))
                     buy_q_new = 1
                     buy_quantity = 1
                     if buy_avg!=0:
-                        buy_q_new = round(math.exp(buy_avg/low-1))
+                        buy_q_new = math.ceil(math.exp(self.buy_quantity_weight*buy_avg/low-1))
 
                     if buy_quantity != buy_q_new:
-                        print("buy_q_new ", buy_quantity, ' -> ', buy_q_new, '(', buy_avg, low, buy_avg/low, math.exp(buy_avg/low-1))
+                        print(data[i][0], "buy_q_new ", buy_quantity, ' -> ', buy_q_new, '(', round(buy_avg), round(low), ')')
 
-                    buy_quantity = buy_q_new
+                    buy_quantity = buy_quantity*buy_q_new
 
                 if quantity<sell_quantity:
                     sell_quantity = quantity
@@ -131,9 +131,15 @@ class Sim:
                     max_b_rate_index = i
 
         tmp = self.result[max_b_index]
-        print('max ', tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5])
+        print('max     ', tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5])
         tmp = self.result[max_b_rate_index]
         print('max rate', tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5])
+        print('')
+
+    def get_date(self, i):
+        tmp = self.result[i]
+        print(tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5])
+        return self.result[i][0]
 
     def draw(self, show):
         t = []
@@ -334,20 +340,40 @@ if __name__ == "__main__":
     #end_date   = '20200730'
 
     stock = Stock(filename)
-    print_price(stock.data,     '20140701', '20140731')
-    print_price(stock.qfq_data, '20140701', '20140731')
+    #print_price(stock.data,     '20140701', '20140731')
+    #print_price(stock.qfq_data, '20140701', '20140731')
     t,p = stock.draw(begin_date, end_date, 0)
+    print(t[0], p[0])
  
     sim = Sim()
-    #sim.set(0.96, 1.04, 1)
+    sim.set(0.96, 1.04, float(sys.argv[4]))
     r = sim.simulate(stock.qfq_data, begin_date, end_date)
     sim.print()
     t,b,c = sim.draw(0)
+    print(t[0], b[0])
 
+    z1 = np.polyfit(t, b, 14)
+    p1 = np.poly1d(z1)
+    print(p1)
+    yvals = p1(t)
+
+    # peak value
+    num_peak_3 = signal.find_peaks(yvals, distance=10) #distance表极大值点的距离至少大于等于10个水平单位
+
+    print(num_peak_3[0])
+    print(sim.get_date(t[0]+num_peak_3[0][0]), yvals[num_peak_3[0][0]])
+    print(sim.get_date(t[0]+num_peak_3[0][1]), yvals[num_peak_3[0][1]])
+    print(sim.get_date(t[0]+num_peak_3[0][2]), yvals[num_peak_3[0][2]])
+    print(sim.get_date(t[0]+num_peak_3[0][3]), yvals[num_peak_3[0][3]])
+
+    print('the number of peaks is ' + str(len(num_peak_3[0])))
     plt.figure()
     plt.plot(t, p, "red", label="price")
     plt.plot(t, b, "blue", label="benefit")
     plt.plot(t, c, "dodgerblue", label="cost")
+    plt.plot(t, yvals, 'gray',label='polyfit values')
+    for ii in range(len(num_peak_3[0])):
+        plt.plot(num_peak_3[0][ii]+t[0], yvals[num_peak_3[0][ii]],'*',markersize=10)
     plt.legend(loc='best')
     plt.title("cost & benefit " + begin_date + ' ~ ' + end_date)
     plt.xlabel('day')
@@ -355,4 +381,3 @@ if __name__ == "__main__":
     #plt.ylim(0, 200)
     plt.axhline(0)
     plt.show()
-

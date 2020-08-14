@@ -12,8 +12,9 @@ from scipy import signal
 
 if len(sys.argv)!=5:
     print("Usage: ")
-    print("read_stock.py filename begin_date end_date")
-    print('read_stock.py 002475.sz.csv 20170102 20200102')
+    print("./read_stock.py filename begin_date end_date")
+    print('./read_stock.py 002475.sz.csv 20170102 20200102')
+    print('./read_stock.py 002273.sz.csv 20150102 20201002 0')
     sys.exit()
 
 # buy and sell trigger by yesterday's average trade price
@@ -49,6 +50,7 @@ class Sim:
         buy_avg = 0.0
 
         r = []
+        print('date      high  low      d_avg    avg  buy_p sell_p  buy_q sell_q      q     cost')
         for i in range(len(data)-1, -1, -1):
             r.append([data[i][0], 0, 0, 0.0, 0, 0.0])
             pos = len(r)-1
@@ -56,34 +58,40 @@ class Sim:
             if d>end_d:
                 continue
             if d>=begin_d:
-                high = float(data[i][1])
-                low = float(data[i][2])
-                avg = float(data[i][3])
+                high = round(float(data[i][1]),2)
+                low  = round(float(data[i][2]),2)
+                avg  = round(float(data[i+1][3]),2)
+                d_avg = data[i+1][0]
+                #avg = float(data[i][3])
+
                 sell_quantity = 0
                 buy_quantity = 0.0
 
-                buy_p = self.buy_price_ratio * avg
+                # 1. Update target by known info
+                # calculate the target price for buy or sell
+                buy_p  = self.buy_price_ratio * avg
                 sell_p = self.sell_price_ratio * avg
+
+                # 2. calculate buy_q, sell_q by comparing target and today's high and low
+                # update buy_quantity & sell_quantity
                 if high>=sell_p:
                     sell_quantity = 1
                 if low<=buy_p:
-                    buy_q_new = 1
                     buy_quantity = 1
                     if buy_avg!=0:
                         buy_q_new = math.ceil(math.exp(self.buy_quantity_weight*buy_avg/low-1))
-
-                    if buy_quantity != buy_q_new:
-                        print(data[i][0], "buy_q_new ", buy_quantity, ' -> ', buy_q_new, '(', round(buy_avg), round(low), ')')
-
-                    buy_quantity = buy_quantity*buy_q_new
-
+                    else:
+                        buy_q_new = 1
+                    buy_quantity = buy_quantity * buy_q_new
                 if quantity<sell_quantity:
                     sell_quantity = quantity
 
+                # update cost, quantity in hand, virtual benefit
                 cost = cost + buy_quantity*buy_p - sell_quantity*sell_p
                 quantity = quantity + buy_quantity - sell_quantity
                 benefit = quantity*avg - cost
 
+                # calculate the average buy cost
                 buy_q_sum += buy_quantity
                 buy_cost_sum += buy_quantity*buy_p
                 if buy_q_sum!=0:
@@ -94,22 +102,23 @@ class Sim:
                 r[pos][3] = round(cost,2)
                 r[pos][4] = quantity
                 r[pos][5] = round(benefit,2)
+                print('{} {:5.2f} {:5.2f}  | {} {:5.2f} {:.2f} {:.2f} | {:5.0f} {:5.0f} | {:5.0f} {:8.2f} {:8.2f}'.format(r[pos][0], high, low, d_avg, avg, buy_p, sell_p, buy_quantity, sell_quantity, quantity, round(cost,2), round(benefit,2)))
+                #print('')
 
-        # save result to private
         self.result = r
         return r
 
     def print(self):
         count = 0
         print(self.begin_d, ' ~ ', self.end_d)
+        print('         buy sell cost quantity benefit')
         begin_d    = datetime.datetime.strptime(self.begin_d, '%Y%m%d')
-        end_d      = datetime.datetime.strptime(self.end_d, '%Y%m%d')
+        end_d      = datetime.datetime.strptime(self.end_d,   '%Y%m%d')
         max_b_index = 0
         max_b = 0.0
         max_b_rate = 0.0
         max_b_rate_index = 0
         rate = 0.0
-        print('         buy sell cost quantity benefit')
         for i in range(len(self.result)):
             tmp = self.result[i]
             d = datetime.datetime.strptime(tmp[0], '%Y%m%d')
@@ -164,8 +173,8 @@ class Sim:
             plt.legend(loc='best')
             plt.title("cost & benefit " + self.begin_d + " ~ " + self.end_d)
             plt.xlabel('day')
-            plt.ylabel('￥')
-            plt.ylim(0, 200)
+            plt.ylabel('RMB')
+            #plt.ylim(0, 200)
             #plt.axhline(100)
             plt.show()
         return t,b,c
@@ -212,8 +221,8 @@ class Stock:
             plt.legend(loc='best')
             plt.title("avg price " + begin_date + " ~ " + end_date)
             plt.xlabel('day')
-            plt.ylabel('￥')
-            plt.ylim(0, 60.0)
+            plt.ylabel('RMB')
+            #plt.ylim(0, 60.0)
             #plt.axhline(100)
             plt.show()
         return t,p
@@ -330,54 +339,73 @@ def check_qfq(filename):
     now_b = datetime.datetime.now()
     print("cost time  ", now_b-now_a, file=sys.stdout)
 
+def draw_mix(t, p, b, c):
+    # curve fit
+    z1 = np.polyfit(t, b, 14)
+    p1 = np.poly1d(z1)
+    #print(p1)
+    yvals = p1(t)
+
+    # peak value
+    num_peak_3 = signal.find_peaks(yvals, distance=10) #distance表极大值点的距离至少大于等于10个水平单位
+    yyyd = np.polyder(p1, 1)
+    print('yyyd ', yyyd)
+    print('yyyd.r ', yyyd.r)
+
+    # https://finthon.com/matplotlib-color-list/
+    print('the number of peaks is ' + str(len(num_peak_3[0])))
+    fig = plt.figure()
+    ax1 = fig.add_subplot(111)
+    ax1.plot(t, b, "blue", label="benefit")
+    ax1.plot(t, c, "dodgerblue", label="cost")
+    ax1.plot(t, yvals, 'gray',label='polyfit values')
+    for ii in range(len(num_peak_3[0])):
+        ax1.plot(num_peak_3[0][ii]+t[0], yvals[num_peak_3[0][ii]],'*',markersize=10)
+    ax1.set_title("cost & benefit " + begin_date + ' ~ ' + end_date)
+    ax1.set_ylabel('RMB')
+    ax1.legend(loc='best')
+    ax1.axhline(0)
+
+    ax2 = ax1.twinx()
+    ax2.plot(t, p, "mistyrose", label="price")
+    ax2.set_ylabel('RMB(avg price)')
+    ax2.legend(loc='best')
+    ax2.axhline(0)
+
+    plt.xlabel('day')
+    #plt.ylim(0, 200)
+    plt.show()
+
+    print(yvals[signal.argrelextrema(yvals, np.greater)]) #极大值的y轴, yvals为要求极值的序列
+    print(signal.argrelextrema(yvals, np.greater)) #极大值的x轴
+    peak_high_ind = signal.argrelextrema(yvals, np.greater)[0] #极大值点，改为np.less即可得到极小值点
+    peak_low_ind  = signal.argrelextrema(yvals, np.less)[0] #极大值点，改为np.less即可得到极小值点
+    plt.plot(t, b, '*',label='original values')
+    plt.plot(t, yvals, 'r',label='polyfit values')
+    plt.xlabel('x axis')
+    plt.ylabel('y axis')
+    plt.legend(loc=4)
+    plt.title('polyfitting')
+    plt.plot(peak_high_ind+t[0], yvals[peak_high_ind], 'o', markersize=10)
+    plt.plot(peak_low_ind+t[0],  yvals[peak_low_ind],  '*', markersize=10)
+    plt.show()
+
 if __name__ == "__main__":
     filename = sys.argv[1]
     #check_qfq(filename)
 
     begin_date = sys.argv[2]
     end_date   = sys.argv[3]
-    #begin_date = '20200102'
-    #end_date   = '20200730'
 
     stock = Stock(filename)
     #print_price(stock.data,     '20140701', '20140731')
     #print_price(stock.qfq_data, '20140701', '20140731')
     t,p = stock.draw(begin_date, end_date, 0)
-    print(t[0], p[0])
  
     sim = Sim()
     sim.set(0.96, 1.04, float(sys.argv[4]))
     r = sim.simulate(stock.qfq_data, begin_date, end_date)
     sim.print()
-    t,b,c = sim.draw(0)
-    print(t[0], b[0])
+    t,b,c = sim.draw(1)
 
-    z1 = np.polyfit(t, b, 14)
-    p1 = np.poly1d(z1)
-    print(p1)
-    yvals = p1(t)
-
-    # peak value
-    num_peak_3 = signal.find_peaks(yvals, distance=10) #distance表极大值点的距离至少大于等于10个水平单位
-
-    print(num_peak_3[0])
-    print(sim.get_date(t[0]+num_peak_3[0][0]), yvals[num_peak_3[0][0]])
-    print(sim.get_date(t[0]+num_peak_3[0][1]), yvals[num_peak_3[0][1]])
-    print(sim.get_date(t[0]+num_peak_3[0][2]), yvals[num_peak_3[0][2]])
-    print(sim.get_date(t[0]+num_peak_3[0][3]), yvals[num_peak_3[0][3]])
-
-    print('the number of peaks is ' + str(len(num_peak_3[0])))
-    plt.figure()
-    plt.plot(t, p, "red", label="price")
-    plt.plot(t, b, "blue", label="benefit")
-    plt.plot(t, c, "dodgerblue", label="cost")
-    plt.plot(t, yvals, 'gray',label='polyfit values')
-    for ii in range(len(num_peak_3[0])):
-        plt.plot(num_peak_3[0][ii]+t[0], yvals[num_peak_3[0][ii]],'*',markersize=10)
-    plt.legend(loc='best')
-    plt.title("cost & benefit " + begin_date + ' ~ ' + end_date)
-    plt.xlabel('day')
-    plt.ylabel('￥')
-    #plt.ylim(0, 200)
-    plt.axhline(0)
-    plt.show()
+    draw_mix(t, p, b, c)

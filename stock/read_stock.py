@@ -269,7 +269,7 @@ class Quan:
             for i in range(len(tmp)):
                 d = datetime.datetime.strptime(tmp[i][0], '%Y%m%d')
                 if d<fq_d:
-                    #print(i, tmp[i][1], tmp[i][3], tmp[i][4], tmp[i][9], tmp[i][10], ' -> ', end='')
+                    print(d, i, tmp[i][1], tmp[i][2], tmp[i][3], ' -> ', end='')
                     '''
                     tmp[i][3] = self.fq(tmp[i][3], j)
                     tmp[i][4] = self.fq(tmp[i][4], j)
@@ -279,7 +279,7 @@ class Quan:
                     tmp[i][1] = self.fq(tmp[i][1], j)
                     tmp[i][2] = self.fq(tmp[i][2], j)
                     tmp[i][3] = self.fq(tmp[i][3], j)
-                    #print(i, tmp[i][1], tmp[i][3], tmp[i][4], tmp[i][9], tmp[i][10])
+                    print(tmp[i][1], tmp[i][2], tmp[i][3])
         return tmp
 
 
@@ -400,7 +400,7 @@ if __name__ == "__main__":
     stock = Stock(filename)
     #print_price(stock.data,     '20140701', '20140731')
     #print_price(stock.qfq_data, '20140701', '20140731')
-    t,p = stock.draw(begin_date, end_date, 0)
+    t,p = stock.draw(begin_date, end_date, 1)
  
     sim = Sim()
     sim.set(0.96, 1.04, float(sys.argv[4]))

@@ -50,7 +50,7 @@ class Sim:
         buy_avg = 0.0
 
         r = []
-        print('date      high  low      d_avg    avg  buy_p sell_p  buy_q sell_q      q     cost')
+        print('date      high  low      d_avg    avg  buy_p sell_p  buy_q sell_q         q     cost   benefit')
         for i in range(len(data)-1, -1, -1):
             r.append([data[i][0], 0, 0, 0.0, 0, 0.0])
             pos = len(r)-1
@@ -102,13 +102,13 @@ class Sim:
                 r[pos][3] = round(cost,2)
                 r[pos][4] = quantity
                 r[pos][5] = round(benefit,2)
-                print('{} {:5.2f} {:5.2f}  | {} {:5.2f} {:.2f} {:.2f} | {:5.0f} {:5.0f} | {:5.0f} {:8.2f} {:8.2f}'.format(r[pos][0], high, low, d_avg, avg, buy_p, sell_p, buy_quantity, sell_quantity, quantity, round(cost,2), round(benefit,2)))
+                print('{} {:5.2f} {:5.2f}  | {} {:5.2f} {:.2f} {:.2f} | {:5.0f} {:5.0f}      | {:5.0f} {:8.2f} {:8.2f}'.format(r[pos][0], high, low, d_avg, avg, buy_p, sell_p, buy_quantity, sell_quantity, quantity, round(cost,2), round(benefit,2)))
                 #print('')
 
         self.result = r
         return r
 
-    def print(self):
+    def output(self):
         count = 0
         print(self.begin_d, ' ~ ', self.end_d)
         print('         buy sell cost quantity benefit')
@@ -191,17 +191,30 @@ class Stock:
     def read_original(self, filename):
         with open(filename, encoding = 'utf-8') as f:
             data = np.loadtxt(f, str, delimiter = ",", skiprows=1)
+            # 002475.sz.csv from tushare, data with amount
+            #       0       1          2    3    4   5     6         7      8       9   10
             #print('ts_code trade_date open high low close pre_close change pct_chg vol amount')
 
+            # sz002475.csv from ifeng without amount
+            #    0    1    2     3   4      5   6    7   8    9   10   11    12    13       14
+            # date,open,high,close,low,volume,chg,%chg,ma5,ma10,ma20,vma5,vma10,vma20,turnover
+
+        '''
+        #print('trade_date high low avg')
         for i in range(len(data)):
             data[i][5] = float(data[i][10]) *10 / float(data[i][9])
         data = np.delete(data, [0,2,6,7,8,9,10], axis=1)
-        #print('trade_date high low avg')
+        '''
+
+        # date high low
+        #data = np.delete(data, [0,1,3,5,6,7,8,9,10,11,12,13,14], axis=1)
         return data
 
     def draw(self, begin_date, end_date, show):
         t = []
         p = []
+        high = []
+        low = []
         count = 0
         begin_d    = datetime.datetime.strptime(begin_date, '%Y%m%d')
         end_d      = datetime.datetime.strptime(end_date, '%Y%m%d')
@@ -214,16 +227,28 @@ class Stock:
                 count +=1
                 t.append(count)
                 p.append(round(float(tmp[3]),2))
+                high.append(round(float(tmp[1]),2))
+                low.append(round(float(tmp[2]),2))
+
+        #max_pos, tmp_pos = max_min(high)
+        #tmp_pos, min_pos = max_min(low)
+
+        max_pos = signal.argrelextrema(np.array(high), np.greater)[0] #极大值点，改为np.less即可得到极小值点
+        min_pos  = signal.argrelextrema(np.array(low), np.less)[0] #极大值点，改为np.less即可得到极小值点
 
         if show==1:
             plt.figure()
-            plt.plot(t, p, "red", label="avg price")
+            #plt.plot(t, p, "red", label="avg")
+            plt.plot(t, high, "orange", label="high")
+            plt.plot(t, low, "green", label="low")
             plt.legend(loc='best')
-            plt.title("avg price " + begin_date + " ~ " + end_date)
+            plt.title(filename + " daily price " + begin_date + " ~ " + end_date)
             plt.xlabel('day')
             plt.ylabel('RMB')
             #plt.ylim(0, 60.0)
             #plt.axhline(100)
+            plt.plot(max_pos+t[0], np.array(high)[max_pos], 'o', markersize=4)
+            plt.plot(min_pos+t[0],  np.array(low)[min_pos], '*', markersize=4)
             plt.show()
         return t,p
 
@@ -264,12 +289,14 @@ class Quan:
 
     def qfq(self, data):
         tmp = data.copy()
+        #print('qfq', self.date)
+        #print('date                  num   high    low    avg ->   high    low    avg')
         for j in range(len(self.date)):
             fq_d = datetime.datetime.strptime(self.date[j], '%Y%m%d')
             for i in range(len(tmp)):
-                d = datetime.datetime.strptime(tmp[i][0], '%Y%m%d')
+                d = datetime.datetime.strptime(tmp[i][0], '%Y-%m-%d')
                 if d<fq_d:
-                    print(d, i, tmp[i][1], tmp[i][2], tmp[i][3], ' -> ', end='')
+                    #print('%s %5d %.3f %.3f %.3f -> ' % (d, i, float(tmp[i][1]), float(tmp[i][2]), float(tmp[i][3])), end='')
                     '''
                     tmp[i][3] = self.fq(tmp[i][3], j)
                     tmp[i][4] = self.fq(tmp[i][4], j)
@@ -278,8 +305,8 @@ class Quan:
                     '''
                     tmp[i][1] = self.fq(tmp[i][1], j)
                     tmp[i][2] = self.fq(tmp[i][2], j)
-                    tmp[i][3] = self.fq(tmp[i][3], j)
-                    print(tmp[i][1], tmp[i][2], tmp[i][3])
+                    #tmp[i][3] = self.fq(tmp[i][3], j)
+                    #print(' %.3f %.3f %.3f' % (float(tmp[i][1]), float(tmp[i][2]), float(tmp[i][3])))
         return tmp
 
 
@@ -380,6 +407,7 @@ def draw_mix(t, p, b, c):
     print(signal.argrelextrema(yvals, np.greater)) #极大值的x轴
     peak_high_ind = signal.argrelextrema(yvals, np.greater)[0] #极大值点，改为np.less即可得到极小值点
     peak_low_ind  = signal.argrelextrema(yvals, np.less)[0] #极大值点，改为np.less即可得到极小值点
+
     plt.plot(t, b, '*',label='original values')
     plt.plot(t, yvals, 'r',label='polyfit values')
     plt.xlabel('x axis')
@@ -389,6 +417,134 @@ def draw_mix(t, p, b, c):
     plt.plot(peak_high_ind+t[0], yvals[peak_high_ind], 'o', markersize=10)
     plt.plot(peak_low_ind+t[0],  yvals[peak_low_ind],  '*', markersize=10)
     plt.show()
+
+def max_min(data):
+    diff = np.diff(np.sign(np.diff(data)))
+    max_pos = np.where(diff == -2)[0] + 1
+    min_pos = np.where(diff ==  2)[0] + 1
+    return max_pos, min_pos
+
+def cal_energy(data, begin_date, end_date):
+    t = []
+    date = []
+    high = []
+    low = []
+    count = 0
+
+    begin_d    = datetime.datetime.strptime(begin_date, '%Y%m%d')
+    end_d      = datetime.datetime.strptime(end_date, '%Y%m%d')
+    #for i in range(len(data)-1, -1, -1):
+    for i in range(0, len(data), 1):
+        tmp = data[i]
+        d = datetime.datetime.strptime(tmp[0], '%Y-%m-%d')
+        if d>end_d:
+            break
+        if d>=begin_d:
+            count +=1
+            t.append(count)
+            date.append(tmp[0])
+            high.append(round(float(tmp[1]),2))
+            low.append(round(float(tmp[2]),2))
+
+    #max_pos, tmp_pos = max_min(high)
+    #tmp_pos, min_pos = max_min(low)
+
+    max_pos = signal.argrelextrema(np.array(high), np.greater)[0] #极大值点，改为np.less即可得到极小值点
+    min_pos  = signal.argrelextrema(np.array(low), np.less)[0] #极大值点，改为np.less即可得到极小值点
+
+    total_cost = 0    # 累计花费, 就是当前的持仓花费
+    max_cost = 0      # 最高花费
+    total_benefit = 0 # 累计收益
+    total_num = 0     # 累计持股
+    max_num = 0
+    print('from sell:')
+    print('')
+    for j in range(0, len(max_pos), 1):
+        print(date[max_pos[j]], high[max_pos[j]])
+        total_cost = 0    # 累计花费, 每一个卖点，都重新计算当前还存在的买点，求和就是对应这个卖点所在时间点最大的买入量
+        total_num = 0     # 累计持股
+        for i in range(0, len(min_pos), 1):
+            #已经卖出
+            if min_pos[i]==-1: continue
+
+            # 卖点在买点前面
+            if max_pos[j]<=min_pos[i]: continue
+
+            total_cost += low[min_pos[i]]
+            print('    buy %s %.2f' % (date[min_pos[i]], low[min_pos[i]]))
+            if total_cost > max_cost: max_cost = total_cost
+            total_num += 1
+            if total_num > max_num: max_num = total_num
+
+            delta = high[max_pos[j]]-low[min_pos[i]]
+
+            # 只要大于0.05就抛出
+            if delta/low[min_pos[i]] >= float(sys.argv[4]):
+                delta = low[min_pos[i]] * float(sys.argv[4])
+                total_benefit += delta
+                total_cost -= low[min_pos[i]]
+                total_num -= 1
+                print('    %d %s %.2f -> %s %.2f delta %.2f total_b %.2f total_c %.2f(%d) max_cost %.2f(%d)' % (min_pos[i], date[min_pos[i]], low[min_pos[i]], date[max_pos[j]], high[max_pos[j]], delta, total_benefit, total_cost, total_num, max_cost, max_num) )
+
+                # 卖出后，把对应的买点置位无效，也就是只买卖一次
+                # 有效的买点会继续在下一次作为cost累计
+                min_pos[i]=-1
+                continue
+        print('    %s total_b %.2f total_c %.2f(%d) max_cost %.2f(%d)' % (date[max_pos[j]], total_benefit, total_cost, total_num, max_cost, max_num) )
+
+    print('')
+    print('from buy:')
+    print('')
+    min_pos  = signal.argrelextrema(np.array(low), np.less)[0] #极大值点，改为np.less即可得到极小值点
+    total_cost = 0    # 累计花费
+    total_benefit = 0 # 累计收益
+    total_num = 0     # 累计持股
+    max_cost = 0      # 最高花费
+    for i in range(0, len(min_pos), 1):
+        print(date[min_pos[i]], 'buy', low[min_pos[i]])
+        total_cost += low[min_pos[i]]
+        total_num += 1
+        benefit = 9999
+        for j in range(0, len(max_pos), 1):
+            if max_pos[j]<=min_pos[i]: continue
+            delta = high[max_pos[j]]-low[min_pos[i]]
+
+            # 总是选择高位里面最差的点抛出
+            '''
+            if delta < benefit:
+                benefit = delta
+                total_num -= 1
+            '''
+
+            # 只要大于0.05就抛出
+            if delta/low[min_pos[i]] >= float(sys.argv[4]):
+                benefit = delta
+                total_cost -= low[min_pos[i]]
+                total_num -= 1
+                print('   -> %s %.2f %.2f %.1f%% sell succ' % (date[max_pos[j]], high[max_pos[j]], delta, delta/low[min_pos[i]]*100))
+                break
+
+            print('   %s %.2f %.2f %.1f%% sell fail' % (date[max_pos[j]], high[max_pos[j]], delta, delta/low[min_pos[i]]*100))
+        if benefit == 9999:
+            benefit = 0
+        total_benefit += benefit
+        print('   benefit/cost %.2f/%.2f(%.2f%%) total_b/c %.2f/%.2f(hold %d)' % (benefit, low[min_pos[i]], benefit/low[min_pos[i]]*100, total_benefit, total_cost, total_num) )
+
+    show = 1
+    if show==1:
+        plt.figure()
+        plt.plot(t, high, "orange", label="high")
+        plt.plot(t, low, "green", label="low")
+        plt.legend(loc='best')
+        plt.title(" daily " + begin_date + " ~ " + end_date)
+        plt.xlabel('day')
+        plt.ylabel('RMB')
+        plt.plot(max_pos+t[0], np.array(high)[max_pos], 'o', markersize=4)
+        plt.plot(min_pos+t[0],  np.array(low)[min_pos], '*', markersize=4)
+        plt.show()
+
+    return t, high, low, max_pos, min_pos
+
 
 if __name__ == "__main__":
     filename = sys.argv[1]
@@ -400,12 +556,16 @@ if __name__ == "__main__":
     stock = Stock(filename)
     #print_price(stock.data,     '20140701', '20140731')
     #print_price(stock.qfq_data, '20140701', '20140731')
-    t,p = stock.draw(begin_date, end_date, 1)
+    #t,p = stock.draw(begin_date, end_date, 1)
  
+    cal_energy(stock.qfq_data, begin_date, end_date)
+
+    '''
     sim = Sim()
     sim.set(0.96, 1.04, float(sys.argv[4]))
     r = sim.simulate(stock.qfq_data, begin_date, end_date)
-    sim.print()
+    #sim.output()
     t,b,c = sim.draw(1)
 
-    draw_mix(t, p, b, c)
+    #draw_mix(t, p, b, c)
+    '''

@@ -1,4 +1,6 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Thu Jul 23 09:15:40 2015
 @author: jet
@@ -60,7 +62,12 @@ def get_hist_data(code = None, start = None, end = None, ktype = 'D'):
     else:
         cols = ct.DAY_PRICE_COLS
     df = pd.DataFrame(js['record'], columns=cols)
+    #print(df.columns)
+    #print(cols)
+    df.drop(['open','close','volume','chg','%chg','ma5','ma10','ma20','vma5','vma10','vma20','turnover'], axis=1, inplace=True)
+    df.to_csv(code + '.csv', index=False)
 
+    '''
     if ktype in ct.K_TYPE_KEY:
         df = df.applymap(lambda x:x.replace(u',', u''))
     for col in cols[1:]:
@@ -70,6 +77,7 @@ def get_hist_data(code = None, start = None, end = None, ktype = 'D'):
     if end is not None:
         df = df[df.date <= end]
     df = df.set_index('date')
+    '''
     return df 
 
 def code_to_APIcode(code):
@@ -145,5 +153,11 @@ def ping_API(url):
 
 #测试入口
 #print(get_hist_data('601989','2015-07-11','2015-07-22'))
-print(get_hist_data('002475','2018-01-01','2020-07-30'))
+#print(get_hist_data('000001','2019-01-01','2021-09-03'))
+#立讯精密
+print(get_hist_data('002475','2020-01-01','2021-09-28'))
+#茅台
+#print(get_hist_data('600519','2019-01-01','2021-09-09'))
+#欧菲光
+#print(get_hist_data('002456','2019-01-01','2021-09-09'))
 

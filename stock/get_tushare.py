@@ -16,11 +16,11 @@ def main():
     pro = ts.pro_api()
     pro = ts.pro_api('5f6fb605103f595ba5e9b8e1286e64a6841beddfe66b664c4de31655')
 
-    start_date='20200701'
-    end_date='20200807'
+    start_date='20100701'
+    end_date  ='20200819'
     ts_code=['002475.SZ', '600519.SH']
 
-    df = pro.daily(ts_code='002475.SZ', start_date='20200701', end_date='20200807')
+    df = pro.daily(ts_code='002475.SZ', start_date='20100701', end_date='20200819')
     df.to_csv('./002475.sz.csv.1', index=False)
 
     print(df)

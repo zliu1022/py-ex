@@ -107,9 +107,9 @@ def main():
     print "games", stat_total,
     #print "  win(b/w/all) rate(b/w/all)" 
     print "B %3d %3d %3d" % (stat_bb, stat_bw, stat_bb+stat_bw), 
-    print "%.1f%% %.1f%% %.1f%%                     " % (100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb), 100.0*(stat_bb+stat_bw)/stat_total),
+    print "%4.1f%% %4.1f%% %4.1f%%     " % (100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb), 100.0*(stat_bb+stat_bw)/stat_total),
     print "W %3d %3d %3d" % (stat_ww, stat_wb, stat_ww+stat_wb), 
-    print "%.1f%% %.1f%% %.1f%%" % (100.0*stat_ww/(stat_bb+stat_ww), 100.0*stat_wb/(stat_bw+stat_wb), 100.0*(stat_ww+stat_wb)/stat_total)
+    print "%4.1f%% %4.1f%% %4.1f%%" % (100.0*stat_ww/(stat_bb+stat_ww), 100.0*stat_wb/(stat_bw+stat_wb), 100.0*(stat_ww+stat_wb)/stat_total)
 
     out_str = "</tbody>\n</table>\n"
     out_str +=  "<h2 id=\"last\">%d games @ %.1f hours, each %.1f hours</h2>\n" % (stat_total, (stat_btime+stat_wtime)/3600.0, (stat_btime+stat_wtime)/3600.0/stat_total)
@@ -152,6 +152,8 @@ def main():
 
     in_fd.close()
     out_fd.close()
+
+    #print 100.0*(stat_bb+stat_bw)/stat_total
 
 if __name__ == "__main__":
     main()

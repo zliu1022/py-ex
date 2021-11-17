@@ -98,9 +98,7 @@ call onematch LZ dual C:\go\weight\15x192\157.gz p300 %ZEN7%
 :run
 @set ZEN_LABEL2=
 @set ZEN_SPEC2=
-@set ROUND=100
-@set ZEN7=ZEN v1 7 15000
-call onematch LZ dual C:\go\weight\15x192\157.gz p300 %ZEN7%
+@set ROUND=200
 
-@set ZEN7=ZEN v1 7 30000
+@set ZEN7=ZEN v1 7 7500
 call onematch LZ dual C:\go\weight\15x192\157.gz p300 %ZEN7%

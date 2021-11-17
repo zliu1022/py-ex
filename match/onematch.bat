@@ -6,12 +6,12 @@
 )
 
 @if not "%2"=="0.13-cpu" @(
-  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
+  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off --ladder 1
 ) else (
   @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
 )
 @if not "%6"=="0.13-cpu" @(
-  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
+  @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off --ladder 1
 ) else (
   @set lz_para=-g -d -r%LZ_RESIGN% -t%LZ_THREAD_NUM% --noponder --timemanage off
 )
@@ -108,7 +108,7 @@
 @if not "%BOARD_SIZE%"=="19" @(
   @set tmpround=%BOARD_SIZE%-%ROUND%
 ) else (
-  @set tmpround=%ROUND%
+  @set tmpround=%ROUND%-F
 )
 @set para=-size %BOARD_SIZE% -komi %KOMI% -verbose -auto -games %ROUND% -time %GAME_TIME%
 @set referee=-referee "c:\python27\python.exe c:\github\Webgo\svr\zen7.py -n7 -dc:\go\zen7\zen.dll --referee"
@@ -130,4 +130,4 @@
 
 @echo.
 @echo %date% %time%
-gogui-twogtp.exe -black %ai1% -white %ai2% %para% -sgffile %sgftitle% 1>%logfile% 2>&1
+gogui-twogtp.exe -black %ai1% -white %ai2% %para% -sgffile %sgftitle% 1>>%logfile% 2>&1

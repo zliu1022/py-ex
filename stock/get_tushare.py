@@ -5,32 +5,40 @@ import tushare as ts
 import time
 import sys
 
-if len(sys.argv)!=1:
+if len(sys.argv)!=4:
     print("Usage: ")
-    print("query.py code")
+    print("get_tushare.py 603060.SH 20220608 20220609")
     sys.exit()
 
 def main():
-    code = '002475'
     # ts.set_token('5f6fb605103f595ba5e9b8e1286e64a6841beddfe66b664c4de31655')
-    pro = ts.pro_api()
+    #pro = ts.pro_api()
     pro = ts.pro_api('5f6fb605103f595ba5e9b8e1286e64a6841beddfe66b664c4de31655')
 
-    start_date='20100701'
-    end_date  ='20200819'
-    ts_code=['002475.SZ', '600519.SH']
+    #ts_code=['002475.SZ', '600519.SH']
 
-    df = pro.daily(ts_code='002475.SZ', start_date='20100701', end_date='20200819')
-    df.to_csv('./002475.sz.csv.1', index=False)
+    #ts_code = '600570.SH'
+    #start_date = '20220817'
+    #end_date = '20220818'
 
+    #ts_code = '603088.SH'
+    #start_date = '20220530'
+    #end_date = '20220531'
+
+    #ts_code = '603005.SH'
+    #start_date = '20220519'
+    #end_date = '20220520'
+
+    ts_code = sys.argv[1]
+    start_date = sys.argv[2]
+    end_date = sys.argv[3]
+    filename = ts_code + '.tushare.csv'
+    print(ts_code, start_date, end_date)
+    df = pro.daily(ts_code=ts_code, start_date=start_date, end_date=end_date)
     print(df)
-    print(len(df))
-    print(df[0:1])
-    print(df[0:1]['amount'])
 
-    amount = float(df[0:1]['amount'])
-    vol = float(df[0:1]['vol'])
-    amount*10/vol
+
+    #df.to_csv(filename, index=False)
 
     '''
     df = pro.daily(ts_code='600519.SH', start_date='20100701', end_date='20200730')

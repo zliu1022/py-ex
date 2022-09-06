@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import tushare as ts
 import time
@@ -11,9 +12,9 @@ if len(sys.argv)!=1:
 def main():
     code = '002475'
 
-    #ret = ts.get_hist_data(code)
+    ret = ts.get_hist_data(code)
     #ret = ts.get_h_data(code)
-    ret = ts.get_h_data(code, start='2020-01-01', end='2020-07-30')
+    #ret = ts.get_h_data(code, start='2020-01-01', end='2020-07-30')
     print(ret)
     # pandas guide: https://www.jianshu.com/p/218baa41bab9
     '''
@@ -30,7 +31,7 @@ def main():
     '''
     print('ret[0:30]\n', ret[0:30], '\n')
 
-    #ret = ts.get_hist_data(code, start='2017-01-01', end='2017-06-31')
+    ret = ts.get_hist_data(code, start='2017-01-01', end='2017-06-31')
 
 if __name__ == "__main__":
    main()

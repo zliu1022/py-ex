@@ -41,6 +41,10 @@ def main():
     stat_wb = 1e-5; stat_ww = 1e-5
     stat_btime =0.0; stat_wtime = 0.0
     stat_blen =0.0; stat_wlen = 0.0
+    stat_len_bb=0
+    stat_len_bw=0 
+    stat_len_ww=0
+    stat_len_wb=0 
     
     ladder_games = []
     end_games = []
@@ -78,13 +82,17 @@ def main():
                     if items[2].find("B+",0)==0:
                         if items[4].find("0",0)==0:
                             stat_bb += 1
+                            stat_len_bb += int(items[6])
                         else:
                             stat_bw += 1
+                            stat_len_bw += int(items[6])
                     else:
                         if items[4].find("0",0)==0:
                             stat_ww += 1
+                            stat_len_ww += int(items[6])
                         else:
                             stat_wb += 1
+                            stat_len_wb += int(items[6])
                     #print 'bb', stat_bb, 'bw', stat_bw, 'ww', stat_ww, 'wb', stat_wb, 'total', stat_total
                     #print
                     stat_btime += float(items[7])
@@ -107,9 +115,10 @@ def main():
     print "games", stat_total,
     #print "  win(b/w/all) rate(b/w/all)" 
     print "B %3d %3d %3d" % (stat_bb, stat_bw, stat_bb+stat_bw), 
-    print "%4.1f%% %4.1f%% %4.1f%%     " % (100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb), 100.0*(stat_bb+stat_bw)/stat_total),
+    print "%.1f%% %.1f%% %.1f%%     " % (100.0*stat_bb/(stat_bb+stat_ww), 100.0*stat_bw/(stat_bw+stat_wb), 100.0*(stat_bb+stat_bw)/stat_total),
     print "W %3d %3d %3d" % (stat_ww, stat_wb, stat_ww+stat_wb), 
-    print "%4.1f%% %4.1f%% %4.1f%%" % (100.0*stat_ww/(stat_bb+stat_ww), 100.0*stat_wb/(stat_bw+stat_wb), 100.0*(stat_ww+stat_wb)/stat_total)
+    print "%4.1f%% %4.1f%% %4.1f%%" % (100.0*stat_ww/(stat_bb+stat_ww), 100.0*stat_wb/(stat_bw+stat_wb), 100.0*(stat_ww+stat_wb)/stat_total),
+    print "Len BB/BW/WW/WB %.0f %.0f %.0f %.0f" % (stat_len_bb/stat_bb, stat_len_bw/stat_bw, stat_len_ww/stat_ww, stat_len_wb/stat_wb)
 
     out_str = "</tbody>\n</table>\n"
     out_str +=  "<h2 id=\"last\">%d games @ %.1f hours, each %.1f hours</h2>\n" % (stat_total, (stat_btime+stat_wtime)/3600.0, (stat_btime+stat_wtime)/3600.0/stat_total)

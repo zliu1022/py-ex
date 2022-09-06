@@ -13,8 +13,7 @@ from scipy import signal
 if len(sys.argv)!=5:
     print("Usage: ")
     print("./read_stock.py filename begin_date end_date")
-    print('./read_stock.py 002475.sz.csv 20170102 20200102')
-    print('./read_stock.py 002273.sz.csv 20150102 20201002 0')
+    print('./read_stock.py 002475.sz.csv 20210102 20220705 0')
     sys.exit()
 
 # buy and sell trigger by yesterday's average trade price
@@ -191,21 +190,19 @@ class Stock:
     def read_original(self, filename):
         with open(filename, encoding = 'utf-8') as f:
             data = np.loadtxt(f, str, delimiter = ",", skiprows=1)
-            # 002475.sz.csv from tushare, data with amount
-            #       0       1          2    3    4   5     6         7      8       9   10
-            #print('ts_code trade_date open high low close pre_close change pct_chg vol amount')
 
-            # sz002475.csv from ifeng without amount
-            #    0    1    2     3   4      5   6    7   8    9   10   11    12    13       14
-            # date,open,high,close,low,volume,chg,%chg,ma5,ma10,ma20,vma5,vma10,vma20,turnover
 
-        '''
+        # 002475.sz.csv from tushare, data with amount
+        #       0       1          2    3    4   5     6         7      8       9   10
+        #print('ts_code trade_date open high low close pre_close change pct_chg vol amount')
         #print('trade_date high low avg')
         for i in range(len(data)):
             data[i][5] = float(data[i][10]) *10 / float(data[i][9])
         data = np.delete(data, [0,2,6,7,8,9,10], axis=1)
-        '''
 
+        # sz002475.csv from ifeng without amount
+        #    0    1    2     3   4      5   6    7   8    9   10   11    12    13       14
+        # date,open,high,close,low,volume,chg,%chg,ma5,ma10,ma20,vma5,vma10,vma20,turnover
         # date high low
         #data = np.delete(data, [0,1,3,5,6,7,8,9,10,11,12,13,14], axis=1)
         return data
@@ -289,12 +286,19 @@ class Quan:
 
     def qfq(self, data):
         tmp = data.copy()
-        #print('qfq', self.date)
-        #print('date                  num   high    low    avg ->   high    low    avg')
-        for j in range(len(self.date)):
+
+        print('qfq', self.date)
+        print('tmp[0]', tmp[0])
+        print('tmp[len]', tmp[len(tmp)-1])
+
+        print('date                  num   high    low    avg ->   high    low    avg')
+        #for j in range(len(self.date)):
+        for j in range(len(self.date)-1, -1, -1):
             fq_d = datetime.datetime.strptime(self.date[j], '%Y%m%d')
+            print(fq_d)
+
             for i in range(len(tmp)):
-                d = datetime.datetime.strptime(tmp[i][0], '%Y-%m-%d')
+                d = datetime.datetime.strptime(tmp[i][0], '%Y%m%d')
                 if d<fq_d:
                     #print('%s %5d %.3f %.3f %.3f -> ' % (d, i, float(tmp[i][1]), float(tmp[i][2]), float(tmp[i][3])), end='')
                     '''
@@ -303,6 +307,13 @@ class Quan:
                     tmp[i][9] = self.fq(tmp[i][9], j)
                     tmp[i][10] = self.fq(tmp[i][10], j)
                     '''
+                    if tmp[i][0] == '20220712':
+                        print(tmp[i][1], ' -> ', self.fq(tmp[i][1], j))
+                    if tmp[i][0] == '20210707':
+                        print(tmp[i][1], ' -> ', self.fq(tmp[i][1], j))
+                    if tmp[i][0] == '20200616':
+                        print(tmp[i][1], ' -> ', self.fq(tmp[i][1], j))
+
                     tmp[i][1] = self.fq(tmp[i][1], j)
                     tmp[i][2] = self.fq(tmp[i][2], j)
                     #tmp[i][3] = self.fq(tmp[i][3], j)
@@ -330,12 +341,17 @@ def check_qfq(filename):
     stock = Stock(filename)
     data = stock.data
 
-    print_price(data, '20200616', '20200618')
-    print('')
-    print_price(data, '20190704', '20190708')
-    print('')
-    print_price(data, '20180716', '20180718')
-    print('')
+    '''
+    20220713,10,0,1.09982
+    20210708,10,0,1.099999
+    20200617,10,2.999711,1.199884
+    20190705,10,3,0.5
+    20180717,10,3,0.6
+    20170706,10,5,0.8
+    20160613,10,5,0.9
+    20150619,10,5,0.8
+    20140521,10,4,0.7
+    '''
 
     '''
     quan = Quan()
@@ -349,9 +365,22 @@ def check_qfq(filename):
     '''
 
     qfq_data = stock.qfq_data
+
+    print_price(data, '20220712', '20220714')
+    print('----- after fu quan -----')
+    print_price(qfq_data, '20220712', '20220714')
+    print('')
+
+    print_price(data, '20210707', '20210709')
+    print('----- after fu quan -----')
+    print_price(qfq_data, '20210707', '20210709')
+    print('')
+
+    print_price(data, '20200616', '20200618')
     print('----- after fu quan -----')
     print_price(qfq_data, '20200616', '20200618')
     print('')
+
     print_price(qfq_data, '20190704', '20190708')
     print('')
     print_price(qfq_data, '20180716', '20180718')
@@ -433,10 +462,10 @@ def cal_energy(data, begin_date, end_date):
 
     begin_d    = datetime.datetime.strptime(begin_date, '%Y%m%d')
     end_d      = datetime.datetime.strptime(end_date, '%Y%m%d')
-    #for i in range(len(data)-1, -1, -1):
-    for i in range(0, len(data), 1):
+    for i in range(len(data)-1, -1, -1):
+    #for i in range(0, len(data), 1):
         tmp = data[i]
-        d = datetime.datetime.strptime(tmp[0], '%Y-%m-%d')
+        d = datetime.datetime.strptime(tmp[0], '%Y%m%d')
         if d>end_d:
             break
         if d>=begin_d:
@@ -446,11 +475,17 @@ def cal_energy(data, begin_date, end_date):
             high.append(round(float(tmp[1]),2))
             low.append(round(float(tmp[2]),2))
 
-    #max_pos, tmp_pos = max_min(high)
-    #tmp_pos, min_pos = max_min(low)
+    max_pos, tmp_pos = max_min(high)
+    tmp_pos, min_pos = max_min(low)
 
-    max_pos = signal.argrelextrema(np.array(high), np.greater)[0] #极大值点，改为np.less即可得到极小值点
-    min_pos  = signal.argrelextrema(np.array(low), np.less)[0] #极大值点，改为np.less即可得到极小值点
+    print('max_pos')
+    print(max_pos)
+    print('')
+    print('min_pos')
+    print(min_pos)
+
+    #max_pos = signal.argrelextrema(np.array(high), np.greater)[0] #极大值点，改为np.less即可得到极小值点
+    #min_pos  = signal.argrelextrema(np.array(low), np.less)[0] #极大值点，改为np.less即可得到极小值点
 
     total_cost = 0    # 累计花费, 就是当前的持仓花费
     max_cost = 0      # 最高花费
@@ -548,24 +583,26 @@ def cal_energy(data, begin_date, end_date):
 
 if __name__ == "__main__":
     filename = sys.argv[1]
-    #check_qfq(filename)
+    check_qfq(filename)
 
+    '''
     begin_date = sys.argv[2]
     end_date   = sys.argv[3]
 
     stock = Stock(filename)
-    #print_price(stock.data,     '20140701', '20140731')
-    #print_price(stock.qfq_data, '20140701', '20140731')
-    #t,p = stock.draw(begin_date, end_date, 1)
+
+    print_price(stock.data,     '20210706', '20210710')
+    print_price(stock.qfq_data, '20210706', '20210710')
+
+    t,p = stock.draw(begin_date, end_date, 1)
  
     cal_energy(stock.qfq_data, begin_date, end_date)
 
-    '''
     sim = Sim()
     sim.set(0.96, 1.04, float(sys.argv[4]))
     r = sim.simulate(stock.qfq_data, begin_date, end_date)
-    #sim.output()
+    sim.output()
     t,b,c = sim.draw(1)
 
-    #draw_mix(t, p, b, c)
+    draw_mix(t, p, b, c)
     '''

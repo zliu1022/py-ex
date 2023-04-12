@@ -4,10 +4,11 @@
 from datetime import datetime
 
 def extract_year(text):
-    for pattern, offset in [("%Y年", 0), ("中报", 0), ("季报", -1), ("-%m-%d", 0)]:
-        pos = text.find(pattern[:-2])
-        if pos != -1:
-            return text[0:pos + offset] if pattern[-1] == "Y" else datetime.strptime(text, "%Y" + pattern[:-2]).year
+    for pattern, offset in [("%Y年", 0), ("中报", 0), ("季报", -1), ("%Y-%m-%d", 0)]:
+        try:
+            return text[0:text.find(pattern[:-2]) + offset] if pattern[-1] == "Y" else datetime.strptime(text, pattern).year
+        except ValueError:
+            continue
     return "1900"
 
 def run_test(test_input, expected_output):

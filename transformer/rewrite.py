@@ -6,8 +6,9 @@ from datetime import datetime
 def extract_year(text):
     for pattern, offset in [("%Y年", 0), ("中报", 0), ("季报", -1), ("%Y-%m-%d", 0)]:
         try:
-            if pattern[:-2] in text:
-                return int(text[0:text.find(pattern[:-2]) + offset]) if pattern[-1] == "Y" else datetime.strptime(text, pattern[:-2]).year
+            pos = text.find(pattern[:-2])
+            if pos != -1:
+                return int(text[0:pos + offset]) if pattern[-1] == "Y" else datetime.strptime(text, pattern[:-2]).year
             elif pattern == "%Y-%m-%d":
                 return datetime.strptime(text, pattern).year
         except ValueError:

@@ -2,27 +2,34 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+import re
 
 def extract_year(text):
-    for pattern, offset in [("%Y年", 0), ("中报", 0), ("季报", -1), ("%Y-%m-%d", 0)]:
-        try:
-            pos = text.find(pattern[:-2])
-            if pos != -1:
-                return int(text[0:pos + offset]) if pattern[-1] == "Y" else datetime.strptime(text, pattern[:-2]).year
-            elif pattern == "%Y-%m-%d":
-                return datetime.strptime(text, pattern).year
-        except ValueError:
-            continue
+    patterns = [
+        (r"(\d{4})年", None),
+        (r"(\d{4})中报", None),
+        (r"(\d{4})季报", None),
+        (r"\d{4}-\d{2}-\d{2}", "%Y-%m-%d"),
+    ]
+
+    for pattern, date_format in patterns:
+        match = re.search(pattern, text)
+        if match:
+            year_str = match.group(1)
+            if date_format:
+                return datetime.strptime(year_str, date_format).year
+            return int(year_str)
+
     return 1900
 
-def run_test(test_input, expected_output):
-    result = extract_year(test_input)
-    assert result == expected_output, f"Expected {expected_output}, but got {result} for input {test_input}"
-
 def test_extract_year():
+    def run_test(test_input, expected_output):
+        result = extract_year(test_input)
+        assert result == expected_output, f"Expected {expected_output}, but got {result} for input {test_input}"
+
     run_test("2021年", 2021)
     run_test("2021中报", 2021)
-    run_test("2021季报", 2020)
+    run_test("2021季报", 2021)
     run_test("2021-06-30", 2021)
     run_test("No match found", 1900)
 

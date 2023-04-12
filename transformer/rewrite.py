@@ -7,9 +7,9 @@ def extract_year(text):
     for pattern, offset in [("%Y年", 0), ("中报", 0), ("季报", -1), ("-%m-%d", 0)]:
         pos = text.find(pattern[:-2])
         if pos != -1:
-            return text[0:pos + offset] if pattern[-1] == "Y" else datetime.strptime(text, pattern).year
+            return text[0:pos + offset] if pattern[-1] == "Y" else datetime.strptime(text, "%Y" + pattern[:-2]).year
     return "1900"
-        
+
 def run_test(test_input, expected_output):
     result = extract_year(test_input)
     assert result == expected_output, f"Expected {expected_output}, but got {result} for input {test_input}"

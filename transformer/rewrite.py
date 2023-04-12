@@ -9,16 +9,19 @@ def extract_year(text):
         (r"(\d{4})年", None),
         (r"(\d{4})中报", None),
         (r"(\d{4})季报", None),
-        (r"\d{4}-\d{2}-\d{2}", "%Y-%m-%d"),
+        (r"(\d{4})-\d{2}-\d{2}", "%Y"),
     ]
 
     for pattern, date_format in patterns:
         match = re.search(pattern, text)
         if match:
-            year_str = match.group(1)
-            if date_format:
-                return datetime.strptime(year_str, date_format).year
-            return int(year_str)
+            try:
+                year_str = match.group(1)
+                if date_format:
+                    return datetime.strptime(year_str, date_format).year
+                return int(year_str)
+            except IndexError:
+                pass
 
     return 1900
 

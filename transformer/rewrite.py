@@ -6,7 +6,8 @@ from datetime import datetime
 def extract_year(text):
     for pattern, offset in [("%Y年", 0), ("中报", 0), ("季报", -1), ("%Y-%m-%d", 0)]:
         try:
-            return int(text[0:text.find(pattern[:-2]) + offset]) if pattern[-1] == "Y" else datetime.strptime(text, pattern).year
+            if pattern[:-2] in text:
+                return int(text[0:text.find(pattern[:-2]) + offset]) if pattern[-1] == "Y" else datetime.strptime(text, pattern).year
         except ValueError:
             continue
     return 1900
@@ -16,11 +17,11 @@ def run_test(test_input, expected_output):
     assert result == expected_output, f"Expected {expected_output}, but got {result} for input {test_input}"
 
 def test_extract_year():
-    run_test("2021年", "2021")
-    run_test("2021中报", "2021")
-    run_test("2021季报", "2020")
+    run_test("2021年", 2021)
+    run_test("2021中报", 2021)
+    run_test("2021季报", 2020)
     run_test("2021-06-30", 2021)
-    run_test("No match found", "1900")
+    run_test("No match found", 1900)
 
 test_extract_year()
 

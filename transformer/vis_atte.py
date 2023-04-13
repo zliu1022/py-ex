@@ -10,7 +10,7 @@ import numpy as np
 # Load pre-trained BERT model and tokenizer
 model_name = 'bert-base-uncased'
 tokenizer = BertTokenizer.from_pretrained(model_name)
-model = BertModel.from_pretrained(model_name)
+model = BertModel.from_pretrained(model_name, output_attentions=True)  # Add the output_attentions=True parameter
 
 # Input text
 text = "Here is some text to demonstrate the attention mechanism."

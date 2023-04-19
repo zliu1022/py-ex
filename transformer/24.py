@@ -18,23 +18,15 @@ def calculate(a, b, op):
             return None
         return a / b
 
-def evaluate_expression(nums, ops):
-    if len(nums) == 1:
-        return round(nums[0], 5) == 24
+def evaluate_expression(a, b, c, d, ops):
+    op1, op2, op3 = ops
+    results = []
 
-    for i in range(len(ops)):
-        a = nums[i]
-        b = nums[i + 1]
-        op = ops[i]
+    results.append(calculate(calculate(a, b, op1), calculate(c, d, op2), op3))
+    results.append(calculate(calculate(calculate(a, b, op1), c, op2), d, op3))
 
-        result = calculate(a, b, op)
-        if result is None:
-            continue
-
-        new_nums = nums[:i] + [result] + nums[i + 2:]
-        new_ops = ops[:i] + ops[i + 1:]
-
-        if evaluate_expression(new_nums, new_ops):
+    for result in results:
+        if result is not None and round(result, 5) == 24:
             return True
 
     return False
@@ -43,7 +35,7 @@ found_solution = False
 
 for num_permutation in itertools.permutations(numbers):
     for op_permutation in itertools.product(operations, repeat=3):
-        if evaluate_expression(list(num_permutation), list(op_permutation)):
+        if evaluate_expression(*num_permutation, op_permutation):
             found_solution = True
             print("Solution found:")
             print("Numbers:", num_permutation)

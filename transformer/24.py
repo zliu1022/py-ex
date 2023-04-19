@@ -18,31 +18,32 @@ def calculate(a, b, op):
             return None
         return a / b
 
-def evaluate_expression(num_permutation, op_permutation):
-    for paren_permutation in itertools.product(range(3), repeat=2):
-        expression = list(num_permutation)
-        ops = list(op_permutation)
+def evaluate_expression(nums, ops):
+    if len(nums) == 1:
+        return round(nums[0], 5) == 24
 
-        indices = list(paren_permutation) + [2]
+    for i in range(len(ops)):
+        a = nums[i]
+        b = nums[i + 1]
+        op = ops[i]
 
-        for index in indices:
-            result = calculate(expression[index], expression[index+1], ops[index])
-            if result is None:
-                continue
-            expression[index+1] = result
-            del expression[index]
-            del ops[index]
-            if len(expression) == 1:
-                break
-        if len(expression) == 1 and round(expression[0], 5) == 24:
+        result = calculate(a, b, op)
+        if result is None:
+            continue
+
+        new_nums = nums[:i] + [result] + nums[i + 2:]
+        new_ops = ops[:i] + ops[i + 1:]
+
+        if evaluate_expression(new_nums, new_ops):
             return True
+
     return False
 
 found_solution = False
 
 for num_permutation in itertools.permutations(numbers):
     for op_permutation in itertools.product(operations, repeat=3):
-        if evaluate_expression(num_permutation, op_permutation):
+        if evaluate_expression(list(num_permutation), list(op_permutation)):
             found_solution = True
             print("Solution found:")
             print("Numbers:", num_permutation)

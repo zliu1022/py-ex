@@ -30,7 +30,11 @@ for num_permutation in itertools.permutations(numbers):
         if result is None: continue
         if round(result, 5) == 24:  # rounding to avoid float imprecision
             found_solution = True
+            print("Solution found:")
+            print("Numbers:", num_permutation)
+            print("Operations:", op_permutation)
             break
 
-print("Solution found:", found_solution)
+if not found_solution:
+    print("No solution found.")
 

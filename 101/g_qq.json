@@ -1,130 +1,471 @@
 {
-    "username": "银冈棋院",
+    "username": "admin",
     "pos_y1": 0,
-    "pos_y2": 12,
+    "pos_y2": 7,
     "islei": false,
     "myoper": {
         "mystar": false,
-        "tags": [],
+        "tags": [
+            "完全不懂",
+            "倒脱鞋"
+        ],
         "mytags": []
     },
     "signs": [],
-    "layoutnumber": 1,
+    "taotaiid": 0,
     "qshids": [],
+    "hasbook": false,
     "orgid": 0,
-    "disuse": 0,
-    "vote": 4.7,
-    "bookinfos": [
-        {
-            "pinyin": "",
-            "bookname": "小棋书",
-            "nodename": "吐血300题",
-            "bookid": 25639,
-            "bookurl": 25639
-        },
-        {
-            "pinyin": "",
-            "bookname": "《吐血棋经》",
-            "nodename": "官子题【你想活吗？？？】",
-            "bookid": 19435,
-            "bookurl": 19435
-        }
-    ],
-    "qtype": 5,
+    "disuse": 19,
+    "vote": 4.4,
+    "qtype": 21,
     "specs": [],
-    "publicid": 48179,
+    "fine_status": 3,
+    "points": [],
+    "publicid": 8,
     "title": "",
     "ineb": false,
+    "xv": 9,
     "comments": [
         {
-            "username": "lige74",
-            "showcontent": "9好手！",
+            "username": "木神子",
+            "showcontent": "紧气的顺序",
+            "douname": "",
+            "headpath": "head/2020/9/24/9241_13263_31_39.png",
+            "userid": 9241,
+            "updated": 1410319547,
+            "doustatus": 0,
+            "id": 43260,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2014-9-10 11:25",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "铁血阿胖",
+            "showcontent": "为什么不能先紧右边",
             "douname": "",
             "headpath": "headicon_128.png",
-            "userid": 12792,
-            "updated": 1421751519,
+            "userid": 13669,
+            "updated": 1433056864,
             "doustatus": 0,
-            "id": 54698,
+            "id": 72408,
             "dou": 0,
             "contentHtml": {},
-            "updatestr": "2015-1-20 18:58",
+            "updatestr": "2015-5-31 15:21",
             "isover": false,
             "ishide": false
         },
         {
-            "username": "saisai0914",
-            "showcontent": "難",
+            "username": "QQde密码",
+            "showcontent": "解答2、3应该都是正确答案啊......",
             "douname": "",
             "headpath": "headicon_128.png",
-            "userid": 43233,
-            "updated": 1473252049,
+            "userid": 4323,
+            "updated": 1433058905,
             "doustatus": 0,
-            "id": 148441,
+            "id": 72412,
             "dou": 0,
             "contentHtml": {},
-            "updatestr": "2016-9-7 20:40",
+            "updatestr": "2015-5-31 15:55",
             "isover": false,
             "ishide": false
         },
         {
-            "username": "哈哈嘿嘿",
-            "showcontent": "@kennt，<a href=\"/u/roboter/\" target=\"_blank\">@roboter</a>，我的答案快入库吧",
+            "username": "一抹茶香",
+            "showcontent": "这个真是让我煞费苦心",
             "douname": "",
-            "headpath": "head/2018/11/30/63762_93351_45_25.png",
-            "userid": 63762,
-            "updated": 1513672105,
+            "headpath": "headicon_128.png",
+            "userid": 34784,
+            "updated": 1459818353,
             "doustatus": 0,
-            "id": 250497,
+            "id": 121202,
             "dou": 0,
             "contentHtml": {},
-            "updatestr": "2017-12-19 16:28",
+            "updatestr": "2016-4-5 09:05",
             "isover": false,
             "ishide": false
         },
         {
-            "username": "哈哈嘿嘿",
-            "showcontent": "<a href=\"/u/kenny/\" target=\"_blank\">@kenny</a>，",
+            "username": "陈依依",
+            "showcontent": "紧右边的话白棋就劫活了",
             "douname": "",
-            "headpath": "head/2018/11/30/63762_93351_45_25.png",
-            "userid": 63762,
-            "updated": 1513672119,
+            "headpath": "headicon_128.png",
+            "userid": 82613,
+            "updated": 1495181840,
             "doustatus": 0,
-            "id": 250498,
+            "id": 195511,
             "dou": 0,
             "contentHtml": {},
-            "updatestr": "2017-12-19 16:28",
+            "updatestr": "2017-5-19 16:17",
             "isover": false,
             "ishide": false
         },
         {
-            "username": "小棋凤",
-            "showcontent": "简单！",
+            "username": "东方之歌",
+            "showcontent": "白子的应对真是奇妙",
             "douname": "",
-            "headpath": "head/2017/9/24/76446_7426_20_39.png",
-            "userid": 76446,
-            "updated": 1523015629,
+            "headpath": "headicon_128.png",
+            "userid": 178687,
+            "updated": 1529716343,
             "doustatus": 0,
-            "id": 294923,
+            "id": 322534,
             "dou": 0,
             "contentHtml": {},
-            "updatestr": "2018-4-6 19:53",
+            "updatestr": "2018-6-23 09:12",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "敬贤路杰仔",
+            "showcontent": "<a href=\"/q/9/\" target=\"_blank\">Q-9</a>",
+            "douname": "",
+            "headpath": "head/2020/2/27/505765_33496_38_43.png",
+            "userid": 505765,
+            "updated": 1582090394,
+            "doustatus": 0,
+            "id": 573135,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-2-19 13:33",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "敬贤路杰仔",
+            "showcontent": "<a href=\"/q/9/\" target=\"_blank\">Q-9</a>",
+            "douname": "",
+            "headpath": "head/2020/2/27/505765_33496_38_43.png",
+            "userid": 505765,
+            "updated": 1582090534,
+            "doustatus": 0,
+            "id": 573138,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-2-19 13:35",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "贺辉宇",
+            "showcontent": "黑棋立 白棋连 黑棋立 白棋收气 黑棋收气",
+            "douname": "",
+            "headpath": "head/2020/2/28/725397_70767_48_18.png",
+            "userid": 725397,
+            "updated": 1585480195,
+            "doustatus": 0,
+            "id": 632621,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-3-29 19:09",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "101朗朗",
+            "showcontent": "答案7为正确答案，101围棋网天生不喜欢打劫，也省略了好多正确答案，@101weiqicom 改改这个问题。",
+            "douname": "",
+            "headpath": "head/2020/4/14/737755_35385_39_24.png",
+            "userid": 737755,
+            "updated": 1591709309,
+            "doustatus": 0,
+            "id": 789150,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-6-9 21:28",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "wx_3482861112126",
+            "showcontent": "答案7为正确答案，101围棋网天生不喜欢打劫，也省略了好多正确答案，@101weiqicom 改改这个问题。",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 166024,
+            "updated": 1599065090,
+            "doustatus": 0,
+            "id": 883342,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-9-3 00:44",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "wx_3482861112126",
+            "showcontent": "答案7为正确答案，101围棋网天生不喜欢打劫，也省略了好多正确答案，https://101weiqicom 改改这个问题。",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 166024,
+            "updated": 1599065121,
+            "doustatus": 0,
+            "id": 883343,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-9-3 00:45",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "钢雪炼",
+            "showcontent": "请别误导别人 <br/>答案7是错的，应该参照答案3的进行才对",
+            "douname": "",
+            "headpath": "head/2020/9/11/843089_75592_45_11.png",
+            "userid": 843089,
+            "updated": 1600221606,
+            "doustatus": 0,
+            "id": 890009,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-9-16 10:00",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "钢雪炼",
+            "showcontent": "可以净杀的",
+            "douname": "",
+            "headpath": "head/2020/9/11/843089_75592_45_11.png",
+            "userid": 843089,
+            "updated": 1600221627,
+            "doustatus": 0,
+            "id": 890010,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2020-9-16 10:00",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "wx_3740515519115",
+            "showcontent": "N",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 972325,
+            "updated": 1628756461,
+            "doustatus": 0,
+            "id": 1069678,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2021-8-12 16:21",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "wx_3740515519115",
+            "showcontent": "OOOOOO",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 972325,
+            "updated": 1628756484,
+            "doustatus": 0,
+            "id": 1069679,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2021-8-12 16:21",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "黄金会员yellow",
+            "showcontent": "答案6不太好，白6应该下S17开劫。",
+            "douname": "",
+            "headpath": "head/2022/8/31/731172_68806_29_57.png",
+            "userid": 731172,
+            "updated": 1643861304,
+            "doustatus": 0,
+            "id": 1158805,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2022-2-3 12:08",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "w_31592953191010",
+            "showcontent": "立争一口气",
+            "douname": "",
+            "headpath": "head/2022/2/19/1310824_33154_18_27.png",
+            "userid": 1310824,
+            "updated": 1648372767,
+            "doustatus": 0,
+            "id": 1191720,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2022-3-27 17:19",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "wx_30429294191917",
+            "showcontent": "你觉得难吗？",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1015984,
+            "updated": 1657187810,
+            "doustatus": 0,
+            "id": 1277469,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2022-7-7 17:56",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "罗小黑3333",
+            "showcontent": "<a href=\"/q/666/\" target=\"_blank\">Q-666</a>",
+            "douname": "",
+            "headpath": "head/2023/2/16/1380540_5029_56_52.png",
+            "userid": 1380540,
+            "updated": 1660557744,
+            "doustatus": 0,
+            "id": 1319561,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2022-8-15 18:02",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "w_5570599619824",
+            "showcontent": "<a href=\"/q/10/\" target=\"_blank\">Q-10</a> <a href=\"/q/11/\" target=\"_blank\">Q-11</a>",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1524701,
+            "updated": 1670843608,
+            "doustatus": 0,
+            "id": 1413174,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2022-12-12 19:13",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "精越善葛好班",
+            "showcontent": "<a href=\"/u/kenny/\" target=\"_blank\">@kenny</a> 答案1、2重复，答案1变化，答案6有误，需替换为答案35",
+            "douname": "",
+            "headpath": "head/2023/3/6/1279265_38957_54_40.png",
+            "userid": 1279265,
+            "updated": 1672818092,
+            "doustatus": 0,
+            "id": 1438010,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2023-1-4 15:41",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "w_51713736191711",
+            "showcontent": "<a href=\"/q/100101/\" target=\"_blank\">Q-100101</a>",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1537870,
+            "updated": 1672987813,
+            "doustatus": 0,
+            "id": 1441055,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2023-1-6 14:50",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "w_51713736191711",
+            "showcontent": "Q-1233456",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1537870,
+            "updated": 1672987907,
+            "doustatus": 0,
+            "id": 1441058,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2023-1-6 14:51",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "周秉言",
+            "showcontent": "<a href=\"/q/12345/\" target=\"_blank\">Q-12345</a>",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1526399,
+            "updated": 1673172849,
+            "doustatus": 0,
+            "id": 1443689,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2023-1-8 18:14",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "w_51713736191711",
+            "showcontent": "<a href=\"/q/123456/\" target=\"_blank\">Q-123456</a>",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1537870,
+            "updated": 1679797002,
+            "doustatus": 0,
+            "id": 1512310,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2023-3-26 10:16",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "容桂黄子杰",
+            "showcontent": "太简单了吧？",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1697438,
+            "updated": 1684935850,
+            "doustatus": 0,
+            "id": 1547372,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2023-5-24 21:44",
+            "isover": false,
+            "ishide": false
+        },
+        {
+            "username": "wx_13580972191816",
+            "showcontent": "你<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>你<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>你<br/><br/><br/><br/><br/><br/><br/><br/><br/>你",
+            "douname": "",
+            "headpath": "headicon_128.png",
+            "userid": 1291019,
+            "updated": 1689145946,
+            "doustatus": 0,
+            "id": 1574202,
+            "dou": 0,
+            "contentHtml": {},
+            "updatestr": "2023-7-12 15:12",
             "isover": false,
             "ishide": false
         }
     ],
-    "id": 48179,
-    "lu": 13,
+    "id": 8,
+    "options": [],
+    "max_levelname": "",
     "hasspec": false,
     "blackfirst": true,
     "luozis": [],
     "status": 2,
-    "pos_x2": 12,
-    "pos_x1": 0,
+    "pos_x2": 18,
+    "pos_x1": 9,
     "andata": {
         "0": {
             "c": 0,
             "subs": [
-                1
+                1,
+                16,
+                21,
+                29,
+                35
             ],
             "pt": "",
             "f": 0,
@@ -138,40 +479,43 @@
         "1": {
             "c": 0,
             "subs": [
-                2
+                2,
+                12
             ],
-            "pt": "la",
-            "f": 0,
+            "pt": "na",
+            "f": 1,
             "tip": "",
             "o": 1,
             "p": 0,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257976,
+                257975,
+                112402,
+                70900,
+                112403,
+                568206
             ],
             "id": 1
         },
         "2": {
             "c": 0,
             "subs": [
-                3
+                3,
+                8,
+                25
             ],
-            "pt": "hb",
-            "f": 0,
+            "pt": "ra",
+            "f": 1,
             "tip": "",
             "o": 1,
             "p": 1,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257976,
+                257975,
+                112403,
+                568206
             ],
             "id": 2
         },
@@ -180,38 +524,33 @@
             "subs": [
                 4
             ],
-            "pt": "bj",
-            "f": 0,
+            "pt": "oa",
+            "f": 1,
             "tip": "",
             "o": 1,
             "p": 2,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257976,
+                112403
             ],
             "id": 3
         },
         "4": {
             "c": 0,
             "subs": [
-                5
+                5,
+                20
             ],
-            "pt": "bk",
-            "f": 0,
+            "pt": "rc",
+            "f": 1,
             "tip": "",
             "o": 1,
             "p": 3,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257976,
+                112403
             ],
             "id": 4
         },
@@ -220,18 +559,14 @@
             "subs": [
                 6
             ],
-            "pt": "bh",
-            "f": 0,
+            "pt": "pb",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 4,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257976
             ],
             "id": 5
         },
@@ -240,38 +575,28 @@
             "subs": [
                 7
             ],
-            "pt": "aj",
-            "f": 0,
+            "pt": "sb",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 5,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257976
             ],
             "id": 6
         },
         "7": {
             "c": 0,
-            "subs": [
-                8
-            ],
-            "pt": "ah",
-            "f": 0,
+            "subs": [],
+            "pt": "qa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 6,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257976
             ],
             "id": 7
         },
@@ -280,18 +605,14 @@
             "subs": [
                 9
             ],
-            "pt": "ai",
-            "f": 0,
+            "pt": "sb",
+            "f": 1,
             "tip": "",
-            "o": 1,
-            "p": 7,
+            "o": 0,
+            "p": 2,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257975
             ],
             "id": 8
         },
@@ -300,18 +621,14 @@
             "subs": [
                 10
             ],
-            "pt": "lk",
-            "f": 0,
+            "pt": "oa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 8,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257975
             ],
             "id": 9
         },
@@ -320,38 +637,28 @@
             "subs": [
                 11
             ],
-            "pt": "ll",
-            "f": 0,
+            "pt": "sa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 9,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257975
             ],
             "id": 10
         },
         "11": {
             "c": 0,
-            "subs": [
-                12
-            ],
-            "pt": "jk",
-            "f": 0,
+            "subs": [],
+            "pt": "mc",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 10,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                257975
             ],
             "id": 11
         },
@@ -360,18 +667,15 @@
             "subs": [
                 13
             ],
-            "pt": "kl",
+            "pt": "oa",
             "f": 0,
             "tip": "",
             "o": 1,
-            "p": 11,
+            "p": 1,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                112402,
+                70900
             ],
             "id": 12
         },
@@ -380,18 +684,15 @@
             "subs": [
                 14
             ],
-            "pt": "jl",
+            "pt": "ra",
             "f": 0,
             "tip": "",
             "o": 1,
             "p": 12,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                112402,
+                70900
             ],
             "id": 13
         },
@@ -400,38 +701,28 @@
             "subs": [
                 15
             ],
-            "pt": "kd",
+            "pt": "mb",
             "f": 0,
             "tip": "",
             "o": 1,
             "p": 13,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                70900
             ],
             "id": 14
         },
         "15": {
             "c": 0,
-            "subs": [
-                16
-            ],
-            "pt": "ld",
+            "subs": [],
+            "pt": "qa",
             "f": 0,
             "tip": "",
             "o": 1,
             "p": 14,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                70900
             ],
             "id": 15
         },
@@ -440,18 +731,14 @@
             "subs": [
                 17
             ],
-            "pt": "ke",
-            "f": 0,
+            "pt": "oa",
+            "f": 1,
             "tip": "",
-            "o": 1,
-            "p": 15,
+            "o": 0,
+            "p": 0,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                361258
             ],
             "id": 16
         },
@@ -460,18 +747,14 @@
             "subs": [
                 18
             ],
-            "pt": "mb",
-            "f": 0,
+            "pt": "na",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 16,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                361258
             ],
             "id": 17
         },
@@ -480,58 +763,42 @@
             "subs": [
                 19
             ],
-            "pt": "ig",
-            "f": 0,
+            "pt": "ma",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 17,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                361258
             ],
             "id": 18
         },
         "19": {
             "c": 0,
-            "subs": [
-                20
-            ],
-            "pt": "hh",
-            "f": 0,
+            "subs": [],
+            "pt": "oa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 18,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                361258
             ],
             "id": 19
         },
         "20": {
             "c": 0,
-            "subs": [
-                21
-            ],
-            "pt": "eg",
+            "subs": [],
+            "pt": "sb",
             "f": 0,
             "tip": "",
             "o": 1,
-            "p": 19,
+            "p": 4,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                112403
             ],
             "id": 20
         },
@@ -540,18 +807,14 @@
             "subs": [
                 22
             ],
-            "pt": "eh",
-            "f": 0,
+            "pt": "ma",
+            "f": 1,
             "tip": "",
-            "o": 1,
-            "p": 20,
+            "o": 0,
+            "p": 0,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                434185
             ],
             "id": 21
         },
@@ -560,18 +823,14 @@
             "subs": [
                 23
             ],
-            "pt": "gf",
-            "f": 0,
+            "pt": "oa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 21,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                434185
             ],
             "id": 22
         },
@@ -580,39 +839,28 @@
             "subs": [
                 24
             ],
-            "pt": "hf",
-            "f": 0,
+            "pt": "ra",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 22,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                434185
             ],
             "id": 23
         },
         "24": {
             "c": 0,
-            "subs": [
-                25,
-                39
-            ],
-            "pt": "de",
-            "f": 0,
+            "subs": [],
+            "pt": "mb",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 23,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                458737,
-                505053,
-                220048
+                434185
             ],
             "id": 24
         },
@@ -621,16 +869,14 @@
             "subs": [
                 26
             ],
-            "pt": "df",
-            "f": 0,
+            "pt": "rc",
+            "f": 1,
             "tip": "",
-            "o": 1,
-            "p": 24,
+            "o": 0,
+            "p": 2,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                568206
             ],
             "id": 25
         },
@@ -639,16 +885,14 @@
             "subs": [
                 27
             ],
-            "pt": "ee",
-            "f": 0,
+            "pt": "oa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 25,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                568206
             ],
             "id": 26
         },
@@ -657,34 +901,28 @@
             "subs": [
                 28
             ],
-            "pt": "ce",
-            "f": 0,
+            "pt": "sb",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 26,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                568206
             ],
             "id": 27
         },
         "28": {
             "c": 0,
-            "subs": [
-                29
-            ],
-            "pt": "ih",
-            "f": 0,
+            "subs": [],
+            "pt": "mc",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 27,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                568206
             ],
             "id": 28
         },
@@ -693,34 +931,33 @@
             "subs": [
                 30
             ],
-            "pt": "ii",
-            "f": 0,
+            "pt": "ra",
+            "f": 1,
             "tip": "",
-            "o": 1,
-            "p": 28,
+            "o": 0,
+            "p": 0,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                247004,
+                247005
             ],
             "id": 29
         },
         "30": {
             "c": 0,
             "subs": [
-                31
+                31,
+                33
             ],
-            "pt": "da",
-            "f": 0,
+            "pt": "ma",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 29,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                247004,
+                247005
             ],
             "id": 30
         },
@@ -729,36 +966,28 @@
             "subs": [
                 32
             ],
-            "pt": "ca",
-            "f": 0,
+            "pt": "qa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 30,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                247004
             ],
             "id": 31
         },
         "32": {
             "c": 0,
-            "subs": [
-                33,
-                35,
-                49
-            ],
-            "pt": "ea",
-            "f": 0,
-            "tip": "",
-            "o": 1,
+            "subs": [],
+            "pt": "na",
+            "f": 1,
+            "tip": "黑被吃",
+            "o": 0,
             "p": 31,
             "u": 0,
             "aids": [
-                505051,
-                505054,
-                505053
+                247004
             ],
             "id": 32
         },
@@ -767,28 +996,28 @@
             "subs": [
                 34
             ],
-            "pt": "kg",
-            "f": 0,
+            "pt": "na",
+            "f": 1,
             "tip": "",
-            "o": 1,
-            "p": 32,
+            "o": 0,
+            "p": 30,
             "u": 0,
             "aids": [
-                505051
+                247005
             ],
             "id": 33
         },
         "34": {
             "c": 0,
             "subs": [],
-            "pt": "lj",
-            "f": 0,
-            "tip": "",
-            "o": 1,
+            "pt": "mc",
+            "f": 1,
+            "tip": "黑被吃",
+            "o": 0,
             "p": 33,
             "u": 0,
             "aids": [
-                505051
+                247005
             ],
             "id": 34
         },
@@ -797,14 +1026,14 @@
             "subs": [
                 36
             ],
-            "pt": "jg",
-            "f": 0,
+            "pt": "qa",
+            "f": 1,
             "tip": "",
-            "o": 1,
-            "p": 32,
+            "o": 0,
+            "p": 0,
             "u": 0,
             "aids": [
-                505054
+                605832
             ],
             "id": 35
         },
@@ -813,14 +1042,14 @@
             "subs": [
                 37
             ],
-            "pt": "if",
-            "f": 0,
+            "pt": "ra",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 35,
             "u": 0,
             "aids": [
-                505054
+                605832
             ],
             "id": 36
         },
@@ -829,395 +1058,310 @@
             "subs": [
                 38
             ],
-            "pt": "kg",
-            "f": 0,
+            "pt": "na",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 36,
             "u": 0,
             "aids": [
-                505054
+                605832
             ],
             "id": 37
         },
         "38": {
             "c": 0,
             "subs": [],
-            "pt": "lj",
-            "f": 0,
+            "pt": "oa",
+            "f": 1,
             "tip": "",
-            "o": 1,
+            "o": 0,
             "p": 37,
             "u": 0,
             "aids": [
-                505054
+                605832
             ],
             "id": 38
-        },
-        "39": {
-            "c": 0,
-            "subs": [
-                40
-            ],
-            "pt": "ce",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 24,
-            "u": 0,
-            "aids": [
-                458737,
-                220048
-            ],
-            "id": 39
-        },
-        "40": {
-            "c": 0,
-            "subs": [
-                41
-            ],
-            "pt": "df",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 39,
-            "u": 0,
-            "aids": [
-                458737,
-                220048
-            ],
-            "id": 40
-        },
-        "41": {
-            "c": 0,
-            "subs": [
-                42
-            ],
-            "pt": "ih",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 40,
-            "u": 0,
-            "aids": [
-                458737,
-                220048
-            ],
-            "id": 41
-        },
-        "42": {
-            "c": 0,
-            "subs": [
-                43,
-                53
-            ],
-            "pt": "kg",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 41,
-            "u": 0,
-            "aids": [
-                458737,
-                220048
-            ],
-            "id": 42
-        },
-        "43": {
-            "c": 0,
-            "subs": [
-                44
-            ],
-            "pt": "ee",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 42,
-            "u": 0,
-            "aids": [
-                458737
-            ],
-            "id": 43
-        },
-        "44": {
-            "c": 0,
-            "subs": [
-                45
-            ],
-            "pt": "ef",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 43,
-            "u": 0,
-            "aids": [
-                458737
-            ],
-            "id": 44
-        },
-        "45": {
-            "c": 0,
-            "subs": [
-                46
-            ],
-            "pt": "ed",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 44,
-            "u": 0,
-            "aids": [
-                458737
-            ],
-            "id": 45
-        },
-        "46": {
-            "c": 0,
-            "subs": [
-                47
-            ],
-            "pt": "da",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 45,
-            "u": 0,
-            "aids": [
-                458737
-            ],
-            "id": 46
-        },
-        "47": {
-            "c": 0,
-            "subs": [
-                48
-            ],
-            "pt": "ca",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 46,
-            "u": 0,
-            "aids": [
-                458737
-            ],
-            "id": 47
-        },
-        "48": {
-            "c": 0,
-            "subs": [],
-            "pt": "ea",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 47,
-            "u": 0,
-            "aids": [
-                458737
-            ],
-            "id": 48
-        },
-        "49": {
-            "c": 0,
-            "subs": [
-                50
-            ],
-            "pt": "if",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 32,
-            "u": 0,
-            "aids": [
-                505053
-            ],
-            "id": 49
-        },
-        "50": {
-            "c": 0,
-            "subs": [
-                51
-            ],
-            "pt": "jg",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 49,
-            "u": 0,
-            "aids": [
-                505053
-            ],
-            "id": 50
-        },
-        "51": {
-            "c": 0,
-            "subs": [
-                52
-            ],
-            "pt": "kg",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 50,
-            "u": 0,
-            "aids": [
-                505053
-            ],
-            "id": 51
-        },
-        "52": {
-            "c": 0,
-            "subs": [],
-            "pt": "lj",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 51,
-            "u": 0,
-            "aids": [
-                505053
-            ],
-            "id": 52
-        },
-        "53": {
-            "c": 0,
-            "subs": [
-                54
-            ],
-            "pt": "ea",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 42,
-            "u": 0,
-            "aids": [
-                220048
-            ],
-            "id": 53
-        },
-        "54": {
-            "c": 0,
-            "subs": [
-                55
-            ],
-            "pt": "fa",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 53,
-            "u": 0,
-            "aids": [
-                220048
-            ],
-            "id": 54
-        },
-        "55": {
-            "c": 0,
-            "subs": [
-                56
-            ],
-            "pt": "da",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 54,
-            "u": 0,
-            "aids": [
-                220048
-            ],
-            "id": 55
-        },
-        "56": {
-            "c": 0,
-            "subs": [],
-            "pt": "ed",
-            "f": 0,
-            "tip": "",
-            "o": 1,
-            "p": 55,
-            "u": 0,
-            "aids": [
-                220048
-            ],
-            "id": 56
         }
     },
-    "sy": 13,
+    "is_public": true,
+    "userlevel": 138,
+    "c": "amsTQlARHRATQlcRHRATQ1cRHRATXFcRHRATXVARHRATXVERHRATQVERbBwRaBFDUhIdExFcUhIdExFcUxIdExFDUBIdExFCUxIdExFdVRIdExFeVRIdExFfUhIdExFfUxJsbg==",
     "answers": [
         {
-            "username": "我爱出勺",
+            "username": "w_32292528191115",
+            "change_count": 1,
+            "ty": 2,
+            "userid": 712673,
+            "id": 2417422,
+            "ok_count": 0,
+            "error_count": 0,
+            "bad_count": 0,
+            "v": 0,
+            "st": 1,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": ""
+                },
+                {
+                    "p": "ra",
+                    "c": ""
+                },
+                {
+                    "p": "oa",
+                    "c": ""
+                },
+                {
+                    "p": "rc",
+                    "c": ""
+                },
+                {
+                    "p": "sb",
+                    "c": ""
+                },
+                {
+                    "p": "sc",
+                    "c": ""
+                },
+                {
+                    "p": "pb",
+                    "c": ""
+                },
+                {
+                    "p": "sa",
+                    "c": ""
+                },
+                {
+                    "p": "rb",
+                    "c": ""
+                },
+                {
+                    "p": "sb",
+                    "c": ""
+                },
+                {
+                    "p": "qa",
+                    "c": ""
+                },
+                {
+                    "p": "rd",
+                    "c": ""
+                },
+                {
+                    "p": "re",
+                    "c": ""
+                },
+                {
+                    "p": "se",
+                    "c": ""
+                },
+                {
+                    "p": "rb",
+                    "c": ""
+                },
+                {
+                    "p": "sf",
+                    "c": ""
+                },
+                {
+                    "p": "sd",
+                    "c": ""
+                }
+            ],
+            "nu": 37,
+            "stepindex": 0,
+            "stepcount": 17,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:114"
+        },
+        {
+            "username": "QQde密码",
+            "change_count": 0,
+            "ty": 3,
+            "userid": 4323,
+            "id": 257976,
+            "ok_count": 2,
+            "error_count": 0,
+            "bad_count": 12,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": " "
+                },
+                {
+                    "p": "ra",
+                    "c": " "
+                },
+                {
+                    "p": "oa",
+                    "c": " "
+                },
+                {
+                    "p": "rc",
+                    "c": " "
+                },
+                {
+                    "p": "pb",
+                    "c": " "
+                },
+                {
+                    "p": "sb",
+                    "c": " "
+                },
+                {
+                    "p": "qa",
+                    "c": " "
+                }
+            ],
+            "nu": 7,
+            "stepindex": 0,
+            "stepcount": 7,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:90"
+        },
+        {
+            "username": "QQde密码",
+            "change_count": 0,
+            "ty": 3,
+            "userid": 4323,
+            "id": 257975,
+            "ok_count": 2,
+            "error_count": 2,
+            "bad_count": 10,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": " "
+                },
+                {
+                    "p": "ra",
+                    "c": " "
+                },
+                {
+                    "p": "sb",
+                    "c": " "
+                },
+                {
+                    "p": "oa",
+                    "c": " "
+                },
+                {
+                    "p": "sa",
+                    "c": " "
+                },
+                {
+                    "p": "mc",
+                    "c": " "
+                }
+            ],
+            "nu": 6,
+            "stepindex": 0,
+            "stepcount": 6,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:89"
+        },
+        {
+            "username": "康王老师",
             "change_count": 0,
             "ty": 1,
-            "userid": 16956,
-            "id": 505051,
-            "ok_count": 10,
+            "userid": 456396,
+            "id": 2334194,
+            "ok_count": 1,
             "error_count": 0,
+            "bad_count": 0,
+            "v": 0,
+            "st": 1,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": ""
+                },
+                {
+                    "p": "oa",
+                    "c": ""
+                },
+                {
+                    "p": "ra",
+                    "c": ""
+                },
+                {
+                    "p": "qa",
+                    "c": ""
+                },
+                {
+                    "p": "pb",
+                    "c": ""
+                }
+            ],
+            "nu": 36,
+            "stepindex": 0,
+            "stepcount": 5,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:110"
+        },
+        {
+            "username": "苍鹰翔宇",
+            "change_count": 10,
+            "ty": 1,
+            "userid": 1500,
+            "id": 112402,
+            "ok_count": 13,
+            "error_count": 2,
             "bad_count": 0,
             "v": 0,
             "st": 2,
             "pts": [
                 {
-                    "p": "la",
+                    "p": "na",
                     "c": ""
                 },
                 {
-                    "p": "hb",
+                    "p": "oa",
                     "c": ""
                 },
                 {
-                    "p": "bj",
+                    "p": "ra",
+                    "c": ""
+                }
+            ],
+            "nu": 2,
+            "stepindex": 0,
+            "stepcount": 3,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:82"
+        },
+        {
+            "username": "roboter",
+            "change_count": 1,
+            "ty": 1,
+            "userid": 2,
+            "id": 70900,
+            "ok_count": 14,
+            "error_count": 0,
+            "bad_count": 1,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "na",
                     "c": ""
                 },
                 {
-                    "p": "bk",
+                    "p": "oa",
                     "c": ""
                 },
                 {
-                    "p": "bh",
-                    "c": ""
-                },
-                {
-                    "p": "aj",
-                    "c": ""
-                },
-                {
-                    "p": "ah",
-                    "c": ""
-                },
-                {
-                    "p": "ai",
-                    "c": ""
-                },
-                {
-                    "p": "lk",
-                    "c": ""
-                },
-                {
-                    "p": "ll",
-                    "c": ""
-                },
-                {
-                    "p": "jk",
-                    "c": ""
-                },
-                {
-                    "p": "kl",
-                    "c": ""
-                },
-                {
-                    "p": "jl",
-                    "c": ""
-                },
-                {
-                    "p": "kd",
-                    "c": ""
-                },
-                {
-                    "p": "ld",
-                    "c": ""
-                },
-                {
-                    "p": "ke",
+                    "p": "ra",
                     "c": ""
                 },
                 {
@@ -1225,87 +1369,23 @@
                     "c": ""
                 },
                 {
-                    "p": "ig",
-                    "c": ""
-                },
-                {
-                    "p": "hh",
-                    "c": ""
-                },
-                {
-                    "p": "eg",
-                    "c": ""
-                },
-                {
-                    "p": "eh",
-                    "c": ""
-                },
-                {
-                    "p": "gf",
-                    "c": ""
-                },
-                {
-                    "p": "hf",
-                    "c": ""
-                },
-                {
-                    "p": "de",
-                    "c": ""
-                },
-                {
-                    "p": "df",
-                    "c": ""
-                },
-                {
-                    "p": "ee",
-                    "c": ""
-                },
-                {
-                    "p": "ce",
-                    "c": ""
-                },
-                {
-                    "p": "ih",
-                    "c": ""
-                },
-                {
-                    "p": "ii",
-                    "c": ""
-                },
-                {
-                    "p": "da",
-                    "c": ""
-                },
-                {
-                    "p": "ca",
-                    "c": ""
-                },
-                {
-                    "p": "ea",
-                    "c": ""
-                },
-                {
-                    "p": "kg",
-                    "c": ""
-                },
-                {
-                    "p": "lj",
+                    "p": "qa",
                     "c": ""
                 }
             ],
-            "nu": 3,
+            "nu": 1,
             "stepindex": 0,
-            "stepcount": 34,
+            "stepcount": 5,
             "showpinjia": false,
             "isdest": false,
-            "$$hashKey": "object:77"
+            "$$hashKey": "object:81"
         },
         {
-            "username": "tangboy",
+            "username": "精越善葛好班",
             "change_count": 0,
             "ty": 3,
-            "userid": 24328,
-            "id": 746375,
+            "userid": 1279265,
+            "id": 2231753,
             "ok_count": 0,
             "error_count": 0,
             "bad_count": 1,
@@ -1313,1264 +1393,598 @@
             "st": 1,
             "pts": [
                 {
-                    "p": "bg",
+                    "p": "na",
                     "c": ""
                 },
                 {
-                    "p": "bf",
+                    "p": "ra",
                     "c": ""
                 },
                 {
-                    "p": "be",
+                    "p": "sb",
                     "c": ""
                 },
                 {
-                    "p": "ce",
+                    "p": "oa",
                     "c": ""
                 },
                 {
-                    "p": "de",
+                    "p": "sa",
                     "c": ""
                 },
                 {
-                    "p": "df",
+                    "p": "rc",
                     "c": ""
                 },
                 {
-                    "p": "ef",
-                    "c": ""
-                },
-                {
-                    "p": "gi",
-                    "c": ""
-                },
-                {
-                    "p": "ih",
-                    "c": ""
-                },
-                {
-                    "p": "ii",
-                    "c": ""
-                },
-                {
-                    "p": "ej",
-                    "c": ""
-                },
-                {
-                    "p": "ei",
+                    "p": "qa",
                     "c": ""
                 }
             ],
-            "nu": 8,
+            "nu": 35,
             "stepindex": 0,
-            "stepcount": 12,
+            "stepcount": 7,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:117"
+        },
+        {
+            "username": "吴鑫49",
+            "change_count": 0,
+            "ty": 1,
+            "userid": 817735,
+            "id": 2227500,
+            "ok_count": 1,
+            "error_count": 0,
+            "bad_count": 0,
+            "v": 0,
+            "st": 1,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": ""
+                },
+                {
+                    "p": "oa",
+                    "c": ""
+                },
+                {
+                    "p": "ra",
+                    "c": ""
+                },
+                {
+                    "p": "mc",
+                    "c": ""
+                },
+                {
+                    "p": "qa",
+                    "c": ""
+                }
+            ],
+            "nu": 34,
+            "stepindex": 0,
+            "stepcount": 5,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:109"
+        },
+        {
+            "username": "吴鑫49",
+            "change_count": 0,
+            "ty": 1,
+            "userid": 817735,
+            "id": 2227499,
+            "ok_count": 1,
+            "error_count": 0,
+            "bad_count": 0,
+            "v": 0,
+            "st": 1,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": ""
+                },
+                {
+                    "p": "oa",
+                    "c": ""
+                },
+                {
+                    "p": "ra",
+                    "c": ""
+                },
+                {
+                    "p": "ma",
+                    "c": ""
+                },
+                {
+                    "p": "qa",
+                    "c": ""
+                }
+            ],
+            "nu": 33,
+            "stepindex": 0,
+            "stepcount": 5,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:108"
+        },
+        {
+            "username": "kenny",
+            "change_count": 0,
+            "ty": 3,
+            "userid": 23199,
+            "id": 361258,
+            "ok_count": 0,
+            "error_count": 0,
+            "bad_count": 11,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "oa",
+                    "c": " "
+                },
+                {
+                    "p": "na",
+                    "c": " "
+                },
+                {
+                    "p": "ma",
+                    "c": " "
+                },
+                {
+                    "p": "oa",
+                    "c": " "
+                }
+            ],
+            "nu": 9,
+            "stepindex": 0,
+            "stepcount": 4,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:91"
+        },
+        {
+            "username": "w_206588471917",
+            "change_count": 0,
+            "ty": 3,
+            "userid": 1443762,
+            "id": 2066512,
+            "ok_count": 0,
+            "error_count": 0,
+            "bad_count": 1,
+            "v": 0,
+            "st": 1,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": ""
+                },
+                {
+                    "p": "ra",
+                    "c": ""
+                },
+                {
+                    "p": "rc",
+                    "c": ""
+                },
+                {
+                    "p": "oa",
+                    "c": ""
+                },
+                {
+                    "p": "sb",
+                    "c": ""
+                },
+                {
+                    "p": "mb",
+                    "c": ""
+                },
+                {
+                    "p": "sa",
+                    "c": ""
+                },
+                {
+                    "p": "ma",
+                    "c": ""
+                },
+                {
+                    "p": "qa",
+                    "c": ""
+                },
+                {
+                    "p": "mc",
+                    "c": ""
+                }
+            ],
+            "nu": 32,
+            "stepindex": 0,
+            "stepcount": 10,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:116"
+        },
+        {
+            "username": "苍鹰翔宇",
+            "change_count": 1,
+            "ty": 1,
+            "userid": 1500,
+            "id": 112403,
+            "ok_count": 22,
+            "error_count": 1,
+            "bad_count": 1,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": ""
+                },
+                {
+                    "p": "ra",
+                    "c": ""
+                },
+                {
+                    "p": "oa",
+                    "c": ""
+                },
+                {
+                    "p": "rc",
+                    "c": ""
+                },
+                {
+                    "p": "sb",
+                    "c": ""
+                }
+            ],
+            "nu": 3,
+            "stepindex": 0,
+            "stepcount": 5,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:83"
+        },
+        {
+            "username": "QQde密码",
+            "change_count": 0,
+            "ty": 3,
+            "userid": 4323,
+            "id": 434185,
+            "ok_count": 0,
+            "error_count": 0,
+            "bad_count": 10,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "ma",
+                    "c": " "
+                },
+                {
+                    "p": "oa",
+                    "c": " "
+                },
+                {
+                    "p": "ra",
+                    "c": " "
+                },
+                {
+                    "p": "mb",
+                    "c": " "
+                }
+            ],
+            "nu": 10,
+            "stepindex": 0,
+            "stepcount": 4,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:92"
+        },
+        {
+            "username": "QQde密码",
+            "change_count": 0,
+            "ty": 3,
+            "userid": 4323,
+            "id": 568206,
+            "ok_count": 0,
+            "error_count": 0,
+            "bad_count": 10,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "na",
+                    "c": ""
+                },
+                {
+                    "p": "ra",
+                    "c": ""
+                },
+                {
+                    "p": "rc",
+                    "c": ""
+                },
+                {
+                    "p": "oa",
+                    "c": ""
+                },
+                {
+                    "p": "sb",
+                    "c": ""
+                },
+                {
+                    "p": "mc",
+                    "c": ""
+                }
+            ],
+            "nu": 14,
+            "stepindex": 0,
+            "stepcount": 6,
             "showpinjia": false,
             "isdest": false,
             "$$hashKey": "object:93"
         },
         {
-            "username": "nitianyi",
+            "username": "◎米娜◎",
             "change_count": 0,
-            "ty": 1,
-            "userid": 110925,
-            "id": 657641,
-            "ok_count": 1,
+            "ty": 3,
+            "userid": 12227,
+            "id": 247004,
+            "ok_count": 0,
             "error_count": 0,
-            "bad_count": 0,
-            "v": 0,
-            "st": 1,
-            "pts": [
-                {
-                    "p": "la",
-                    "c": ""
-                },
-                {
-                    "p": "hb",
-                    "c": ""
-                },
-                {
-                    "p": "bj",
-                    "c": ""
-                },
-                {
-                    "p": "aj",
-                    "c": ""
-                },
-                {
-                    "p": "bh",
-                    "c": ""
-                },
-                {
-                    "p": "bk",
-                    "c": ""
-                },
-                {
-                    "p": "ah",
-                    "c": ""
-                },
-                {
-                    "p": "ai",
-                    "c": ""
-                },
-                {
-                    "p": "lk",
-                    "c": ""
-                },
-                {
-                    "p": "ll",
-                    "c": ""
-                },
-                {
-                    "p": "jk",
-                    "c": ""
-                },
-                {
-                    "p": "kl",
-                    "c": ""
-                },
-                {
-                    "p": "jl",
-                    "c": ""
-                },
-                {
-                    "p": "kd",
-                    "c": ""
-                },
-                {
-                    "p": "ld",
-                    "c": ""
-                },
-                {
-                    "p": "ke",
-                    "c": ""
-                },
-                {
-                    "p": "mb",
-                    "c": ""
-                },
-                {
-                    "p": "ig",
-                    "c": ""
-                },
-                {
-                    "p": "hh",
-                    "c": ""
-                },
-                {
-                    "p": "eg",
-                    "c": ""
-                },
-                {
-                    "p": "eh",
-                    "c": ""
-                },
-                {
-                    "p": "de",
-                    "c": ""
-                },
-                {
-                    "p": "ce",
-                    "c": ""
-                },
-                {
-                    "p": "df",
-                    "c": ""
-                },
-                {
-                    "p": "ee",
-                    "c": ""
-                },
-                {
-                    "p": "ef",
-                    "c": ""
-                },
-                {
-                    "p": "ed",
-                    "c": ""
-                },
-                {
-                    "p": "ih",
-                    "c": ""
-                },
-                {
-                    "p": "ii",
-                    "c": ""
-                },
-                {
-                    "p": "gf",
-                    "c": ""
-                },
-                {
-                    "p": "hf",
-                    "c": ""
-                },
-                {
-                    "p": "da",
-                    "c": ""
-                },
-                {
-                    "p": "ca",
-                    "c": ""
-                },
-                {
-                    "p": "ea",
-                    "c": ""
-                },
-                {
-                    "p": "kg",
-                    "c": ""
-                },
-                {
-                    "p": "lj",
-                    "c": ""
-                }
-            ],
-            "nu": 7,
-            "stepindex": 0,
-            "stepcount": 36,
-            "showpinjia": false,
-            "isdest": false,
-            "$$hashKey": "object:90"
-        },
-        {
-            "username": "我爱出勺",
-            "change_count": 0,
-            "ty": 1,
-            "userid": 16956,
-            "id": 505054,
-            "ok_count": 10,
-            "error_count": 0,
-            "bad_count": 0,
+            "bad_count": 10,
             "v": 0,
             "st": 2,
             "pts": [
                 {
-                    "p": "la",
-                    "c": ""
-                },
-                {
-                    "p": "hb",
-                    "c": ""
-                },
-                {
-                    "p": "bj",
-                    "c": ""
-                },
-                {
-                    "p": "bk",
-                    "c": ""
-                },
-                {
-                    "p": "bh",
-                    "c": ""
-                },
-                {
-                    "p": "aj",
-                    "c": ""
-                },
-                {
-                    "p": "ah",
-                    "c": ""
-                },
-                {
-                    "p": "ai",
-                    "c": ""
-                },
-                {
-                    "p": "lk",
-                    "c": ""
-                },
-                {
-                    "p": "ll",
-                    "c": ""
-                },
-                {
-                    "p": "jk",
-                    "c": ""
-                },
-                {
-                    "p": "kl",
-                    "c": ""
-                },
-                {
-                    "p": "jl",
-                    "c": ""
-                },
-                {
-                    "p": "kd",
-                    "c": ""
-                },
-                {
-                    "p": "ld",
-                    "c": ""
-                },
-                {
-                    "p": "ke",
-                    "c": ""
-                },
-                {
-                    "p": "mb",
-                    "c": ""
-                },
-                {
-                    "p": "ig",
-                    "c": ""
-                },
-                {
-                    "p": "hh",
-                    "c": ""
-                },
-                {
-                    "p": "eg",
-                    "c": ""
-                },
-                {
-                    "p": "eh",
-                    "c": ""
-                },
-                {
-                    "p": "gf",
-                    "c": ""
-                },
-                {
-                    "p": "hf",
-                    "c": ""
-                },
-                {
-                    "p": "de",
-                    "c": ""
-                },
-                {
-                    "p": "df",
-                    "c": ""
-                },
-                {
-                    "p": "ee",
-                    "c": ""
-                },
-                {
-                    "p": "ce",
-                    "c": ""
-                },
-                {
-                    "p": "ih",
-                    "c": ""
-                },
-                {
-                    "p": "ii",
-                    "c": ""
-                },
-                {
-                    "p": "da",
-                    "c": ""
-                },
-                {
-                    "p": "ca",
-                    "c": ""
-                },
-                {
-                    "p": "ea",
-                    "c": ""
-                },
-                {
-                    "p": "jg",
-                    "c": ""
-                },
-                {
-                    "p": "if",
-                    "c": ""
-                },
-                {
-                    "p": "kg",
-                    "c": ""
-                },
-                {
-                    "p": "lj",
-                    "c": ""
-                }
-            ],
-            "nu": 5,
-            "stepindex": 0,
-            "stepcount": 36,
-            "showpinjia": false,
-            "isdest": false,
-            "$$hashKey": "object:79"
-        },
-        {
-            "username": "mpx",
-            "change_count": 0,
-            "ty": 1,
-            "userid": 3951,
-            "id": 458737,
-            "ok_count": 10,
-            "error_count": 0,
-            "bad_count": 0,
-            "v": 0,
-            "st": 2,
-            "pts": [
-                {
-                    "p": "la",
+                    "p": "ra",
                     "c": " "
                 },
                 {
-                    "p": "hb",
+                    "p": "ma",
                     "c": " "
                 },
                 {
-                    "p": "bj",
+                    "p": "qa",
                     "c": " "
                 },
                 {
-                    "p": "bk",
-                    "c": " "
-                },
-                {
-                    "p": "bh",
-                    "c": " "
-                },
-                {
-                    "p": "aj",
-                    "c": " "
-                },
-                {
-                    "p": "ah",
-                    "c": " "
-                },
-                {
-                    "p": "ai",
-                    "c": " "
-                },
-                {
-                    "p": "lk",
-                    "c": " "
-                },
-                {
-                    "p": "ll",
-                    "c": " "
-                },
-                {
-                    "p": "jk",
-                    "c": " "
-                },
-                {
-                    "p": "kl",
-                    "c": " "
-                },
-                {
-                    "p": "jl",
-                    "c": " "
-                },
-                {
-                    "p": "kd",
-                    "c": " "
-                },
-                {
-                    "p": "ld",
-                    "c": " "
-                },
-                {
-                    "p": "ke",
-                    "c": " "
-                },
-                {
-                    "p": "mb",
-                    "c": " "
-                },
-                {
-                    "p": "ig",
-                    "c": " "
-                },
-                {
-                    "p": "hh",
-                    "c": " "
-                },
-                {
-                    "p": "eg",
-                    "c": " "
-                },
-                {
-                    "p": "eh",
-                    "c": " "
-                },
-                {
-                    "p": "gf",
-                    "c": " "
-                },
-                {
-                    "p": "hf",
-                    "c": " "
-                },
-                {
-                    "p": "de",
-                    "c": " "
-                },
-                {
-                    "p": "ce",
-                    "c": " "
-                },
-                {
-                    "p": "df",
-                    "c": " "
-                },
-                {
-                    "p": "ih",
-                    "c": " "
-                },
-                {
-                    "p": "kg",
-                    "c": " "
-                },
-                {
-                    "p": "ee",
-                    "c": " "
-                },
-                {
-                    "p": "ef",
-                    "c": " "
-                },
-                {
-                    "p": "ed",
-                    "c": " "
-                },
-                {
-                    "p": "da",
-                    "c": " "
-                },
-                {
-                    "p": "ca",
-                    "c": " "
-                },
-                {
-                    "p": "ea",
-                    "c": " "
-                }
-            ],
-            "nu": 2,
-            "stepindex": 0,
-            "stepcount": 34,
-            "showpinjia": false,
-            "isdest": false,
-            "$$hashKey": "object:76"
-        },
-        {
-            "username": "我爱出勺",
-            "change_count": 0,
-            "ty": 1,
-            "userid": 16956,
-            "id": 505053,
-            "ok_count": 10,
-            "error_count": 0,
-            "bad_count": 0,
-            "v": 0,
-            "st": 2,
-            "pts": [
-                {
-                    "p": "la",
-                    "c": ""
-                },
-                {
-                    "p": "hb",
-                    "c": ""
-                },
-                {
-                    "p": "bj",
-                    "c": ""
-                },
-                {
-                    "p": "bk",
-                    "c": ""
-                },
-                {
-                    "p": "bh",
-                    "c": ""
-                },
-                {
-                    "p": "aj",
-                    "c": ""
-                },
-                {
-                    "p": "ah",
-                    "c": ""
-                },
-                {
-                    "p": "ai",
-                    "c": ""
-                },
-                {
-                    "p": "lk",
-                    "c": ""
-                },
-                {
-                    "p": "ll",
-                    "c": ""
-                },
-                {
-                    "p": "jk",
-                    "c": ""
-                },
-                {
-                    "p": "kl",
-                    "c": ""
-                },
-                {
-                    "p": "jl",
-                    "c": ""
-                },
-                {
-                    "p": "kd",
-                    "c": ""
-                },
-                {
-                    "p": "ld",
-                    "c": ""
-                },
-                {
-                    "p": "ke",
-                    "c": ""
-                },
-                {
-                    "p": "mb",
-                    "c": ""
-                },
-                {
-                    "p": "ig",
-                    "c": ""
-                },
-                {
-                    "p": "hh",
-                    "c": ""
-                },
-                {
-                    "p": "eg",
-                    "c": ""
-                },
-                {
-                    "p": "eh",
-                    "c": ""
-                },
-                {
-                    "p": "gf",
-                    "c": ""
-                },
-                {
-                    "p": "hf",
-                    "c": ""
-                },
-                {
-                    "p": "de",
-                    "c": ""
-                },
-                {
-                    "p": "df",
-                    "c": ""
-                },
-                {
-                    "p": "ee",
-                    "c": ""
-                },
-                {
-                    "p": "ce",
-                    "c": ""
-                },
-                {
-                    "p": "ih",
-                    "c": ""
-                },
-                {
-                    "p": "ii",
-                    "c": ""
-                },
-                {
-                    "p": "da",
-                    "c": ""
-                },
-                {
-                    "p": "ca",
-                    "c": ""
-                },
-                {
-                    "p": "ea",
-                    "c": ""
-                },
-                {
-                    "p": "if",
-                    "c": ""
-                },
-                {
-                    "p": "jg",
-                    "c": ""
-                },
-                {
-                    "p": "kg",
-                    "c": ""
-                },
-                {
-                    "p": "lj",
-                    "c": ""
+                    "p": "na",
+                    "c": "黑被吃"
                 }
             ],
             "nu": 4,
             "stepindex": 0,
-            "stepcount": 36,
+            "stepcount": 4,
             "showpinjia": false,
             "isdest": false,
-            "$$hashKey": "object:78"
+            "$$hashKey": "object:87"
         },
         {
-            "username": "哈哈嘿嘿",
+            "username": "◎米娜◎",
             "change_count": 0,
-            "ty": 1,
-            "userid": 63762,
-            "id": 610916,
-            "ok_count": 1,
-            "error_count": 0,
-            "bad_count": 0,
-            "v": 0,
-            "st": 1,
-            "pts": [
-                {
-                    "p": "la",
-                    "c": ""
-                },
-                {
-                    "p": "hb",
-                    "c": ""
-                },
-                {
-                    "p": "bj",
-                    "c": ""
-                },
-                {
-                    "p": "aj",
-                    "c": ""
-                },
-                {
-                    "p": "bh",
-                    "c": ""
-                },
-                {
-                    "p": "bk",
-                    "c": ""
-                },
-                {
-                    "p": "ah",
-                    "c": ""
-                },
-                {
-                    "p": "ai",
-                    "c": ""
-                },
-                {
-                    "p": "lk",
-                    "c": ""
-                },
-                {
-                    "p": "ll",
-                    "c": ""
-                },
-                {
-                    "p": "jk",
-                    "c": ""
-                },
-                {
-                    "p": "kl",
-                    "c": ""
-                },
-                {
-                    "p": "jl",
-                    "c": ""
-                },
-                {
-                    "p": "kd",
-                    "c": ""
-                },
-                {
-                    "p": "ld",
-                    "c": ""
-                },
-                {
-                    "p": "ke",
-                    "c": ""
-                },
-                {
-                    "p": "mb",
-                    "c": ""
-                },
-                {
-                    "p": "ig",
-                    "c": ""
-                },
-                {
-                    "p": "hh",
-                    "c": ""
-                },
-                {
-                    "p": "gf",
-                    "c": ""
-                },
-                {
-                    "p": "hf",
-                    "c": ""
-                },
-                {
-                    "p": "eg",
-                    "c": ""
-                },
-                {
-                    "p": "eh",
-                    "c": ""
-                },
-                {
-                    "p": "de",
-                    "c": ""
-                },
-                {
-                    "p": "ce",
-                    "c": ""
-                },
-                {
-                    "p": "df",
-                    "c": ""
-                },
-                {
-                    "p": "if",
-                    "c": ""
-                },
-                {
-                    "p": "jg",
-                    "c": ""
-                },
-                {
-                    "p": "ih",
-                    "c": ""
-                },
-                {
-                    "p": "kg",
-                    "c": ""
-                },
-                {
-                    "p": "ee",
-                    "c": ""
-                },
-                {
-                    "p": "ef",
-                    "c": ""
-                },
-                {
-                    "p": "ed",
-                    "c": ""
-                },
-                {
-                    "p": "da",
-                    "c": ""
-                },
-                {
-                    "p": "ca",
-                    "c": ""
-                },
-                {
-                    "p": "ea",
-                    "c": ""
-                }
-            ],
-            "nu": 6,
-            "stepindex": 0,
-            "stepcount": 36,
-            "showpinjia": false,
-            "isdest": false,
-            "$$hashKey": "object:89"
-        },
-        {
-            "username": "银冈棋院",
-            "change_count": 0,
-            "ty": 1,
-            "userid": 10863,
-            "id": 220048,
+            "ty": 3,
+            "userid": 12227,
+            "id": 247005,
             "ok_count": 0,
             "error_count": 0,
-            "bad_count": 0,
+            "bad_count": 10,
             "v": 0,
             "st": 2,
             "pts": [
                 {
-                    "p": "la",
+                    "p": "ra",
+                    "c": " "
+                },
+                {
+                    "p": "ma",
+                    "c": " "
+                },
+                {
+                    "p": "na",
+                    "c": " "
+                },
+                {
+                    "p": "mc",
+                    "c": "黑被吃"
+                }
+            ],
+            "nu": 5,
+            "stepindex": 0,
+            "stepcount": 4,
+            "showpinjia": false,
+            "isdest": false,
+            "$$hashKey": "object:88"
+        },
+        {
+            "username": "QQde密码",
+            "change_count": 0,
+            "ty": 3,
+            "userid": 4323,
+            "id": 605832,
+            "ok_count": 0,
+            "error_count": 0,
+            "bad_count": 10,
+            "v": 0,
+            "st": 2,
+            "pts": [
+                {
+                    "p": "qa",
                     "c": ""
                 },
                 {
-                    "p": "hb",
+                    "p": "ra",
                     "c": ""
                 },
                 {
-                    "p": "bj",
+                    "p": "na",
                     "c": ""
                 },
                 {
-                    "p": "bk",
-                    "c": ""
-                },
-                {
-                    "p": "bh",
-                    "c": ""
-                },
-                {
-                    "p": "aj",
-                    "c": ""
-                },
-                {
-                    "p": "ah",
-                    "c": ""
-                },
-                {
-                    "p": "ai",
-                    "c": ""
-                },
-                {
-                    "p": "lk",
-                    "c": ""
-                },
-                {
-                    "p": "ll",
-                    "c": ""
-                },
-                {
-                    "p": "jk",
-                    "c": ""
-                },
-                {
-                    "p": "kl",
-                    "c": ""
-                },
-                {
-                    "p": "jl",
-                    "c": ""
-                },
-                {
-                    "p": "kd",
-                    "c": ""
-                },
-                {
-                    "p": "ld",
-                    "c": ""
-                },
-                {
-                    "p": "ke",
-                    "c": ""
-                },
-                {
-                    "p": "mb",
-                    "c": ""
-                },
-                {
-                    "p": "ig",
-                    "c": ""
-                },
-                {
-                    "p": "hh",
-                    "c": ""
-                },
-                {
-                    "p": "eg",
-                    "c": ""
-                },
-                {
-                    "p": "eh",
-                    "c": ""
-                },
-                {
-                    "p": "gf",
-                    "c": ""
-                },
-                {
-                    "p": "hf",
-                    "c": ""
-                },
-                {
-                    "p": "de",
-                    "c": ""
-                },
-                {
-                    "p": "ce",
-                    "c": ""
-                },
-                {
-                    "p": "df",
-                    "c": ""
-                },
-                {
-                    "p": "ih",
-                    "c": ""
-                },
-                {
-                    "p": "kg",
-                    "c": ""
-                },
-                {
-                    "p": "ea",
-                    "c": ""
-                },
-                {
-                    "p": "fa",
-                    "c": ""
-                },
-                {
-                    "p": "da",
-                    "c": ""
-                },
-                {
-                    "p": "ed",
+                    "p": "oa",
                     "c": ""
                 }
             ],
-            "nu": 1,
+            "nu": 16,
             "stepindex": 0,
-            "stepcount": 32,
+            "stepcount": 4,
             "showpinjia": false,
             "isdest": false,
-            "$$hashKey": "object:75"
+            "$$hashKey": "object:94"
         }
     ],
     "is_share": true,
+    "lu": 19,
+    "min_levelname": "",
     "taskresult": {
         "ok_nums": [
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
-            1,
-            4,
-            6
+            672,
+            558,
+            823,
+            1091,
+            1210,
+            1412,
+            1477,
+            1165,
+            906,
+            803,
+            664,
+            518,
+            408,
+            329,
+            262,
+            193,
+            137,
+            144,
+            147,
+            106,
+            64,
+            57,
+            46,
+            36,
+            29,
+            54,
+            62,
+            9,
+            9,
+            23
         ],
-        "fail_total": 87,
+        "fail_total": 10505,
         "fail_nums": [
-            1,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            1,
-            2,
-            0,
-            2,
-            0,
-            3,
-            1,
-            0,
-            1,
-            2,
-            5,
-            3,
+            529,
+            585,
+            1168,
+            1339,
+            1301,
+            1507,
+            1184,
+            825,
+            628,
+            427,
+            317,
+            209,
+            151,
+            85,
+            49,
+            50,
+            37,
+            26,
+            23,
+            16,
+            12,
+            9,
             4,
             6,
-            5,
-            5,
-            5,
-            14,
-            8,
-            5,
             2,
-            10
+            6,
+            4,
+            2,
+            3,
+            1
         ],
-        "ok_total": 15
+        "ok_total": 13414
     },
     "prepos": [
         [
-            "gj",
-            "hk",
-            "hl",
-            "im",
-            "ij",
-            "jj",
-            "ji",
-            "jh",
-            "kh",
-            "li",
-            "dg",
-            "ci",
-            "ch",
-            "cf",
-            "dd",
-            "dc",
-            "db",
-            "bb",
-            "hc",
-            "lb",
-            "lc",
-            "kc",
-            "md",
-            "jd",
-            "je",
-            "ie",
-            "he",
-            "ge",
-            "hg",
-            "gg",
-            "fh",
-            "dj",
-            "dk",
-            "el",
-            "em",
-            "fk"
+            "qc",
+            "qd",
+            "pd",
+            "od",
+            "nc"
         ],
         [
-            "lh",
-            "lg",
-            "kf",
-            "jf",
-            "ik",
-            "il",
-            "dl",
-            "dm",
-            "ck",
-            "cj",
-            "bl",
-            "bi",
-            "fj",
-            "eb",
-            "ec",
-            "fc",
-            "fd",
-            "fe",
-            "fg",
-            "ff",
-            "gd",
-            "hd",
-            "id",
-            "jc",
-            "kb",
-            "ib",
-            "ka",
-            "me",
-            "le",
-            "kj",
-            "ki",
-            "kk",
-            "km"
+            "pc",
+            "oc",
+            "ob"
         ]
     ],
-    "hasbook": false,
+    "sy": 8,
     "issingle": true,
     "xuandians": [],
-    "sms_count": 1,
+    "sms_count": 3,
     "edit_count": 0,
-    "sx": 13,
-    "name": "",
+    "enable_answer": true,
+    "name": null,
     "nexterrorurl": "",
-    "ans_count": 8,
-    "userid": 10863,
-    "taotaiid": 0,
-    "is_public": true,
-    "options": [],
-    "points": [],
+    "ans_count": 17,
+    "userid": 1,
+    "layoutnumber": 1,
+    "sx": 10,
+    "bookinfos": [
+        {
+            "pinyin": "",
+            "bookname": "叶老师围棋提高A",
+            "nodename": "三气对杀",
+            "bookid": 5102,
+            "bookurl": 5102
+        },
+        {
+            "pinyin": "",
+            "bookname": "叶老师围棋提高A",
+            "nodename": "总复习",
+            "bookid": 5102,
+            "bookurl": 5102
+        },
+        {
+            "pinyin": "lichanhaoshoujin",
+            "bookname": "李昌镐精讲围棋手筋全集",
+            "nodename": "1",
+            "bookid": 321,
+            "bookurl": "lichanhaoshoujin"
+        }
+    ],
+    "r": 2,
     "isguess": false,
-    "qtypename": "官子题",
+    "qtypename": "对杀题",
     "myan": null,
     "attr_type": 0,
-    "levelname": "5D+",
+    "levelname": "9K+",
     "psm": {
         "is_start_black": true,
         "prepos": [
             [
-                "gj",
-                "hk",
-                "hl",
-                "im",
-                "ij",
-                "jj",
-                "ji",
-                "jh",
-                "kh",
-                "li",
-                "dg",
-                "ci",
-                "ch",
-                "cf",
-                "dd",
-                "dc",
-                "db",
-                "bb",
-                "hc",
-                "lb",
-                "lc",
-                "kc",
-                "md",
-                "jd",
-                "je",
-                "ie",
-                "he",
-                "ge",
-                "hg",
-                "gg",
-                "fh",
-                "dj",
-                "dk",
-                "el",
-                "em",
-                "fk"
+                "qc",
+                "qd",
+                "pd",
+                "od",
+                "nc",
+                "nb",
+                "rb"
             ],
             [
-                "lh",
-                "lg",
-                "kf",
-                "jf",
-                "ik",
-                "il",
-                "dl",
-                "dm",
-                "ck",
-                "cj",
-                "bl",
-                "bi",
-                "fj",
-                "eb",
-                "ec",
-                "fc",
-                "fd",
-                "fe",
-                "fg",
-                "ff",
-                "gd",
-                "hd",
-                "id",
-                "jc",
-                "kb",
-                "ib",
-                "ka",
-                "me",
-                "le",
-                "kj",
-                "ki",
-                "kk",
-                "km"
+                "pc",
+                "oc",
+                "ob",
+                "pa",
+                "qb",
+                "nd",
+                "md",
+                "lc",
+                "lb"
             ]
         ],
         "points": [],
-        "lu": 13,
+        "lu": 19,
         "play_mode": 1,
         "stones": [
             {
@@ -2640,11 +2054,41 @@
             },
             {
                 "status": 0,
+                "ptname": "an",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ao",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ap",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "aq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ar",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "as",
+                "pz": null
+            },
+            {
+                "status": 0,
                 "ptname": "ba",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "bb",
                 "pz": null
             },
@@ -2679,7 +2123,7 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "bi",
                 "pz": null
             },
@@ -2694,13 +2138,43 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "bl",
                 "pz": null
             },
             {
                 "status": 0,
                 "ptname": "bm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "bn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "bo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "bp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "bq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "br",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "bs",
                 "pz": null
             },
             {
@@ -2729,7 +2203,7 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "cf",
                 "pz": null
             },
@@ -2739,22 +2213,22 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "ch",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "ci",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "cj",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "ck",
                 "pz": null
             },
@@ -2770,21 +2244,51 @@
             },
             {
                 "status": 0,
+                "ptname": "cn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "co",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "cp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "cq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "cr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "cs",
+                "pz": null
+            },
+            {
+                "status": 0,
                 "ptname": "da",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "db",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "dc",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "dd",
                 "pz": null
             },
@@ -2799,7 +2303,7 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "dg",
                 "pz": null
             },
@@ -2814,23 +2318,53 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "dj",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "dk",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "dl",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "dm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "dn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "do",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "dp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "dq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "dr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ds",
                 "pz": null
             },
             {
@@ -2839,12 +2373,12 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "eb",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "ec",
                 "pz": null
             },
@@ -2889,13 +2423,43 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "el",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "em",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "en",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "eo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ep",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "eq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "er",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "es",
                 "pz": null
             },
             {
@@ -2909,32 +2473,32 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "fc",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "fd",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "fe",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "ff",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "fg",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "fh",
                 "pz": null
             },
@@ -2944,12 +2508,12 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "fj",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "fk",
                 "pz": null
             },
@@ -2961,6 +2525,36 @@
             {
                 "status": 0,
                 "ptname": "fm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "fn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "fo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "fp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "fq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "fr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "fs",
                 "pz": null
             },
             {
@@ -2979,12 +2573,12 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "gd",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "ge",
                 "pz": null
             },
@@ -2994,7 +2588,7 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "gg",
                 "pz": null
             },
@@ -3009,7 +2603,7 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "gj",
                 "pz": null
             },
@@ -3030,6 +2624,36 @@
             },
             {
                 "status": 0,
+                "ptname": "gn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "go",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "gp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "gq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "gr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "gs",
+                "pz": null
+            },
+            {
+                "status": 0,
                 "ptname": "ha",
                 "pz": null
             },
@@ -3039,27 +2663,27 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "hc",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "hd",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "he",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "hf",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "hg",
                 "pz": null
             },
@@ -3079,12 +2703,12 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "hk",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "hl",
                 "pz": null
             },
@@ -3095,11 +2719,41 @@
             },
             {
                 "status": 0,
+                "ptname": "hn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ho",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "hp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "hq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "hr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "hs",
+                "pz": null
+            },
+            {
+                "status": 0,
                 "ptname": "ia",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "ib",
                 "pz": null
             },
@@ -3109,12 +2763,12 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "id",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "ie",
                 "pz": null
             },
@@ -3139,23 +2793,53 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "ij",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "ik",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "il",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "im",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "in",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "io",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ip",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "iq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ir",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "is",
                 "pz": null
             },
             {
@@ -3169,22 +2853,22 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "jc",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "jd",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "je",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "jf",
                 "pz": null
             },
@@ -3194,17 +2878,17 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "jh",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "ji",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "jj",
                 "pz": null
             },
@@ -3224,17 +2908,47 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
+                "ptname": "jn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "jo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "jp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "jq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "jr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "js",
+                "pz": null
+            },
+            {
+                "status": 0,
                 "ptname": "ka",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "kb",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "kc",
                 "pz": null
             },
@@ -3249,7 +2963,7 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "kf",
                 "pz": null
             },
@@ -3259,22 +2973,22 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "kh",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "ki",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "kj",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "kk",
                 "pz": null
             },
@@ -3284,8 +2998,38 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "km",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "kn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ko",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "kp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "kq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "kr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ks",
                 "pz": null
             },
             {
@@ -3294,12 +3038,12 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 1,
                 "ptname": "lb",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 1,
                 "ptname": "lc",
                 "pz": null
             },
@@ -3309,7 +3053,7 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "le",
                 "pz": null
             },
@@ -3319,17 +3063,17 @@
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "lg",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "lh",
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 0,
                 "ptname": "li",
                 "pz": null
             },
@@ -3355,6 +3099,36 @@
             },
             {
                 "status": 0,
+                "ptname": "ln",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "lo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "lp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "lq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "lr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ls",
+                "pz": null
+            },
+            {
+                "status": 0,
                 "ptname": "ma",
                 "pz": null
             },
@@ -3369,12 +3143,12 @@
                 "pz": null
             },
             {
-                "status": 2,
+                "status": 1,
                 "ptname": "md",
                 "pz": null
             },
             {
-                "status": 1,
+                "status": 0,
                 "ptname": "me",
                 "pz": null
             },
@@ -3417,68 +3191,633 @@
                 "status": 0,
                 "ptname": "mm",
                 "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "mn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "mo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "mp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "mq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "mr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ms",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "na",
+                "pz": null
+            },
+            {
+                "status": 2,
+                "ptname": "nb",
+                "pz": null
+            },
+            {
+                "status": 2,
+                "ptname": "nc",
+                "pz": null
+            },
+            {
+                "status": 1,
+                "ptname": "nd",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ne",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nf",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ng",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nh",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ni",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nj",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nk",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nl",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "no",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "np",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "nr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ns",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "oa",
+                "pz": null
+            },
+            {
+                "status": 1,
+                "ptname": "ob",
+                "pz": null
+            },
+            {
+                "status": 1,
+                "ptname": "oc",
+                "pz": null
+            },
+            {
+                "status": 2,
+                "ptname": "od",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "oe",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "of",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "og",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "oh",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "oi",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "oj",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ok",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ol",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "om",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "on",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "oo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "op",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "oq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "or",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "os",
+                "pz": null
+            },
+            {
+                "status": 1,
+                "ptname": "pa",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pb",
+                "pz": null
+            },
+            {
+                "status": 1,
+                "ptname": "pc",
+                "pz": null
+            },
+            {
+                "status": 2,
+                "ptname": "pd",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pe",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pf",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pg",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ph",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pi",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pj",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pk",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pl",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "po",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "pr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ps",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qa",
+                "pz": null
+            },
+            {
+                "status": 1,
+                "ptname": "qb",
+                "pz": null
+            },
+            {
+                "status": 2,
+                "ptname": "qc",
+                "pz": null
+            },
+            {
+                "status": 2,
+                "ptname": "qd",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qe",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qf",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qg",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qh",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qi",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qj",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qk",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ql",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qo",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "qs",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ra",
+                "pz": null
+            },
+            {
+                "status": 2,
+                "ptname": "rb",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rc",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rd",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "re",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rf",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rg",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rh",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ri",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rj",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rk",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rl",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ro",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "rs",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sa",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sb",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sc",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sd",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "se",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sf",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sg",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sh",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "si",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sj",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sk",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sl",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sm",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sn",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "so",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sp",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sq",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "sr",
+                "pz": null
+            },
+            {
+                "status": 0,
+                "ptname": "ss",
+                "pz": null
             }
         ],
         "signs": [],
         "istest": false,
-        "answerend": true,
-        "answerstatus": 3,
+        "answerend": false,
+        "answerstatus": 0,
         "answercount": 0,
         "testsnap": null,
         "pointstep": 0,
-        "step_history": [
-            {
-                "x": 7,
-                "y": 5,
-                "name": "hf",
-                "status": 0,
-                "px": 76,
-                "py": 58,
-                "ptcolor": 2
-            }
-        ],
+        "step_history": [],
         "temp_history": [],
-        "stepobjs": [
-            {
-                "pt": {
-                    "x": 7,
-                    "y": 5,
-                    "name": "hf",
-                    "status": 0,
-                    "px": 76,
-                    "py": 58,
-                    "ptcolor": 2
-                },
-                "text": "",
-                "isblack": true,
-                "ptname": "H8"
-            }
-        ],
-        "objindex": 1,
+        "stepobjs": [],
+        "objindex": 0,
         "yanjiupoints": {},
         "user_luozis": [],
         "show_luozi": false,
         "droppos_ptname": null,
-        "result": 3,
+        "result": 0,
         "yes_rect": [],
         "no_rect": [],
         "current_color": 0,
         "next_color": 0,
-        "gotonextcolor": 1,
-        "steps": [
-            {
-                "x": 7,
-                "y": 5,
-                "name": "hf",
-                "status": 0,
-                "px": 76,
-                "py": 58,
-                "ptcolor": 2
-            }
-        ],
-        "step": 1,
+        "gotonextcolor": 2,
+        "steps": [],
+        "step": 0,
         "stonecomment": "",
-        "board_arrow": 1,
+        "board_arrow": 4,
         "numbermode": 0,
         "lastshowpt": null,
         "b_mus": [],
@@ -3506,10 +3845,11 @@
         "isdisabled": false,
         "can_drop_more_pos": false,
         "last_notation": null,
+        "inputsimple": false,
         "last_kill_pt": null,
         "last_kill_step": 0,
         "xuandians": [],
-        "qtype": 5,
+        "qtype": 21,
         "attr_type": 0,
         "attr_type2": 0,
         "options": [],
@@ -3517,7 +3857,6 @@
         "opanswerindex": -1,
         "luozis": [],
         "isdroppos": false,
-        "smallshow": true,
-        "qdotip": "非也，答错了"
+        "smallshow": true
     }
 }

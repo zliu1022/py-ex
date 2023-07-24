@@ -13,7 +13,7 @@ from scipy import signal
 if len(sys.argv)!=5:
     print("Usage: ")
     print("./read_stock.py filename begin_date end_date")
-    print('./read_stock.py 002475.sz.csv 20210102 20220705 0')
+    print('./read_stock.py 002475.sz.csv 20200102 20200705 0')
     sys.exit()
 
 # buy and sell trigger by yesterday's average trade price
@@ -244,6 +244,10 @@ class Stock:
             plt.ylabel('RMB')
             #plt.ylim(0, 60.0)
             #plt.axhline(100)
+
+            print(len(t))
+            print(len(max_pos))
+            print(len(high))
             plt.plot(max_pos+t[0], np.array(high)[max_pos], 'o', markersize=4)
             plt.plot(min_pos+t[0],  np.array(low)[min_pos], '*', markersize=4)
             plt.show()
@@ -585,7 +589,6 @@ if __name__ == "__main__":
     filename = sys.argv[1]
     check_qfq(filename)
 
-    '''
     begin_date = sys.argv[2]
     end_date   = sys.argv[3]
 
@@ -605,4 +608,3 @@ if __name__ == "__main__":
     t,b,c = sim.draw(1)
 
     draw_mix(t, p, b, c)
-    '''

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicorn Drawing</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="unicornCanvas" width="300" height="300"></canvas>
+    <script>
+        const canvas = document.getElementById('unicornCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw the body
+        ctx.beginPath();
+        ctx.arc(100, 200, 50, 0, Math.PI * 2, true);
+        ctx.fillStyle = 'pink';
+        ctx.fill();
+
+        // Draw the head
+        ctx.beginPath();
+        ctx.arc(150, 150, 30, 0, Math.PI * 2, true);
+        ctx.fillStyle = 'pink';
+        ctx.fill();
+
+        // Draw the horn
+        ctx.beginPath();
+        ctx.moveTo(150, 120);
+        ctx.lineTo(170, 70);
+        ctx.lineTo(130, 120);
+        ctx.closePath();
+        ctx.fillStyle = 'gold';
+        ctx.fill();
+
+        // Draw the legs
+        ctx.beginPath();
+        ctx.rect(70, 240, 10, 40);
+        ctx.rect(130, 240, 10, 40);
+        ctx.fillStyle = 'pink';
+        ctx.fill();
+
+        // Draw the tail
+        ctx.beginPath();
+        ctx.moveTo(50, 200);
+        ctx.lineTo(10, 160);
+        ctx.lineTo(20, 200);
+        ctx.lineTo(10, 240);
+        ctx.closePath();
+        ctx.fillStyle = 'purple';
+        ctx.fill();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尺规作图</title>
+</head>
+<body>
+    <svg id="rulerDiagram" width="800" height="600" style="border: 1px solid black;"></svg>
+
+    <script>
+        const svg = document.getElementById("rulerDiagram");
+
+        // 初始化变量
+        const a1 = 100;
+        const b1 = 50;
+        const a2 = 150;
+        const b2 = 75;
+        const L = 200;
+
+        // 画边长为L的线段
+        drawLine(100, 300, 100 + L, 300);
+
+        // 画垂直线段
+        const verticalLength = a1 + b1 + a2 + b2;
+        drawLine(100, 300, 100, 300 - verticalLength);
+
+        // 画斜线
+        drawLine(100, 300 - verticalLength, 100 + L, 300);
+
+        // 找到点M
+        const mX = 100 + (L * (a1 + b1)) / (a1 + b1 + a2 + b2);
+        const mY = 300 - (L * (a1 + b1)) / (a1 + b1 + a2 + b2);
+        drawCircle(mX, mY, 3);
+
+        // 画点N
+        const nX = 100;
+        const nY = 300 - b1;
+        drawCircle(nX, nY, 3);
+
+        // 连接点M和N
+        drawLine(mX, mY, nX, nY);
+
+        function drawLine(x1, y1, x2, y2) {
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", x1);
+            line.setAttribute("y1", y1);
+            line.setAttribute("x2", x2);
+            line.setAttribute("y2", y2);
+            line.setAttribute("stroke", "black");
+            svg.appendChild(line);
+        }
+
+        function drawCircle(cx, cy, r) {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", cx);
+            circle.setAttribute("cy", cy);
+            circle.setAttribute("r", r);
+            circle.setAttribute("fill", "black");
+            svg.appendChild(circle);
+        }
+    </script>
+</body>
+</html>
+

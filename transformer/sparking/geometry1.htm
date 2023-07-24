@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尺规作图</title>
+    <style>
+        #stepBtn {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <button id="stepBtn" onclick="nextStep()">下一步</button>
+    <svg id="rulerDiagram" width="800" height="600" style="border: 1px solid black;"></svg>
+
+    <script>
+        const svg = document.getElementById("rulerDiagram");
+
+        // 初始化变量
+        const a1 = 100;
+        const b1 = 50;
+        const a2 = 150;
+        const b2 = 75;
+        const L = 200;
+
+        let step = 0;
+
+        function nextStep() {
+            switch (step) {
+                case 0:
+                    drawRectangles();
+                    break;
+                case 1:
+                    drawLine(100, 300, 100 + L, 300);
+                    break;
+                case 2:
+                    const verticalLength = a1 + b1 + a2 + b2;
+                    drawLine(100, 300, 100, 300 - verticalLength);
+                    break;
+                case 3:
+                    drawLine(100, 300 - (a1 + b1 + a2 + b2), 100 + L, 300);
+                    break;
+                case 4:
+                    const mX = 100 + (L * (a1 + b1)) / (a1 + b1 + a2 + b2);
+                    const mY = 300 - (L * (a1 + b1)) / (a1 + b1 + a2 + b2);
+                    drawCircle(mX, mY, 3);
+                    break;
+                case 5:
+                    const nX = 100;
+                    const nY = 300 - b1;
+                    drawCircle(nX, nY, 3);
+                    break;
+                case 6:
+                    connectMN();
+                    break;
+                case 7:
+                    drawFinalRectangle();
+                    break;
+                default:
+                    alert("已完成所有步骤");
+            }
+            step++;
+        }
+
+        function drawRectangles() {
+            const rectA = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rectA.setAttribute("x", 50);
+            rectA.setAttribute("y", 100);
+            rectA.setAttribute("width", a1);
+            rectA.setAttribute("height", b1);
+            rectA.setAttribute("fill", "blue");
+            svg.appendChild(rectA);
+
+            const rectB = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rectB.setAttribute("x", 200);
+            rectB.setAttribute("y", 100);
+            rectB.setAttribute("width", a2);
+            rectB.setAttribute("height", b2);
+            rectB.setAttribute("fill", "green");
+            svg.appendChild(rectB);
+
+            const lineL = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+            lineL.setAttribute("x1", 50);
+            lineL.setAttribute("y1", 400);
+            lineL.setAttribute("x2", 50 + L);
+            lineL.setAttribute("y2", 400);
+            lineL.setAttribute("stroke", "black");
+            lineL.setAttribute("stroke-width", 2);
+            svg.appendChild(lineL);
+        }
+
+        function drawLine(x1, y1, x2, y2) {
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", x1);
+            line.setAttribute("y1", y1);
+            line.setAttribute("x2", x2);
+            line.setAttribute("y2", y2);
+            line.setAttribute("stroke", "black");
+            line.setAttribute("stroke-width", 2);
+            svg.appendChild(line);
+        }
+
+        function drawCircle(x, y, r) {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", x);
+            circle.setAttribute("cy", y);
+            circle.setAttribute("r", r);
+            circle.setAttribute("fill", "red");
+            svg.appendChild(circle);
+        }
+
+        function connectMN() {
+            const mX = 100 + (L * (a1 + b1)) / (a1 + b1 + a2 + b2);
+            const mY = 300 - (L * (a1 + b1)) / (a1 + b1 + a2 + b2);
+            const nX = 100;
+            const nY = 300 - b1;
+            drawLine(mX, mY, nX, nY);
+        }
+
+        function drawFinalRectangle() {
+            const a3 = L;
+            const b3 = (a1 * b1 + a2 * b2) / L;
+            const rectC = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rectC.setAttribute("x", 50);
+            rectC.setAttribute("y", 450);
+            rectC.setAttribute("width", a3);
+            rectC.setAttribute("height", b3);
+            rectC.setAttribute("fill", "purple");
+            svg.appendChild(rectC);
+        }
+    </script>
+</body>
+</html>
+

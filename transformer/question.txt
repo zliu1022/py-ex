@@ -1,0 +1,16 @@
+Do you know google 's paper "Attention is All You Need"
+
+Could you tell me the detail of the principle of the neural network?
+
+Why in "Attention is All You Need" the neural network can remember things just like human being?
+
+Could you use python to write out "Transformer architecture"
+
+It's a good example. In this example, num_layer=6, does it mean only 6 words can be "remembered"?
+
+OK.Great. In the codes you provide to me above , what's the meaning of "class PositionalEncoding"? You never tell about this class.
+
+What's the "token" mean? Does it mean a English word?
+
+That's really great! Thanks for your carefully explaination. Do you think it's possible to use a real and  simple example to run this transformer architecure?
+

@@ -158,10 +158,14 @@ id_arr = [
     ]
 
 if __name__ == "__main__":
+    '''
     for id_item in id_arr:
         jiayi2sgf(id_item)
     quit()
     if len(sys.argv) == 2:
         id_item = sys.argv[1]
-    jiayi2sgf(id_item)
+    '''
+    id_item = input("Input id (ex. 18489279): ")
+    if len(id_item) !=0 :
+        jiayi2sgf(id_item)
 

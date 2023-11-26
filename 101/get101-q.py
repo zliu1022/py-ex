@@ -9,6 +9,11 @@ import json
 from pprint import pprint
 import sys
 
+#
+# 获取9K 第1题，4958，不需要登录
+# 所有分支都是正解
+# 另存为sgf
+
 base_url = "https://www.101weiqi.com/"
 
 import base64

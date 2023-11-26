@@ -8,6 +8,8 @@ import pandas as pd
 #
 # 获取9K list，不需要登录
 # 另存为csv
+# 默认获取第一页
+# 获取全部需要去掉break注释，get_content_level 中的遍历所有页面
 
 base_url = "https://www.101weiqi.com/"
 
@@ -65,7 +67,9 @@ def get_data(base_url, level_str, n):
         title = a.find('span', class_='warptext').text
         img_url = a.find('img')['src']
         problem_url = base_url + a['href']
-        data.append({'level': level_str, 'title': title, 'url': problem_url, 'img_url': img_url})
+        title_name = title.split()[0]
+        title_rate = title.split()[1]
+        data.append({'level': level_str, 'title': title_name, 'correct_rate': title_rate, 'url': problem_url, 'img_url': img_url})
     return data
 
 def get_pagenum(soup):
@@ -87,6 +91,7 @@ def get_content_level(level_str):
 
     soup = BeautifulSoup(resp.text, 'html.parser')
     pagenum = get_pagenum(soup)
+    print(level_str, 'total_page', pagenum)
 
     all_data = []
     for i in range(1, pagenum+1):

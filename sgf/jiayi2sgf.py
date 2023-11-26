@@ -91,23 +91,25 @@ def extract_info(js):
 
     # Extract the necessary information
     play_time = info['play_time']
+    l1 = str(26 - int(info['level_1'])) + '级'
+    l2 = str(26 - int(info['level_2'])) + '级'
     if info['player'] == '2':
         if info['u_id_1'] == '451213':
-            player_white = '451213'
-            player_black = info['u_id_2']
+            player_white = 'lxl' + '-' + l1
+            player_black = info['u_id_2'] + '-' + l2
             player_color = '执白'
         else:
-            player_black = '451213'
-            player_white = info['u_id_1']
+            player_black = 'lxl' + '-' + l2
+            player_white = info['u_id_1'] + '-' + l1
             player_color = '执黑'
     else:
         if info['u_id_1'] == '451213':
-            player_black = '451213'
-            player_white = info['u_id_2']
+            player_black = 'lxl' + '-' + l1
+            player_white = info['u_id_2'] + '-' + l2
             player_color = '执黑'
         else:
-            player_white = '451213'
-            player_black = info['u_id_1']
+            player_white = 'lxl' + '-' + l2
+            player_black = info['u_id_1'] + '-' + l1
             player_color = '执白'
 
     win_over = abs(float(info['win_over']))
@@ -162,10 +164,11 @@ if __name__ == "__main__":
     for id_item in id_arr:
         jiayi2sgf(id_item)
     quit()
+    '''
     if len(sys.argv) == 2:
         id_item = sys.argv[1]
-    '''
-    id_item = input("Input id (ex. 18489279): ")
+    else:
+        id_item = input("Input id (ex. 18489279): ")
     if len(id_item) !=0 :
         jiayi2sgf(id_item)
 

@@ -106,6 +106,7 @@ def plot_daily_comparison(daily_data):
     ax2.set_ylabel('Total Time (s)')
     ax2.legend()
     ax2.grid(True)  # 添加网格线
+    ax2.set_ylim(0, 10)
 
     unique_dates = daily_data['time'].dt.date.sort_values().unique()
     # 在每一天结束时添加一条垂直虚线，用于分隔不同天的数据
@@ -129,7 +130,7 @@ def plot_multiple_days_comparison(data):
     cols = 2
     rows = (num_metrics + 1) // cols
 
-    fig, axs = plt.subplots(rows, cols, figsize=(14, 6 * rows))
+    fig, axs = plt.subplots(rows, cols, figsize=(14, 6 * rows), sharey=True)
     axs = axs.flatten()  # 将子图数组展平，方便迭代
 
     # 创建统一的5分钟时间轴（9:00到18:00）
@@ -180,6 +181,8 @@ def plot_multiple_days_comparison(data):
 
             # 绘制
             ax.plot(x, y, label=f'{date}', marker='o')
+
+            ax.set_ylim(0, 10)
 
         ax.set_title(f'{metric} Comparison Over Multiple Days')
         ax.set_xlabel('Time of Day')

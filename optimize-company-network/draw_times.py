@@ -65,40 +65,6 @@ def filter_data_by_time(data):
     filtered_data = data[(data['time'].dt.hour >= 9) & (data['time'].dt.hour <= 18)]
     return filtered_data
 
-'''
-# 绘制单日的 DNS 和 total 对比图
-def plot_daily_comparison_v0(daily_data):
-    # 创建一个figure和两个子图
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
-
-    # 绘制 DNS 对比图
-    ax1.plot(daily_data['time'], daily_data['chat-dns'], label='chat-dns', marker='o')
-    ax1.plot(daily_data['time'], daily_data['pt-com-dns'], label='pt-com-dns', marker='o')
-    ax1.plot(daily_data['time'], daily_data['pt-cn-dns'], label='pt-cn-dns', marker='o')
-    ax1.set_title(f'DNS Comparison')
-    ax1.set_xlabel('Time')
-    ax1.set_ylabel('DNS Time (s)')
-    ax1.legend()
-    ax1.grid(True)  # 添加网格线
-
-    # 绘制 total 对比图
-    ax2.plot(daily_data['time'], daily_data['chat-total'], label='chat-total', marker='o')
-    ax2.plot(daily_data['time'], daily_data['pt-com-total'], label='pt-com-total', marker='o')
-    ax2.plot(daily_data['time'], daily_data['pt-cn-total'], label='pt-cn-total', marker='o')
-    ax2.set_title(f'Total Time Comparison')
-    ax2.set_xlabel('Time')
-    ax2.set_ylabel('Total Time (s)')
-    ax2.legend()
-    ax2.grid(True)  # 添加网格线
-
-    # 优化x轴显示
-    fig.autofmt_xdate()
-
-    # 调整布局并显示图像
-    #plt.tight_layout()
-    plt.show()
-'''
-
 def add_relative_time(data):
     data = data.sort_values('time').copy()
     unique_dates = data['time'].dt.date.sort_values().unique()
@@ -115,8 +81,8 @@ def add_relative_time(data):
 
 # 绘制单日的 DNS 和 total 对比图（修改为使用相对时间）
 def plot_daily_comparison(daily_data):
-    # 创建一个figure和两个子图
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
+    # 创建一个figure和两个子图, 共享 X 轴
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
 
     # 绘制 DNS 对比图
     ax1.plot(daily_data['relative_time'], daily_data['chat-dns'], label='chat-dns', marker='o')
@@ -128,15 +94,8 @@ def plot_daily_comparison(daily_data):
     ax1.legend()
     ax1.grid(True)  # 添加网格线
 
-    unique_dates = daily_data['time'].dt.date.sort_values().unique()
-    # 添加垂直分隔线
-    for j in range(1, len(unique_dates)):
-        ax1.axvline(x=j*540, color='grey', linestyle='--', linewidth=0.5)
-
-    # 设置 x 轴标签
-    ax1.set_xticks([i*540 for i in range(len(unique_dates)+1)])
-    ax1.set_xticklabels([f'Day {i+1}' for i in range(len(unique_dates))] + [f'Day {len(unique_dates)+1}'], rotation=45)
-
+    # 隐藏 ax1 的 X 轴刻度和标签
+    ax1.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
 
     # 绘制 total 对比图
     ax2.plot(daily_data['relative_time'], daily_data['chat-total'], label='chat-total', marker='o')
@@ -147,6 +106,16 @@ def plot_daily_comparison(daily_data):
     ax2.set_ylabel('Total Time (s)')
     ax2.legend()
     ax2.grid(True)  # 添加网格线
+
+    unique_dates = daily_data['time'].dt.date.sort_values().unique()
+    # 在每一天结束时添加一条垂直虚线，用于分隔不同天的数据
+    # 假设每一天的数据区间为 540 分钟（9小时），所以分隔线的位置为 j*540
+    for j in range(1, len(unique_dates)):
+        ax2.axvline(x=j*540, color='grey', linestyle='--', linewidth=0.5)
+
+    # 设置 X 轴刻度和标签
+    ax2.set_xticks([i*540 for i in range(len(unique_dates)+1)])
+    ax2.set_xticklabels([f'Day {i+1}' for i in range(len(unique_dates))] + [f'Day {len(unique_dates)+1}'], rotation=45)
 
     # 优化x轴显示
     plt.tight_layout()

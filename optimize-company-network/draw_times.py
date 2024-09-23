@@ -233,8 +233,7 @@ def plot_multiple_days_comparison(data):
 
 # 主程序
 def main():
-    file_path = 'output_202409191006.md'  # 文件路径
-    file_path = 'fake.md'  # 文件路径
+    file_path = 'output.md'  # 文件路径
     data = read_data_from_md(file_path)
 
     # 筛选每天9点到18点的数据

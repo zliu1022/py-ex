@@ -11,6 +11,7 @@ urls = {
     "chat": "https://chatgptd-dev.tvunetworks.com/",
     "pt-com": "https://partyline.tvunetworks.com/partyline/participate/party?id=942382705012",
     "pt-cn": "https://partyline.tvunetworks.cn/partyline/participate/party?id=199966092325",
+    "ytb": "https://www.youtube.com/"
 }
 
 # 获取当前时间戳，时间戳格式为 年-月-日 小时:分钟:秒
@@ -43,8 +44,8 @@ def get_timing_info(url):
 
 # 输出表格的表头
 def print_table_header(file):
-    header = "| time | chat-dns | pt-com-dns | pt-cn-dns | chat-total | pt-com-total | pt-cn-total |\n"
-    separator = "|---|---|---|---|---|---|---|\n"
+    header = "| time | chat-dns | pt-com-dns | pt-cn-dns | ytb_dns | chat-total | pt-com-total | pt-cn-total | ytb_total |\n"
+    separator = "|---|---|---|---|---|---|---|---|---|\n"
     # 打印到屏幕
     print(header + separator, end="")
     # 保存到文件
@@ -55,8 +56,8 @@ def print_table_header(file):
     os.fsync(file.fileno())
 
 # 输出表格的每一行
-def print_table_row(file, time_str, chat_dns, pt_com_dns, pt_cn_dns, chat_total, pt_com_total, pt_cn_total):
-    row = f"| {time_str} | {chat_dns} | {pt_com_dns} | {pt_cn_dns} | {chat_total} | {pt_com_total} | {pt_cn_total} |\n"
+def print_table_row(file, time_str, chat_dns, pt_com_dns, pt_cn_dns, ytb_dns, chat_total, pt_com_total, pt_cn_total, ytb_total):
+    row = f"| {time_str} | {chat_dns} | {pt_com_dns} | {pt_cn_dns} | {ytb_dns} | {chat_total} | {pt_com_total} | {pt_cn_total} | {ytb_total} |\n"
     # 打印到屏幕
     print(row, end="")
     # 保存到文件
@@ -68,7 +69,8 @@ def print_table_row(file, time_str, chat_dns, pt_com_dns, pt_cn_dns, chat_total,
 # 主要循环逻辑
 def main():
     # 启动 caffeinate 防止 macOS 休眠
-    caffeinate = subprocess.Popen(['caffeinate'])
+    caffeinate = subprocess.Popen(['caffeinate',  '-iu'])
+    subprocess.run(['sudo', 'pmset', '-a', 'sleep', '0', 'disksleep', '0'], check=True)
 
     # 生成文件名并打开文件
     filename = generate_filename()
@@ -82,7 +84,7 @@ def main():
                 current_minute = datetime.now().minute
 
                 # 检查是否在9点到18点之间
-                if 9 <= current_hour <= 18:
+                if 9 <= current_hour <= 17:
                     # 检查当前时间是否为5分钟的整数倍
                     if current_minute % 5 == 0:
                         current_time = get_current_time()
@@ -94,14 +96,17 @@ def main():
                         # 获取 pt-cn 的 DNS 和 total 时间
                         pt_cn_dns, pt_cn_total = get_timing_info(urls["pt-cn"])
 
+                        ytb_dns, ytb_total = get_timing_info(urls["ytb"])
+
                         # 打印表格行并保存到文件
-                        print_table_row(file, current_time, chat_dns, pt_com_dns, pt_cn_dns, chat_total, pt_com_total, pt_cn_total)
+                        print_table_row(file, current_time, chat_dns, pt_com_dns, pt_cn_dns, ytb_dns, chat_total, pt_com_total, pt_cn_total, ytb_total)
 
                 # 每60秒检测一次
                 time.sleep(60)
         finally:
             # 确保程序结束时，关闭 caffeinate
             caffeinate.terminate()
+            subprocess.run(['sudo', 'pmset', '-a', 'sleep', '10', 'disksleep', '10'], check=True)
 
 if __name__ == "__main__":
     main()

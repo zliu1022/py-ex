@@ -14,7 +14,7 @@ def print_json(obj, prefix=""):
     else:
         print(f"{prefix}: {obj}")
 
-def data2sgf(game_data):
+def data2sgf(game_data, id_item):
     # gamekey: normal-20240303085359-9428
     game_date = game_data.get('gamekey', '').split('-')[1][0:8]
     file_date = game_date[0:4] + '-' + game_date[4:6] + '-' + game_date[6:8]
@@ -23,7 +23,8 @@ def data2sgf(game_data):
     move_data = game_data.get('pu', '')
 
     # 创建 SGF 文件内容
-    sgf_content = '(;FF[4]GM[1]SZ[19]AP[Python]\n'
+    # https://www.red-bean.com/sgf/properties.html#GN
+    sgf_content = '(;FF[4]GM[1]SZ[19]KM[7.5]AP[Python]GN[新博' + str(id_item) + ']\n'
 
     # 添加黑白方信息
     black_name = game_data.get('blackname', 'Unknown')
@@ -59,10 +60,17 @@ def data2sgf(game_data):
 
     if black_name == "刘欣来":
         turn = "执黑"
+        # 新博结果总是标注胜利方的结果
+        if game_result[0] == '白':
+            game_result = game_result.replace('胜', '败')
+        game_result = game_result[1:]
     else:
         turn = "执白"
+        if game_result[0] == '黑':
+            game_result = game_result.replace('胜', '败')
+        game_result = game_result[1:]
 
-    file_name = file_date + '，' + turn + '，' + game_result + '，新博' + '.sgf'
+    file_name = file_date + '，' + turn + game_result + '.sgf'
 
     return sgf_content, file_name
 
@@ -73,7 +81,7 @@ def xinbo(id_item):
         f.write(resp.text)
     game_data = json.loads(resp.text)
     #print_json(game_data)
-    sgf_content,file_name = data2sgf(game_data)
+    sgf_content,file_name = data2sgf(game_data, id_item)
 
     # 将 SGF 内容保存到文件
     with open(file_name, 'w') as sgf_file:

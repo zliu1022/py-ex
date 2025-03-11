@@ -59,9 +59,11 @@ def login():
     }
 
     login_url = "https://www.101weiqi.com/login/"
-    session = requests.Session()
-    response = session.post(login_url, data=data, headers=headers)
-    return session
+    sess = requests.Session()
+    resp = sess.post(login_url, data=data, headers=headers)
+    print('login-resp-status', resp.status_code)
+    print('login-sess-cookie', sess.cookies)
+    return sess
 
 def print_resp_detail(response, session):
     print('session')
@@ -113,6 +115,7 @@ def getq_sess(url, session):
         'Upgrade-Insecure-Requests': '1',
     }
     resp = session.get(url, headers=headers)
+    print('getq-resp', resp)
     return resp
 
 def print_g_qq(obj):
@@ -325,16 +328,23 @@ if __name__ == '__main__':
         q_str = sys.argv[2]
     url = base_url + level_str + "/" + q_str + "/"
     title = level_str + "-Q-" + q_str
+    html_name = title + ".html"
     sgf_name = title + ".sgf"
 
     # 通过设置登录token和sessionid直接拿
-    token = 'ujJhAxo83Z5mg0oRfxtwC2BqgQ0nTjvdeQSBbm3XHqqCWOB9FHF78lqvPA3MF6Ct'
-    sessionid = 'gbszfob6tjb67kscg6uytllqskcczewu'
+    #token = 'ujJhAxo83Z5mg0oRfxtwC2BqgQ0nTjvdeQSBbm3XHqqCWOB9FHF78lqvPA3MF6Ct'
+    #sessionid = 'gbszfob6tjb67kscg6uytllqskcczewu'
     #get_question(url, token, sessionid)
 
     # 先登录，然后通过session对象GET
     sess = login()
     resp = getq_sess(url, sess)
+
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    pretty_html = soup.prettify()
+    with open(html_name, 'w', encoding=resp.encoding) as file:
+        file.write(pretty_html)
+
     sgf_str = resp_sgf(resp, url)
     with open(sgf_name, 'w') as file:
         file.write(sgf_str)

@@ -179,8 +179,6 @@ def resp_json(resp, no):
     except json.JSONDecodeError:
         print(f'Failed to decode part: {json_parts}')
 
-    #print_g_qq(obj)
-
     prepos = decode_prepos(obj['c'], obj['r'])
 
     opt = []

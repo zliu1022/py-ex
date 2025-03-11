@@ -168,8 +168,12 @@ def answer_status(st):
     return status
 
 def resp_json(resp, no):
-    match = re.search(r'var g_qq = (.*);', resp.text)
-    json_str = match.group(1)
+    match = re.search(r'var g_qq = (.*);', resp.text, re.DOTALL)
+    if match:
+        json_str = match.group(1)
+    else:
+        print("Pattern not found in the response.")
+        quit()
 
     json_parts = json_str.split(';')
 

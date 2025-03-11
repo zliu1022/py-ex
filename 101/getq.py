@@ -179,6 +179,9 @@ def resp_json(resp, no):
     except json.JSONDecodeError:
         print(f'Failed to decode part: {json_parts}')
 
+    with open(no+'-g_qq.json', 'w', encoding='utf-8') as f:
+        json.dump(obj, f, ensure_ascii=False, indent=4)
+
     prepos = decode_prepos(obj['c'], obj['r'])
 
     opt = []
@@ -216,7 +219,9 @@ def resp_json(resp, no):
         'level':      obj.get('levelname'),
         'name':       obj.get('name'),
         'options':    opt,
-        'answers':    ans
+        'answers':    ans,
+        'stat':       obj.get('taskresult'),
+        'similar':    obj.get('sms_count')
     }
 
     return doc

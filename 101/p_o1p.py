@@ -7,17 +7,27 @@ import tkinter as tk
 from tkinter import messagebox
 
 # Function to convert Go board coordinates (e.g., 'cs') to (row, column)
-def coord_to_position(coord):
+def prepos_coord_to_position(coord):
     columns = 'abcdefghijklmnopqrst'
     col_letter, row_letter = coord[0], coord[1]
     col = columns.index(col_letter)
-    row = 19 - columns.index(row_letter) - 1
+    row = columns.index(row_letter)
+    row = board_size - row - 1  # Adjust row index to match the display
+    return row, col
+
+def coord_to_position(coord):
+    columns = 'abcdefghijklmnopqrst'
+    #col_letter, row_letter = coord[0], coord[1]
+    col_letter, row_letter = coord[1], coord[0]
+    col = columns.index(col_letter)
+    row = columns.index(row_letter)
+    row = board_size - row - 1  # Adjust row index to match the display
     return row, col
 
 # Function to convert (row, column) to Go board coordinates
 def position_to_coord(row, col):
     columns = 'abcdefghijklmnopqrst'
-    row_letter = columns[19 - row - 1]
+    row_letter = columns[board_size - row - 1]
     col_letter = columns[col]
     return col_letter + row_letter
 
@@ -27,9 +37,8 @@ db = client['101']
 collection = db['q']
 
 # Filter for "qtype": "死活题" and retrieve problems
+#problems_cursor = collection.find({"no": "4958"})
 problems_cursor = collection.find({"qtype": "死活题"})
-problems_cursor = collection.find({"no": "4958"})
-
 problems = list(problems_cursor)
 
 # Check if any problems are found
@@ -77,11 +86,13 @@ def draw_stone(row, col, color):
 
 for color, positions in prepos.items():
     for coord in positions:
-        row, col = coord_to_position(coord)
+        row, col = prepos_coord_to_position(coord)
         draw_stone(row, col, 'black' if color == 'b' else 'white')
         board[row][col] = color
 
-# Display hint for the first correct move
+# Display hint for the correct moves
+hint_items = []
+
 def draw_hint(coord):
     row, col = coord_to_position(coord)
     x = margin + col * cell_size
@@ -94,7 +105,7 @@ def draw_hint(coord):
 first_move = None
 if answers:
     first_move = answers[0]['p'][0]
-    draw_hint(first_move)
+    hint_items.append(draw_hint(first_move))
 
 # Handle user moves
 user_moves = []
@@ -107,6 +118,14 @@ def get_expected_coords(move_number):
     for answer in answers:
         if len(answer['p']) >= move_number:
             expected_coords.add(answer['p'][move_number - 1])
+    return expected_coords
+
+def get_expected_next_coords(user_moves):
+    expected_coords = set()
+    for answer in answers:
+        if answer['p'][:len(user_moves)] == user_moves:
+            if len(answer['p']) > len(user_moves):
+                expected_coords.add(answer['p'][len(user_moves)])
     return expected_coords
 
 def show_error_message():
@@ -167,20 +186,34 @@ def on_board_click(event):
     board[row][col] = current_color
     user_moves.append(coord)
     move_number += 1
+
     # Switch color
     current_color = 'white' if current_color == 'black' else 'black'
 
+    # Clear previous hints
+    for item in hint_items:
+        canvas.delete(item)
+    hint_items.clear()
+
     # Check if the user's sequence matches any of the answers
+    matched_answers = []
     for answer in answers:
         answer_moves = answer['p']
         if user_moves == answer_moves[:len(user_moves)]:
+            matched_answers.append(answer)
             if len(user_moves) == len(answer_moves):
                 messagebox.showinfo("Result", "正确！(Correct!)")
                 root.destroy()
-            break
+                return  # End the game
+            break  # Found a matching answer
     else:
         # No matching answer; allow the user to continue
         pass
+
+    # Display hints for the next expected moves
+    next_expected_coords = get_expected_next_coords(user_moves)
+    for coord in next_expected_coords:
+        hint_items.append(draw_hint(coord))
 
 canvas.bind("<Button-1>", on_board_click)
 

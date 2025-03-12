@@ -13,9 +13,11 @@ def read_data_from_md(file_path):
         "chat-dns": [],
         "pt-com-dns": [],
         "pt-cn-dns": [],
+        "ytb-dns": [],
         "chat-total": [],
         "pt-com-total": [],
-        "pt-cn-total": []
+        "pt-cn-total": [],
+        "ytb-total": []
     }
 
     with open(file_path, 'r') as file:
@@ -27,15 +29,17 @@ def read_data_from_md(file_path):
     if is_markdown_table:
         # 使用正则表达式提取表格中的数据行
         for line in lines:
-            match = re.match(r'\| ([\d-]+\s[\d:]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \|', line)
+            match = re.match(r'\| ([\d-]+\s[\d:]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \| ([\d.]+) \|', line)
             if match:
                 data["time"].append(match.group(1))
                 data["chat-dns"].append(float(match.group(2)))
                 data["pt-com-dns"].append(float(match.group(3)))
                 data["pt-cn-dns"].append(float(match.group(4)))
-                data["chat-total"].append(float(match.group(5)))
-                data["pt-com-total"].append(float(match.group(6)))
-                data["pt-cn-total"].append(float(match.group(7)))
+                data["ytb-dns"].append(float(match.group(5)))
+                data["chat-total"].append(float(match.group(6)))
+                data["pt-com-total"].append(float(match.group(7)))
+                data["pt-cn-total"].append(float(match.group(8)))
+                data["ytb-total"].append(float(match.group(9)))
     else:
         # 处理以制表符分隔的文本格式
         for line in lines:
@@ -85,28 +89,31 @@ def plot_daily_comparison(daily_data):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
 
     # 绘制 DNS 对比图
-    ax1.plot(daily_data['relative_time'], daily_data['chat-dns'], label='chat-dns', marker='o')
-    ax1.plot(daily_data['relative_time'], daily_data['pt-com-dns'], label='pt-com-dns', marker='o')
-    ax1.plot(daily_data['relative_time'], daily_data['pt-cn-dns'], label='pt-cn-dns', marker='o')
+    ax1.plot(daily_data['relative_time'], daily_data['chat-dns'], label='chat-dns', marker='.')
+    ax1.plot(daily_data['relative_time'], daily_data['pt-com-dns'], label='pt-com-dns', marker='.')
+    ax1.plot(daily_data['relative_time'], daily_data['pt-cn-dns'], label='pt-cn-dns', marker='.')
+    ax1.plot(daily_data['relative_time'], daily_data['ytb-dns'], label='ytb-dns', marker='.')
     ax1.set_title('DNS Comparison')
     ax1.set_xlabel('Relative Time (minutes)')
     ax1.set_ylabel('DNS Time (s)')
     ax1.legend()
     ax1.grid(True)  # 添加网格线
+    ax1.set_ylim(0, 1.5)
 
     # 隐藏 ax1 的 X 轴刻度和标签
     ax1.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
 
     # 绘制 total 对比图
-    ax2.plot(daily_data['relative_time'], daily_data['chat-total'], label='chat-total', marker='o')
-    ax2.plot(daily_data['relative_time'], daily_data['pt-com-total'], label='pt-com-total', marker='o')
-    ax2.plot(daily_data['relative_time'], daily_data['pt-cn-total'], label='pt-cn-total', marker='o')
+    ax2.plot(daily_data['relative_time'], daily_data['chat-total'], label='chat-total', marker='.')
+    ax2.plot(daily_data['relative_time'], daily_data['pt-com-total'], label='pt-com-total', marker='.')
+    ax2.plot(daily_data['relative_time'], daily_data['pt-cn-total'], label='pt-cn-total', marker='.')
+    ax2.plot(daily_data['relative_time'], daily_data['ytb-total'], label='ytb-total', marker='.')
     ax2.set_title('Total Time Comparison')
     ax2.set_xlabel('Relative Time (minutes)')
     ax2.set_ylabel('Total Time (s)')
     ax2.legend()
     ax2.grid(True)  # 添加网格线
-    ax2.set_ylim(0, 10)
+    ax2.set_ylim(0, 4)
 
     unique_dates = daily_data['time'].dt.date.sort_values().unique()
     # 在每一天结束时添加一条垂直虚线，用于分隔不同天的数据
@@ -125,7 +132,7 @@ def plot_daily_comparison(daily_data):
 # 绘制多天的对比图
 def plot_multiple_days_comparison(data):
     #metrics = ['chat-dns', 'pt-com-dns', 'pt-cn-dns', 'chat-total', 'pt-com-total', 'pt-cn-total']
-    metrics = ['chat-total', 'pt-com-total', 'pt-cn-total']
+    metrics = ['chat-total', 'pt-com-total', 'pt-cn-total', 'ytb-total']
     num_metrics = len(metrics)
     cols = 2
     rows = (num_metrics + 1) // cols
@@ -180,9 +187,9 @@ def plot_multiple_days_comparison(data):
             y = aggregated[metric].values
 
             # 绘制
-            ax.plot(x, y, label=f'{date}', marker='o')
+            ax.plot(x, y, label=f'{date}', marker='.')
 
-            ax.set_ylim(0, 10)
+            ax.set_ylim(0, 4)
 
         ax.set_title(f'{metric} Comparison Over Multiple Days')
         ax.set_xlabel('Time of Day')

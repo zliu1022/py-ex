@@ -178,19 +178,19 @@ def resp_json(resp, no):
     global base_dir
 
     # 提取js变量
-    match = re.search(r'var g_qq = (.*);', resp.text, re.DOTALL)
+    pattern = r'var\s+g_qq\s*=\s*\{.*?\};'
+    match = re.search(pattern, resp.text, re.DOTALL)
     if match:
-        json_str = match.group(1)
+        g_qq_str = match.group()
+        json_str = g_qq_str[11:-1] # 去除开头的 var g_qq =，以及最后的分号
+        try:
+            obj = json.loads(json_str)
+        except json.JSONDecodeError:
+            print(f'Failed to decode json: {json_str}')
+            return {'ret': False, 'code': 2}
     else:
         print(f'Failed to find g_qq: {no}')
         return {'ret': False, 'code': 1}
-    json_parts = json_str.split(';')
-    # 只有第一块是g_qq，后面都是些单行的var定义
-    try:
-        obj = json.loads(json_parts[0])
-    except json.JSONDecodeError:
-        print(f'Failed to decode part: {json_parts}')
-        return {'ret': False, 'code': 2}
 
     json_name  = base_dir + no + '-' + str(obj.get('r')) + '-g_qq.json'
     with open(json_name, 'w', encoding='utf-8') as f:

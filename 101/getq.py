@@ -10,42 +10,46 @@ from bs4 import BeautifulSoup
 import re
 import json
 import base64
-from pprint import pprint
 
 base_dir = './.cache/'
 
-def login():
+def login(username):
     # MongoDB连接参数
     mongo_client = MongoClient("mongodb://localhost:27017/")
     db = mongo_client["101"]
     login_collection = db["login"]
 
-    # 从MongoDB中获取session数据
-    login_data = login_collection.find_one({})
+    # 创建用户名唯一索引（如果不存在）
+    login_collection.create_index('username', unique=True)
+
+    # 从MongoDB中获取对应username的记录
+    login_data = login_collection.find_one({'username': username})
 
     if login_data:
+        password = login_data.get('password')
         # 检查session的时间是否在一天之内
-        session_time_str = login_data['timestamp']
-        session_time = datetime.strptime(session_time_str, '%Y-%m-%d %H:%M:%S')
-        if datetime.now() - session_time < timedelta(days=7):
-            # 从存储的数据中重建session
-            session_cookies = login_data['cookies']
-            session = requests.Session()
-            jar = RequestsCookieJar()
-
-            for cookie in session_cookies:
-                jar.set(cookie['name'], cookie['value'], domain=cookie['domain'], path=cookie['path'])
-            session.cookies = jar
-            #print("使用存储的session。")
-            return session
+        session_time_str = login_data.get('timestamp')
+        if session_time_str:
+            session_time = datetime.strptime(session_time_str, '%Y-%m-%d %H:%M:%S')
+            if datetime.now() - session_time < timedelta(days=1):
+                # 从存储的cookies中重建session
+                session_cookies = login_data.get('cookies')
+                if session_cookies:
+                    session = requests.Session()
+                    jar = RequestsCookieJar()
+                    for cookie in session_cookies:
+                        jar.set(cookie['name'], cookie['value'], domain=cookie['domain'], path=cookie['path'])
+                    session.cookies = jar
+                    #print(f"使用存储的session，用户名：{username}。")
+                    return session
         else:
             print("存储的session已过期，重新登录。")
     else:
-        print("未找到存储的session，进行登录。")
+        print(f"未找到用户名为'{username}'的记录。")
+        password = input('请输入密码：')
 
     # 执行登录操作
     login_url = "https://www.101weiqi.com/login/"
-
     headers = {
         "authority": "www.101weiqi.com",
         "method": "POST",
@@ -56,7 +60,6 @@ def login():
         "accept-language": "zh,en;q=0.9,zh-CN;q=0.8",
         "cache-control": "no-cache",
         "content-type": "application/x-www-form-urlencoded",
-        "cookie": "csrftoken=E2sOo7ibFaS05ThNBqBGEXx72fIINxsWP3brB5NDPYkWXQAS6J2gTI9zW8AegOZv",
         "dnt": "1",
         "origin": "https://www.101weiqi.com",
         "pragma": "no-cache",
@@ -70,12 +73,10 @@ def login():
     }
 
     data = {
-        "csrfmiddlewaretoken": "j7uxusoV2TEmcvpOyDnx4eA07UMlbuV4u8daHqTncH6i4sIT3WO7jZcs1NERELsD",
         "source": "index_nav",
-        "form_username": "zliu1022",
-        "form_password": "zliu123"
+        'form_username': username,
+        'form_password': password
     }
-
     session = requests.Session()
     response = session.post(login_url, data=data, headers=headers)
 
@@ -87,7 +88,7 @@ def login():
             print("登录失败，请检查您的用户名和密码。")
             return None
         else:
-            #print("登录成功，保存session。")
+            print("登录成功，保存session。")
 
             # 提取cookie并保存到MongoDB
             session_cookies = []
@@ -103,12 +104,16 @@ def login():
                     'rfc2109': cookie.rfc2109,
                 })
 
-            # 保存cookies和时间戳到MongoDB
-            login_collection.delete_many({})  # 清空集合中的旧数据
-            login_collection.insert_one({
-                'cookies': session_cookies,
-                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            })
+            # 更新或插入用户名的cookies和时间戳到MongoDB
+            login_collection.update_one(
+                {'username': username},
+                {'$set': {
+                    'password': password,
+                    'cookies': session_cookies,
+                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                }},
+                upsert=True
+            )
             return session
     else:
         print("登录请求失败，状态码：", response.status_code)
@@ -287,7 +292,7 @@ def update_q(doc):
         else:
             print("数据已存在，且无任何变化。")
     else:
-        print("已插入新文档。")
+        print(f"已插入新文档。{doc['no']}")
 
 def getq(no):
     global base_dir
@@ -299,7 +304,8 @@ def getq(no):
     url = base_url + level_str + "/" + no
     html_name = base_dir + no + ".html"
 
-    session = login()
+    username = 'uehbpridrciazzumpz'
+    session = login(username)
     if session:
         response = get_url(session, url)
         if response:

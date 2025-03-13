@@ -176,15 +176,15 @@ def answer_status(st):
 
 def resp_json(resp, no):
     global base_dir
+
+    # 提取js变量
     match = re.search(r'var g_qq = (.*);', resp.text, re.DOTALL)
     if match:
         json_str = match.group(1)
     else:
         print(f'Failed to find g_qq: {no}')
         return {'ret': False, 'code': 1}
-
     json_parts = json_str.split(';')
-
     # 只有第一块是g_qq，后面都是些单行的var定义
     try:
         obj = json.loads(json_parts[0])

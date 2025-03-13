@@ -178,6 +178,8 @@ def resp_json(resp, no):
     global base_dir
 
     # 提取js变量
+    #re.DOTALL 标志使 . 可以匹配包括换行符在内的所有字符。
+    #.*? 是非贪婪匹配，尽可能少地匹配字符，直到找到第一个 };。
     pattern = r'var\s+g_qq\s*=\s*\{.*?\};'
     match = re.search(pattern, resp.text, re.DOTALL)
     if match:
@@ -243,7 +245,8 @@ def resp_json(resp, no):
         'options':    opt,
         'answers':    ans,
         'stat':       obj.get('taskresult'),
-        'similar':    obj.get('sms_count')
+        'similar':    obj.get('sms_count'),
+        'bookinfos':    obj.get('bookinfos')
     }
 
     return {'ret': True, 'data': doc}

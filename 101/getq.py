@@ -12,6 +12,8 @@ import json
 import base64
 from pprint import pprint
 
+base_dir = './.cache/'
+
 def login():
     # MongoDB连接参数
     mongo_client = MongoClient("mongodb://localhost:27017/")
@@ -25,7 +27,7 @@ def login():
         # 检查session的时间是否在一天之内
         session_time_str = login_data['timestamp']
         session_time = datetime.strptime(session_time_str, '%Y-%m-%d %H:%M:%S')
-        if datetime.now() - session_time < timedelta(days=1):
+        if datetime.now() - session_time < timedelta(days=7):
             # 从存储的数据中重建session
             session_cookies = login_data['cookies']
             session = requests.Session()
@@ -34,7 +36,7 @@ def login():
             for cookie in session_cookies:
                 jar.set(cookie['name'], cookie['value'], domain=cookie['domain'], path=cookie['path'])
             session.cookies = jar
-            print("使用存储的session。")
+            #print("使用存储的session。")
             return session
         else:
             print("存储的session已过期，重新登录。")
@@ -78,14 +80,14 @@ def login():
     response = session.post(login_url, data=data, headers=headers)
 
     if response.status_code == 200:
-        print("登录请求成功。")
+        #print("登录请求成功。")
 
         # 检查登录是否成功
         if "登录失败" in response.text or "密码错误" in response.text:
             print("登录失败，请检查您的用户名和密码。")
             return None
         else:
-            print("登录成功，保存session。")
+            #print("登录成功，保存session。")
 
             # 提取cookie并保存到MongoDB
             session_cookies = []
@@ -124,7 +126,7 @@ def get_url(session, url):
     }
     response = session.get(url, headers=headers)
     if response.status_code == 200:
-        print("成功获取URL内容。")
+        #print("成功获取URL内容。")
         return response
     else:
         print(f"获取URL失败，状态码：{response.status_code}")
@@ -168,12 +170,13 @@ def answer_status(st):
     return status
 
 def resp_json(resp, no):
+    global base_dir
     match = re.search(r'var g_qq = (.*);', resp.text, re.DOTALL)
     if match:
         json_str = match.group(1)
     else:
-        print("Pattern not found in the response.")
-        quit()
+        print(f'Failed to find g_qq: {no}')
+        return {'ret': False, 'code': 1}
 
     json_parts = json_str.split(';')
 
@@ -182,11 +185,18 @@ def resp_json(resp, no):
         obj = json.loads(json_parts[0])
     except json.JSONDecodeError:
         print(f'Failed to decode part: {json_parts}')
+        return {'ret': False, 'code': 2}
 
-    with open(no+'-g_qq.json', 'w', encoding='utf-8') as f:
+    json_name  = base_dir + no + '-' + str(obj.get('r')) + '-g_qq.json'
+    with open(json_name, 'w', encoding='utf-8') as f:
         json.dump(obj, f, ensure_ascii=False, indent=4)
 
-    prepos = decode_prepos(obj['c'], obj['r'])
+    prepos = decode_prepos(obj.get('c'), obj.get('r'))
+
+    # 对每个字符串进行字符位置交换
+    if obj.get('xv') and obj.get('xv') % 3 != 0:
+        swapped_prepos = [[s[1] + s[0] if len(s) == 2 else s for s in sublist] for sublist in prepos]
+        prepos = swapped_prepos
 
     opt = []
     for opt in obj['options']:
@@ -213,6 +223,9 @@ def resp_json(resp, no):
     doc = {
         'no':         no,
         'size':       obj.get('lu'),
+        'c':          obj.get('c'),
+        'r':          obj.get('r'),
+        'xv':         obj.get('xv'),
         'prepos':     {
             'b': prepos[0],
             'w': prepos[1]
@@ -228,7 +241,7 @@ def resp_json(resp, no):
         'similar':    obj.get('sms_count')
     }
 
-    return doc
+    return {'ret': True, 'data': doc}
 
 def dict_diff(old, new, path=''):
     differences = {}
@@ -263,6 +276,9 @@ def update_q(doc):
     )
 
     if old:
+        # 删除 '_id' 字段以避免比较中出现
+        old.pop('_id', None)
+
         differences = dict_diff(old, doc)
         if differences:
             print("以下字段已被更新：")
@@ -273,16 +289,15 @@ def update_q(doc):
     else:
         print("已插入新文档。")
 
-def main():
+def getq(no):
+    global base_dir
     base_url = "https://www.101weiqi.com/"
     level_str = "q"
-    no = 1
 
     if len(sys.argv) == 2:
         no = sys.argv[1]
     url = base_url + level_str + "/" + no
-    html_name = level_str + "-" + no + ".html"
-    sgf_name  = level_str + "-" + no + ".sgf"
+    html_name = base_dir + no + ".html"
 
     session = login()
     if session:
@@ -292,14 +307,25 @@ def main():
             pretty_html = soup.prettify()
             with open(html_name, 'w', encoding=response.encoding) as file:
                 file.write(pretty_html)
-            print(f"页面已保存到 {html_name}。")
+            #print(f"页面已保存到 {html_name}。")
 
-            doc = resp_json(response, no)
-            update_q(doc)
+            ret = resp_json(response, no)
+            if ret.get('ret'):
+                update_q(ret.get('data'))
+
+                html_name_r = base_dir + no + '-' + str(ret.get('data').get('r')) + ".html"
+                with open(html_name_r, 'w', encoding=response.encoding) as file:
+                    file.write(pretty_html)
+
+                return {'ret': True, 'data': ret.get('data')}
+            else:
+                return {'ret': False, 'code': 3, 'message':'解析json失败'}
         else:
             print("无法获取页面内容。")
+            return {'ret': False, 'code': 1, 'message':'获取页面失败'}
     else:
         print("登录失败，无法继续。")
+        return {'ret': False, 'code': 2, 'message':'登录失败'}
 
 if __name__ == "__main__":
-    main()
+    getq("1")

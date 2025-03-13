@@ -54,15 +54,16 @@ def getdb_level_doc(documents):
     code_2_list = []  # 登录失败
     code_3_list = []  # 解析json失败
 
-    for doc in documents:
-        print(f"No. {doc}")
+    getq_counter = 0
+    for no in documents:
+        print(f"No. {no}")
 
-        ret = q_collection.find_one({'no': doc})
+        ret = q_collection.find_one({'no': no})
         if ret:
             print('已经存在')
             continue
 
-        result = getq(doc)
+        result = getq(no)
         if result.get('ret') == False:
             code = result.get('code')
             if code == 1:
@@ -72,8 +73,15 @@ def getdb_level_doc(documents):
             elif code == 3:
                 code_3_list.append(doc)
         print()
-        wait_t = random.randint(10, 20)
-        time.sleep(wait_t)
+        getq_counter += 1
+        if getq_counter == 50:
+            print("Reached 50 calls to getq. Waiting for 300 seconds.")
+            time.sleep(300)
+            getq_counter = 0  # 重置计数器
+        else:
+            wait_time = random.randint(15, 30)
+            print(f"Waiting for {wait_time} seconds.")
+            time.sleep(wait_time)
 
     print("获取页面失败（code=1）的no列表：")
     print(code_1_list)

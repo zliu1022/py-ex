@@ -6,6 +6,7 @@ from pymongo import MongoClient
 import tkinter as tk
 from tkinter import messagebox
 import sys
+from bson import ObjectId
 
 # Function to convert Go board coordinates (e.g., 'cs') to (row, column)
 def prepos_coord_to_position(coord):
@@ -178,7 +179,7 @@ def load_problem():
     blackfirst = problem.get('blackfirst', True)
     level = problem.get('level', 'N/A')
     answers = problem.get('answers', [])
-    problem_no = problem.get('no', 'N/A')
+    problem_no = problem.get('url_no', 'N/A')
     salt_r = problem.get('r', 'N/A')
     ty = problem.get('qtype', 'N/A')
 
@@ -215,6 +216,9 @@ def load_problem():
         for ans in answers:
             if ans['ty'] == 1 and ans['st'] == 2:
                 first_move = ans['p'][0]
+        if first_move == None:
+            print(f'Warning no answers ty==1 st==2')
+            first_move = 'jj'
         hint_items.append(draw_hint(first_move))
 
 # Add a "Next Problem" button
@@ -229,17 +233,23 @@ if __name__ == "__main__":
 
     # Filter for "qtype": "死活题" and retrieve problems
     if len(sys.argv) == 2:
-        no = sys.argv[1]
-        problems_cursor = collection.find({"no": no})
+        #url_no = sys.argv[1]
+        #problems_cursor = collection.find({"url_no": url_no})
+
+        obj_id_str = sys.argv[1]
+        problems_cursor = collection.find({"_id": ObjectId(obj_id_str)})
     else:
         problems_cursor = collection.find()
         #problems_cursor = collection.find({"qtype": "死活题"})
-        #problems_cursor = collection.find({"r": 2})
     problems = list(problems_cursor)
+    print(len(problems))
+    for p in problems:
+        print(p.get('url_no'), p.get('title_id'), p.get('status'))
 
     # Check if any problems are found
     if not problems:
-        raise Exception("No problems found with qtype '死活题'.")
+        raise Exception("No problems found with url_no.")
+        quit()
 
     # Initialize GUI
     root = tk.Tk()

@@ -1,0 +1,24 @@
+# 更新全部level列表页面，每个level 20页
+# 一个月更新一次估计就行
+/getpage.py 15K
+./getpage.py 14K
+./getpage.py 13K
+./getpage.py 12K
+./getpage.py 11K
+./getpage.py 10K
+./getpage.py 9K
+./getpage.py 8K
+./getpage.py 7K
+./getpage.py 6K
+./getpage.py 5K
+./getpage.py 4K
+./getpage.py 3K
+./getpage.py 2K
+./getpage.py 1K
+./getpage.py 1D
+./getpage.py 2D
+./getpage.py 3D
+./getpage.py 4D
+./getpage.py 5D
+./getpage.py 6D
+./getpage.py 7D

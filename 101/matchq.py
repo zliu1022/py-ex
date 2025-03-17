@@ -38,7 +38,15 @@ def symmetries(x, y):
     return syms
 
 # Function to canonicalize positions
-def canonicalize_positions(positions):
+def canonicalize_positions(prepos):
+    positions = []
+    # Convert positions to coordinates
+    for color_key in ['b', 'w']:
+        color = 'B' if color_key == 'b' else 'W'
+        for pos_str in prepos.get(color_key, []):
+            x, y = pos_to_coord(pos_str)
+            positions.append( (color, x, y) )
+
     # positions: list of tuples (color, x, y)
     # Apply all symmetries and pick the one with the minimal representation
     min_representation = None
@@ -72,20 +80,14 @@ if __name__ == "__main__":
 
     for doc in docs:
         doc_id = str(doc['no'])
-        prepos = doc['prepos']
-        positions = []
-        # Convert positions to coordinates
-        for color_key in ['b', 'w']:
-            color = 'B' if color_key == 'b' else 'W'
-            for pos_str in prepos.get(color_key, []):
-                x, y = pos_to_coord(pos_str)
-                positions.append( (color, x, y) )
+        prepos = doc.get('prepos')
+        if not prepos:
+            print(doc)
+            continue
         # Canonicalize positions
-        representation, canon_positions = canonicalize_positions(positions)
-        #print(doc['no'])
+        representation, canon_positions = canonicalize_positions(prepos)
         #print(representation)
         #print(canon_positions)
-        #print()
 
         canonical_positions[representation].append(doc_id)
         doc_positions[doc_id] = set( (color, x, y) for color, x, y in canon_positions )

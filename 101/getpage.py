@@ -9,10 +9,12 @@ from pymongo import MongoClient, ReturnDocument
 import sys
 
 #
-# 获取9K list，不需要登录
+# 获取level list，不需要登录
 # 另存为csv
 # 默认获取第一页
 # 获取全部需要去掉break注释，get_content_level 中的遍历所有页面
+# url_no列表，数组形式存放到level集合
+# url_no列表，单个文档形式存放到grade集合
 
 base_url = "https://www.101weiqi.com/"
 
@@ -108,7 +110,45 @@ def update_list(doc):
         else:
             print("数据已存在，且无任何变化。")
     else:
-        print("已插入新文档。")
+        print("level集合，插入新文档。")
+
+'''
+输入 level_str 和 数组new_list
+数组 new_list存放了很多 url_no
+对于每一个 url_no
+查询 grade集合中是否有对应的 url_no：
+- 如果没有，则加入：{
+    "level_str": level_str,
+    "url_no": new_list的元素
+}
+- 如果有，而且 level_str不一致，则进行更新，并打印 url_no 从原来的level_str替换成新的
+'''
+def update_grade(level_str, new_list):
+    new_list = []
+    replace_list = []
+
+    client = MongoClient("mongodb://localhost:27017/")  # 连接 MongoDB
+    db = client["101"]  # 选择数据库
+    collection = db["grade"]  # 选择集合
+
+    for url_no in new_list:
+        existing_doc = collection.find_one({"url_no": url_no})
+
+        if not existing_doc:
+            # 如果 url_no 不存在，则插入新文档
+            collection.insert_one({"level_str": level_str, "url_no": url_no})
+            print(f"new {level_str} {url_no}")
+            new_list.append(url_no)
+        elif existing_doc["level_str"] != level_str:
+            # 如果 url_no 存在但 level_str 不同，则更新并打印变化
+            old_level_str = existing_doc["level_str"]
+            collection.update_one({"url_no": url_no}, {"$set": {"level_str": level_str}})
+            print(f"replace {old_level_str} {url_no} -> {level_str} {url_no}")
+            replace_list.append(url_no)
+
+    print(f'{level_str} new {len(new_list)} replace {len(replace_list)}')
+
+    client.close()  # 关闭连接
 
 def get_content_level(level_str):
     global base_url
@@ -143,6 +183,9 @@ def get_content_level(level_str):
         'list':  all_data
     }
     update_list(doc)
+
+    #反复拿level的列表
+    update_grade(level_str, all_data)
 
 if __name__ == '__main__':
     level_str = "9K"

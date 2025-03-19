@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>按难度 - 欣赏题 - 101围棋网</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content=""/>
+        <meta name="description" content="按难度显示《欣赏题》中的题目。"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="shortcut icon"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="Bookmark"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="apple-touch-icon" sizes="144x144" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="stylesheet" href="https://static2.101weiqi.com/static/cache/a8e4ded57c9e2c03a4443127da6b1fd7.css">
+        <style type="text/css">
+            [ng-cloak] {
+                display: none !important
+            }
+        </style>
+    </head>
+    <body ng-app="wqapp">
+        <nav class="navbar nav101" style="margin:0" id="whead" ng-controller="headctrl" ng-cloak>
+            <div class="container" id="headid">
+                <script>
+                    var hlinks = [{
+                        htype: 1,
+                        h: '/home/',
+                        name: '我的首页'
+                    }, {
+                        htype: 1,
+                        h: '/task/',
+                        name: '作业'
+                    }, {
+                        htype: 1,
+                        h: '/questionlib/',
+                        name: '题库'
+                    }, {
+                        htype: 1,
+                        h: '/playai/',
+                        name: '训练营'
+                    }, {
+                        htype: 1,
+                        h: '/play/',
+                        name: '对弈'
+                    }, {
+                        htype: 1,
+                        h: '/forum/',
+                        name: '讨论区'
+                    }, {
+                        htype: 1,
+                        h: '/book/',
+                        name: '棋书'
+                    }, {
+                        htype: 1,
+                        h: '/chessbook/',
+                        name: '棋谱'
+                    }, ];
+                    var rightlinks = [{
+                        htype: 3,
+                        h: '/u/33excited/',
+                        name: '33excited 3D'
+                    }, {
+                        htype: 3,
+                        h: '/logout/',
+                        name: '退出'
+                    }]
+                </script>
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand" href="/">
+                        <img src="https://static2.101weiqi.com/static/images/logo.png">
+                    </a>
+                </div>
+                <div class="pull-left" style="margin-left: 40px;">
+                    <div class="navbar-item" ng-repeat="h in activelinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand" ng-if="h.htype == 1">
+                            <div class="navdiv">[[h.name]]</div>
+                        </a>
+                        <a ng-href="[[h.h]]" class="navbar-brand" style="position: relative;" ng-if="h.htype == 2" title="[[h.name]]">
+                            <div class="navdiv">
+                                <dd ng-if="h.icon == '@'">@</dd>
+                                <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            </div>
+                            <dd class="headnumber">[[h.number]]</dd>
+                        </a>
+                    </div>
+                </div>
+                <div class="pull-right" ng-if="hasright">
+                    <div class="navbar-item" ng-repeat="h in rightlinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand2">
+                            <span class="navspan">[[h.name]]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="toggleright" ng-if="hasmore">
+                    <button type="button" class="navbar-toggle2" ng-click="showmore()">
+                        <span class="sr-only">101围棋网</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="clear"></div>
+                <div class="width100 headsplit" ng-if="is_showmore">
+                    <div class="col-xs-4 navmore-item" ng-repeat="h in morelinks">
+                        <a ng-href="[[h.h]]" class="morelink">
+                            <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            [[h.name]]
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="container tc-main " id="main">
+            <div class="height20" id="toph"></div>
+            <div class="col-md-12">
+                <h3>
+                    按难度显示 &nbsp;
+                    <small>
+                        ---&nbsp;&nbsp;<a href="/book/2762/">欣赏题</a>
+                    </small>
+                </h3>
+                <hr/>
+                <p>
+                    <a href="/book/2762/?m=restore">&rarr;按章节显示</a>
+                </p>
+                <div style="margin-top:10px;" class="fontsize12"></div>
+                <div class="clear"></div>
+                <input type='hidden' name='csrfmiddlewaretoken' value='z0hLhwzZoCRlownueXkIhHESxN4XaE3ak0oWyHxVD2HTDOj7IvJPQf4SK680OY6B'/>
+                <div class="clearfix">
+                    <ul class="pagination pull-right"></ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="clear"></div>
+        </div>
+        <footer id="myfooter">
+            <div class="container tc-main" style="margin-bottom: 10px;">
+                <div class="spliter"></div>
+                <span class="pull-left">© 2012-2025 101weiqi.com</span>
+                <span class="pull-right" style="padding-right:10px;">
+                    <a href="https://doc.101weiqi.com/">帮助中心</a>
+                </span>
+            </div>
+            <input type="hidden" id="curuser" value="33excited" login="/">
+        </footer>
+        <script type="text/javascript">
+            var is_secure = true;
+        </script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/a8bd9e5dc91f652e613dddf51fdd25dc.js"></script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/1259566f8925db6142107d9e75c8b15e.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var x = 0;
+                var y = 0;
+            });
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?13a338d58a330cc6f97cd0c32cf6dd47";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            }
+            )();
+        </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9229237fbc59aa2c","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"a870cf35e515469b89a360f984dd3c51"}' crossorigin="anonymous"></script>
+    </body>
+</html>
+

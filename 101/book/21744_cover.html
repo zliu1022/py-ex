@@ -1,0 +1,3372 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   龙宝死活题棋书111 - 101围棋网
+  </title>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-type"/>
+  <meta content="龙宝死活题棋书111" name="keywords"/>
+  <meta content="" name="description"/>
+  <meta content="width=device-width, initial-scale=1.0,shrink-to-fit=no" name="viewport"/>
+  <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="shortcut icon"/>
+  <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="Bookmark"/>
+  <link href="https://static2.101weiqi.com/static/images/apple_1142.png" rel="apple-touch-icon" sizes="57x57"/>
+  <link href="https://static2.101weiqi.com/static/images/apple_1142.png" rel="apple-touch-icon" sizes="114x114"/>
+  <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="apple-touch-icon" sizes="72x72"/>
+  <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="apple-touch-icon" sizes="144x144"/>
+  <link href="https://static2.101weiqi.com/static/cache/a8e4ded57c9e2c03a4443127da6b1fd7.css" rel="stylesheet"/>
+  <style type="text/css">
+   [ng-cloak]{display:none !important}
+  </style>
+  <link href="https://static2.101weiqi.com/static/cache/269550530cc127b6aa5a35925a7de6ce.css" rel="stylesheet"/>
+  <style>
+   .qis_bg{ width: 95%; background:url(https://static2.101weiqi.com/static/images/qis_all_2.jpg) repeat-y center top;  background-size: 100%;border-radius: 10px;}.qis_title{ width: 100%;height:80px; background:url(https://static2.101weiqi.com/static/images/qis_title_2.png) no-repeat right top; background-size: 80px ; text-align: center; line-height: 80px; font-family: '微软雅黑'; font-size: 22px; font-weight: bold;}.qis_bottom{ width: 100%;height:80px; background:url(https://static2.101weiqi.com/static/images/qis_bottom_2.png) no-repeat left bottom; background-size: 80px;}
+  </style>
+ </head>
+ <body ng-app="wqapp">
+  <nav class="navbar nav101" id="whead" ng-cloak="" ng-controller="headctrl" style="margin:0">
+   <div class="container" id="headid">
+    <script>
+     var hlinks = [{htype:1,h:'/home/',name:'我的首页'},{htype:1,h:'/task/',name:'作业'},{htype:1,h:'/questionlib/',name:'题库'},{htype:1,h:'/playai/',name:'训练营'},{htype:1,h:'/play/',name:'对弈'},{htype:1,h:'/forum/',name:'讨论区'},{htype:1,h:'/book/',name:'棋书'},{htype:1,h:'/chessbook/',name:'棋谱'},];var rightlinks = [{htype:3,h:'/u/33excited/',name:'33excited 3D'},{htype:3,h:'/logout/',name:'退出'}]
+    </script>
+    <div class="navbar-header pull-left">
+     <a class="navbar-brand" href="/">
+      <img src="https://static2.101weiqi.com/static/images/logo.png"/>
+     </a>
+    </div>
+    <div class="pull-left" style="margin-left: 40px;">
+     <div class="navbar-item" ng-repeat="h in activelinks">
+      <a class="navbar-brand" ng-href="[[h.h]]" ng-if="h.htype == 1">
+       <div class="navdiv">
+        [[h.name]]
+       </div>
+      </a>
+      <a class="navbar-brand" ng-href="[[h.h]]" ng-if="h.htype == 2" style="position: relative;" title="[[h.name]]">
+       <div class="navdiv">
+        <dd ng-if="h.icon == '@'">
+         @
+        </dd>
+        <i class="glyphicon glyphicon-[[h.icon]]" ng-if="h.icon != '@'">
+        </i>
+       </div>
+       <dd class="headnumber">
+        [[h.number]]
+       </dd>
+      </a>
+     </div>
+    </div>
+    <div class="pull-right" ng-if="hasright">
+     <div class="navbar-item" ng-repeat="h in rightlinks">
+      <a class="navbar-brand2" ng-href="[[h.h]]">
+       <span class="navspan">
+        [[h.name]]
+       </span>
+      </a>
+     </div>
+    </div>
+    <div class="toggleright" ng-if="hasmore">
+     <button class="navbar-toggle2" ng-click="showmore()" type="button">
+      <span class="sr-only">
+       101围棋网
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="width100 headsplit" ng-if="is_showmore">
+     <div class="col-xs-4 navmore-item" ng-repeat="h in morelinks">
+      <a class="morelink" ng-href="[[h.h]]">
+       <i class="glyphicon glyphicon-[[h.icon]]" ng-if="h.icon != '@'">
+       </i>
+       [[h.name]]
+      </a>
+     </div>
+     <div class="clear">
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="container tc-main" id="main" ng-cloak="" ng-controller="BookCtrl">
+   <div class="height20" id="toph">
+   </div>
+   <div class="col-md-7" style="margin:0">
+    <div class="danghu_left">
+     <div class="qis_bg">
+      <div class="qis_title">
+       龙宝死活题棋书111
+      </div>
+      <div class="qis_content">
+       <p>
+        由
+        <a href="/u/梦九龙宝/">
+         梦九龙宝
+        </a>
+        分享
+       </p>
+       <p>
+       </p>
+       <p class="text-success">
+        共336道题目，平均难度：6K+ 做题次数：850164次
+       </p>
+       <p>
+        <a class="btn btn-success" href="/book/doing/1937278/">
+         开始做题
+        </a>
+        <a href="/book/dosetting/1937278/">
+         做题形式设置
+        </a>
+        <a href="/book/myerror/1937278/">
+         我的棋书错题本
+        </a>
+       </p>
+       <p class="text-success" style="line-height:150%;">
+        棋友完成棋书作业后，将在此显示本书做题数据统计（每天晚上统计，针对
+        <a href="/changepower/">
+         银卡以上会员
+        </a>
+        ）
+       </p>
+       <p>
+        <a bid="21744" class="starbook" href="javascript:void(0);">
+         <img class="starimg" src="https://static2.101weiqi.com/static/images/star_inactive.gif"/>
+         <span class="startip">
+          收藏本棋书
+         </span>
+        </a>
+       </p>
+       <ul>
+        <li style="width:100%;">
+         1、
+         <a class="node" href="/book/21744/9504/">
+          小溪
+         </a>
+         (9)
+        </li>
+        <li style="width:100%;">
+         2、
+         <a class="node" href="/book/21744/9505/">
+          河
+         </a>
+         (3)
+        </li>
+        <li style="width:100%;">
+         3、
+         <a class="node" href="/book/21744/9506/">
+          长江
+         </a>
+         (1)
+        </li>
+        <li style="width:100%;">
+         4、
+         <a class="node" href="/book/21744/9507/">
+          大海
+         </a>
+         (5)
+        </li>
+        <div class="clear">
+        </div>
+       </ul>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7590/">
+         <img src="https://static2.101weiqi.com/file/newimg/7590.png"/>
+         <br/>
+         <span class="qname">
+          Q-7590
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10768/">
+         <img src="https://static2.101weiqi.com/file/newimg/10768.png"/>
+         <br/>
+         <span class="qname">
+          Q-10768
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1814/">
+         <img src="https://static2.101weiqi.com/file/newimg/1814.png"/>
+         <br/>
+         <span class="qname">
+          Q-1814
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61351/">
+         <img src="https://static2.101weiqi.com/file/newimg/61351.png"/>
+         <br/>
+         <span class="qname">
+          长气的手筋
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/28349/">
+         <img src="https://static2.101weiqi.com/file/newimg/28349.png"/>
+         <br/>
+         <span class="qname">
+          Q-28349
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/56896/">
+         <img src="https://static2.101weiqi.com/file/newimg/56896.png"/>
+         <br/>
+         <span class="qname">
+          Q-56896
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/55935/">
+         <img src="https://static2.101weiqi.com/file/newimg/55935.png"/>
+         <br/>
+         <span class="qname">
+          Q-55935
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8397/">
+         <img src="https://static2.101weiqi.com/file/newimg/8397.png"/>
+         <br/>
+         <span class="qname">
+          Q-8397
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11626/">
+         <img src="https://static2.101weiqi.com/file/newimg/11626.png"/>
+         <br/>
+         <span class="qname">
+          Q-11626
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/21266/">
+         <img src="https://static2.101weiqi.com/file/newimg/21266.png"/>
+         <br/>
+         <span class="qname">
+          应用
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1644/">
+         <img src="https://static2.101weiqi.com/file/newimg/1644.png"/>
+         <br/>
+         <span class="qname">
+          Q-1644
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4899/">
+         <img src="https://static2.101weiqi.com/file/newimg/4899.png"/>
+         <br/>
+         <span class="qname">
+          Q-4899
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10627/">
+         <img src="https://static2.101weiqi.com/file/newimg/10627.png"/>
+         <br/>
+         <span class="qname">
+          Q-10627
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14335/">
+         <img src="https://static2.101weiqi.com/file/newimg/14335.png"/>
+         <br/>
+         <span class="qname">
+          Q-14335
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/6305/">
+         <img src="https://static2.101weiqi.com/file/newimg/6305.png"/>
+         <br/>
+         <span class="qname">
+          Q-6305
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/19839/">
+         <img src="https://static2.101weiqi.com/file/newimg/19839.png"/>
+         <br/>
+         <span class="qname">
+          征吃
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10395/">
+         <img src="https://static2.101weiqi.com/file/newimg/10395.png"/>
+         <br/>
+         <span class="qname">
+          Q-10395
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10311/">
+         <img src="https://static2.101weiqi.com/file/newimg/10311.png"/>
+         <br/>
+         <span class="qname">
+          Q-10311
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/25365/">
+         <img src="https://static2.101weiqi.com/file/newimg/25365.png"/>
+         <br/>
+         <span class="qname">
+          猛虎投林
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8861/">
+         <img src="https://static2.101weiqi.com/file/newimg/8861.png"/>
+         <br/>
+         <span class="qname">
+          Q-8861
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12099/">
+         <img src="https://static2.101weiqi.com/file/newimg/12099.png"/>
+         <br/>
+         <span class="qname">
+          Q-12099
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8415/">
+         <img src="https://static2.101weiqi.com/file/newimg/8415.png"/>
+         <br/>
+         <span class="qname">
+          Q-8415
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/39002/">
+         <img src="https://static2.101weiqi.com/file/newimg/39002.png"/>
+         <br/>
+         <span class="qname">
+          Q-39002
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/6972/">
+         <img src="https://static2.101weiqi.com/file/newimg/6972.png"/>
+         <br/>
+         <span class="qname">
+          Q-6972
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/40804/">
+         <img src="https://static2.101weiqi.com/file/newimg/40804.png"/>
+         <br/>
+         <span class="qname">
+          Q-40804
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1276/">
+         <img src="https://static2.101weiqi.com/file/newimg/1276.png"/>
+         <br/>
+         <span class="qname">
+          Q-1276
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11108/">
+         <img src="https://static2.101weiqi.com/file/newimg/11108.png"/>
+         <br/>
+         <span class="qname">
+          Q-11108
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11300/">
+         <img src="https://static2.101weiqi.com/file/newimg/11300.png"/>
+         <br/>
+         <span class="qname">
+          Q-11300
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/44308/">
+         <img src="https://static2.101weiqi.com/file/newimg/44308.png"/>
+         <br/>
+         <span class="qname">
+          对杀
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/21378/">
+         <img src="https://static2.101weiqi.com/file/newimg/21378.png"/>
+         <br/>
+         <span class="qname">
+          Q-21378
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/58621/">
+         <img src="https://static2.101weiqi.com/file/newimg/58621.png"/>
+         <br/>
+         <span class="qname">
+          Q-58621
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22490/">
+         <img src="https://static2.101weiqi.com/file/newimg/22490.png"/>
+         <br/>
+         <span class="qname">
+          Q-22490
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61921/">
+         <img src="https://static2.101weiqi.com/file/newimg/61921.png"/>
+         <br/>
+         <span class="qname">
+          Q-61921
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/13672/">
+         <img src="https://static2.101weiqi.com/file/newimg/13672.png"/>
+         <br/>
+         <span class="qname">
+          Q-13672
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/43576/">
+         <img src="https://static2.101weiqi.com/file/newimg/43576.png"/>
+         <br/>
+         <span class="qname">
+          为了在对杀中取胜请给黑棋长气
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9375/">
+         <img src="https://static2.101weiqi.com/file/newimg/9375.png"/>
+         <br/>
+         <span class="qname">
+          Q-9375
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/63070/">
+         <img src="https://static2.101weiqi.com/file/newimg/63070.png"/>
+         <br/>
+         <span class="qname">
+          Q-63070
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/21848/">
+         <img src="https://static2.101weiqi.com/file/newimg/21848.png"/>
+         <br/>
+         <span class="qname">
+          对杀79
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/57426/">
+         <img src="https://static2.101weiqi.com/file/newimg/57426.png"/>
+         <br/>
+         <span class="qname">
+          Q-57426
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/6436/">
+         <img src="https://static2.101weiqi.com/file/newimg/6436.png"/>
+         <br/>
+         <span class="qname">
+          Q-6436
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1535/">
+         <img src="https://static2.101weiqi.com/file/newimg/1535.png"/>
+         <br/>
+         <span class="qname">
+          Q-1535
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8969/">
+         <img src="https://static2.101weiqi.com/file/newimg/8969.png"/>
+         <br/>
+         <span class="qname">
+          Q-8969
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5210/">
+         <img src="https://static2.101weiqi.com/file/newimg/5210.png"/>
+         <br/>
+         <span class="qname">
+          Q-5210
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11778/">
+         <img src="https://static2.101weiqi.com/file/newimg/11778.png"/>
+         <br/>
+         <span class="qname">
+          Q-11778
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10945/">
+         <img src="https://static2.101weiqi.com/file/newimg/10945.png"/>
+         <br/>
+         <span class="qname">
+          Q-10945
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10217/">
+         <img src="https://static2.101weiqi.com/file/newimg/10217.png"/>
+         <br/>
+         <span class="qname">
+          Q-10217
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4493/">
+         <img src="https://static2.101weiqi.com/file/newimg/4493.png"/>
+         <br/>
+         <span class="qname">
+          Q-4493
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7746/">
+         <img src="https://static2.101weiqi.com/file/newimg/7746.png"/>
+         <br/>
+         <span class="qname">
+          Q-7746
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/62294/">
+         <img src="https://static2.101weiqi.com/file/newimg/62294.png"/>
+         <br/>
+         <span class="qname">
+          Q-62294
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8202/">
+         <img src="https://static2.101weiqi.com/file/newimg/8202.png"/>
+         <br/>
+         <span class="qname">
+          Q-8202
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/25419/">
+         <img src="https://static2.101weiqi.com/file/newimg/25419.png"/>
+         <br/>
+         <span class="qname">
+          Q-25419
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9201/">
+         <img src="https://static2.101weiqi.com/file/newimg/9201.png"/>
+         <br/>
+         <span class="qname">
+          Q-9201
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4028/">
+         <img src="https://static2.101weiqi.com/file/newimg/4028.png"/>
+         <br/>
+         <span class="qname">
+          Q-4028
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4617/">
+         <img src="https://static2.101weiqi.com/file/newimg/4617.png"/>
+         <br/>
+         <span class="qname">
+          Q-4617
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20004/">
+         <img src="https://static2.101weiqi.com/file/newimg/20004.png"/>
+         <br/>
+         <span class="qname">
+          Q-20004
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20498/">
+         <img src="https://static2.101weiqi.com/file/newimg/20498.png"/>
+         <br/>
+         <span class="qname">
+          征子
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/21341/">
+         <img src="https://static2.101weiqi.com/file/newimg/21341.png"/>
+         <br/>
+         <span class="qname">
+          Q-21341
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20284/">
+         <img src="https://static2.101weiqi.com/file/newimg/20284.png"/>
+         <br/>
+         <span class="qname">
+          Q-20284
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12921/">
+         <img src="https://static2.101weiqi.com/file/newimg/12921.png"/>
+         <br/>
+         <span class="qname">
+          Q-12921
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/50983/">
+         <img src="https://static2.101weiqi.com/file/newimg/50983.png"/>
+         <br/>
+         <span class="qname">
+          Q-50983
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14510/">
+         <img src="https://static2.101weiqi.com/file/newimg/14510.png"/>
+         <br/>
+         <span class="qname">
+          Q-14510
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/13/">
+         <img src="https://static2.101weiqi.com/file/newimg/13.png"/>
+         <br/>
+         <span class="qname">
+          Q-13
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14097/">
+         <img src="https://static2.101weiqi.com/file/newimg/14097.png"/>
+         <br/>
+         <span class="qname">
+          Q-14097
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1667/">
+         <img src="https://static2.101weiqi.com/file/newimg/1667.png"/>
+         <br/>
+         <span class="qname">
+          Q-1667
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3060/">
+         <img src="https://static2.101weiqi.com/file/newimg/3060.png"/>
+         <br/>
+         <span class="qname">
+          Q-3060
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7669/">
+         <img src="https://static2.101weiqi.com/file/newimg/7669.png"/>
+         <br/>
+         <span class="qname">
+          Q-7669
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8874/">
+         <img src="https://static2.101weiqi.com/file/newimg/8874.png"/>
+         <br/>
+         <span class="qname">
+          Q-8874
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/63476/">
+         <img src="https://static2.101weiqi.com/file/newimg/63476.png"/>
+         <br/>
+         <span class="qname">
+          Q-63476
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/42919/">
+         <img src="https://static2.101weiqi.com/file/newimg/42919.png"/>
+         <br/>
+         <span class="qname">
+          Q-42919
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61984/">
+         <img src="https://static2.101weiqi.com/file/newimg/61984.png"/>
+         <br/>
+         <span class="qname">
+          Q-61984
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4989/">
+         <img src="https://static2.101weiqi.com/file/newimg/4989.png"/>
+         <br/>
+         <span class="qname">
+          Q-4989
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7766/">
+         <img src="https://static2.101weiqi.com/file/newimg/7766.png"/>
+         <br/>
+         <span class="qname">
+          Q-7766
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/47065/">
+         <img src="https://static2.101weiqi.com/file/newimg/47065.png"/>
+         <br/>
+         <span class="qname">
+          Q-47065
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14405/">
+         <img src="https://static2.101weiqi.com/file/newimg/14405.png"/>
+         <br/>
+         <span class="qname">
+          Q-14405
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/42815/">
+         <img src="https://static2.101weiqi.com/file/newimg/42815.png"/>
+         <br/>
+         <span class="qname">
+          Q-42815
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/36/">
+         <img src="https://static2.101weiqi.com/file/newimg/36.png"/>
+         <br/>
+         <span class="qname">
+          Q-36
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/50536/">
+         <img src="https://static2.101weiqi.com/file/newimg/50536.png"/>
+         <br/>
+         <span class="qname">
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1652/">
+         <img src="https://static2.101weiqi.com/file/newimg/1652.png"/>
+         <br/>
+         <span class="qname">
+          Q-1652
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/43039/">
+         <img src="https://static2.101weiqi.com/file/newimg/43039.png"/>
+         <br/>
+         <span class="qname">
+          Q-43039
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/44/">
+         <img src="https://static2.101weiqi.com/file/newimg/44.png"/>
+         <br/>
+         <span class="qname">
+          Q-44
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/26908/">
+         <img src="https://static2.101weiqi.com/file/newimg/26908.png"/>
+         <br/>
+         <span class="qname">
+          Q-26908
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20007/">
+         <img src="https://static2.101weiqi.com/file/newimg/20007.png"/>
+         <br/>
+         <span class="qname">
+          Q-20007
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/6502/">
+         <img src="https://static2.101weiqi.com/file/newimg/6502.png"/>
+         <br/>
+         <span class="qname">
+          Q-6502
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1649/">
+         <img src="https://static2.101weiqi.com/file/newimg/1649.png"/>
+         <br/>
+         <span class="qname">
+          Q-1649
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/52544/">
+         <img src="https://static2.101weiqi.com/file/newimg/52544.png"/>
+         <br/>
+         <span class="qname">
+          Q-52544
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1655/">
+         <img src="https://static2.101weiqi.com/file/newimg/1655.png"/>
+         <br/>
+         <span class="qname">
+          Q-1655
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3389/">
+         <img src="https://static2.101weiqi.com/file/newimg/3389.png"/>
+         <br/>
+         <span class="qname">
+          Q-3389
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/46341/">
+         <img src="https://static2.101weiqi.com/file/newimg/46341.png"/>
+         <br/>
+         <span class="qname">
+          Q-46341
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/68971/">
+         <img src="https://static2.101weiqi.com/file/newimg/68971.png"/>
+         <br/>
+         <span class="qname">
+          Q-68971
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1645/">
+         <img src="https://static2.101weiqi.com/file/newimg/1645.png"/>
+         <br/>
+         <span class="qname">
+          Q-1645
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27529/">
+         <img src="https://static2.101weiqi.com/file/newimg/27529.png"/>
+         <br/>
+         <span class="qname">
+          Q-27529
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/63080/">
+         <img src="https://static2.101weiqi.com/file/newimg/63080.png"/>
+         <br/>
+         <span class="qname">
+          Q-63080
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/51456/">
+         <img src="https://static2.101weiqi.com/file/newimg/51456.png"/>
+         <br/>
+         <span class="qname">
+          Q-51456
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20010/">
+         <img src="https://static2.101weiqi.com/file/newimg/20010.png"/>
+         <br/>
+         <span class="qname">
+          Q-20010
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20003/">
+         <img src="https://static2.101weiqi.com/file/newimg/20003.png"/>
+         <br/>
+         <span class="qname">
+          Q-20003
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1130/">
+         <img src="https://static2.101weiqi.com/file/newimg/1130.png"/>
+         <br/>
+         <span class="qname">
+          Q-1130
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/31562/">
+         <img src="https://static2.101weiqi.com/file/newimg/31562.png"/>
+         <br/>
+         <span class="qname">
+          Q-31562
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8216/">
+         <img src="https://static2.101weiqi.com/file/newimg/8216.png"/>
+         <br/>
+         <span class="qname">
+          Q-8216
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1309/">
+         <img src="https://static2.101weiqi.com/file/newimg/1309.png"/>
+         <br/>
+         <span class="qname">
+          Q-1309
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5047/">
+         <img src="https://static2.101weiqi.com/file/newimg/5047.png"/>
+         <br/>
+         <span class="qname">
+          Q-5047
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22664/">
+         <img src="https://static2.101weiqi.com/file/newimg/22664.png"/>
+         <br/>
+         <span class="qname">
+          Q-22664
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/54266/">
+         <img src="https://static2.101weiqi.com/file/newimg/54266.png"/>
+         <br/>
+         <span class="qname">
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27563/">
+         <img src="https://static2.101weiqi.com/file/newimg/27563.png"/>
+         <br/>
+         <span class="qname">
+          Q-27563
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9438/">
+         <img src="https://static2.101weiqi.com/file/newimg/9438.png"/>
+         <br/>
+         <span class="qname">
+          Q-9438
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14381/">
+         <img src="https://static2.101weiqi.com/file/newimg/14381.png"/>
+         <br/>
+         <span class="qname">
+          Q-14381
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/42824/">
+         <img src="https://static2.101weiqi.com/file/newimg/42824.png"/>
+         <br/>
+         <span class="qname">
+          Q-42824
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/13417/">
+         <img src="https://static2.101weiqi.com/file/newimg/13417.png"/>
+         <br/>
+         <span class="qname">
+          Q-13417
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/106/">
+         <img src="https://static2.101weiqi.com/file/newimg/106.png"/>
+         <br/>
+         <span class="qname">
+          Q-106
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/63097/">
+         <img src="https://static2.101weiqi.com/file/newimg/63097.png"/>
+         <br/>
+         <span class="qname">
+          Q-63097
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8748/">
+         <img src="https://static2.101weiqi.com/file/newimg/8748.png"/>
+         <br/>
+         <span class="qname">
+          Q-8748
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/44034/">
+         <img src="https://static2.101weiqi.com/file/newimg/44034.png"/>
+         <br/>
+         <span class="qname">
+          Q-44034
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3799/">
+         <img src="https://static2.101weiqi.com/file/newimg/3799.png"/>
+         <br/>
+         <span class="qname">
+          Q-3799
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/17818/">
+         <img src="https://static2.101weiqi.com/file/newimg/17818.png"/>
+         <br/>
+         <span class="qname">
+          Q-17818
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/23482/">
+         <img src="https://static2.101weiqi.com/file/newimg/23482.png"/>
+         <br/>
+         <span class="qname">
+          Q-23482
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8417/">
+         <img src="https://static2.101weiqi.com/file/newimg/8417.png"/>
+         <br/>
+         <span class="qname">
+          Q-8417
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20006/">
+         <img src="https://static2.101weiqi.com/file/newimg/20006.png"/>
+         <br/>
+         <span class="qname">
+          Q-20006
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/49504/">
+         <img src="https://static2.101weiqi.com/file/newimg/49504.png"/>
+         <br/>
+         <span class="qname">
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61982/">
+         <img src="https://static2.101weiqi.com/file/newimg/61982.png"/>
+         <br/>
+         <span class="qname">
+          Q-61982
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11046/">
+         <img src="https://static2.101weiqi.com/file/newimg/11046.png"/>
+         <br/>
+         <span class="qname">
+          Q-11046
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14457/">
+         <img src="https://static2.101weiqi.com/file/newimg/14457.png"/>
+         <br/>
+         <span class="qname">
+          Q-14457
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5306/">
+         <img src="https://static2.101weiqi.com/file/newimg/5306.png"/>
+         <br/>
+         <span class="qname">
+          Q-5306
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5500/">
+         <img src="https://static2.101weiqi.com/file/newimg/5500.png"/>
+         <br/>
+         <span class="qname">
+          Q-5500
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/62310/">
+         <img src="https://static2.101weiqi.com/file/newimg/62310.png"/>
+         <br/>
+         <span class="qname">
+          Q-62310
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9161/">
+         <img src="https://static2.101weiqi.com/file/newimg/9161.png"/>
+         <br/>
+         <span class="qname">
+          Q-9161
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61133/">
+         <img src="https://static2.101weiqi.com/file/newimg/61133.png"/>
+         <br/>
+         <span class="qname">
+          Q-61133
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/56895/">
+         <img src="https://static2.101weiqi.com/file/newimg/56895.png"/>
+         <br/>
+         <span class="qname">
+          Q-56895
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/38874/">
+         <img src="https://static2.101weiqi.com/file/newimg/38874.png"/>
+         <br/>
+         <span class="qname">
+          Q-38874
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1668/">
+         <img src="https://static2.101weiqi.com/file/newimg/1668.png"/>
+         <br/>
+         <span class="qname">
+          Q-1668
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3372/">
+         <img src="https://static2.101weiqi.com/file/newimg/3372.png"/>
+         <br/>
+         <span class="qname">
+          Q-3372
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/43611/">
+         <img src="https://static2.101weiqi.com/file/newimg/43611.png"/>
+         <br/>
+         <span class="qname">
+          请吃白棋
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1646/">
+         <img src="https://static2.101weiqi.com/file/newimg/1646.png"/>
+         <br/>
+         <span class="qname">
+          Q-1646
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1657/">
+         <img src="https://static2.101weiqi.com/file/newimg/1657.png"/>
+         <br/>
+         <span class="qname">
+          Q-1657
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5757/">
+         <img src="https://static2.101weiqi.com/file/newimg/5757.png"/>
+         <br/>
+         <span class="qname">
+          Q-5757
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20535/">
+         <img src="https://static2.101weiqi.com/file/newimg/20535.png"/>
+         <br/>
+         <span class="qname">
+          Q-20535
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20151/">
+         <img src="https://static2.101weiqi.com/file/newimg/20151.png"/>
+         <br/>
+         <span class="qname">
+          Q-20151
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4174/">
+         <img src="https://static2.101weiqi.com/file/newimg/4174.png"/>
+         <br/>
+         <span class="qname">
+          Q-4174
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14337/">
+         <img src="https://static2.101weiqi.com/file/newimg/14337.png"/>
+         <br/>
+         <span class="qname">
+          Q-14337
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20293/">
+         <img src="https://static2.101weiqi.com/file/newimg/20293.png"/>
+         <br/>
+         <span class="qname">
+          Q-20293
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10537/">
+         <img src="https://static2.101weiqi.com/file/newimg/10537.png"/>
+         <br/>
+         <span class="qname">
+          Q-10537
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3411/">
+         <img src="https://static2.101weiqi.com/file/newimg/3411.png"/>
+         <br/>
+         <span class="qname">
+          Q-3411
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/89/">
+         <img src="https://static2.101weiqi.com/file/newimg/89.png"/>
+         <br/>
+         <span class="qname">
+          Q-89
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/115316/">
+         <img src="https://static2.101weiqi.com/file/newimg/115316.png"/>
+         <br/>
+         <span class="qname">
+          白先最佳着手
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/65334/">
+         <img src="https://static2.101weiqi.com/file/newimg/65334.png"/>
+         <br/>
+         <span class="qname">
+          Q-65334
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20384/">
+         <img src="https://static2.101weiqi.com/file/newimg/20384.png"/>
+         <br/>
+         <span class="qname">
+          Q-20384
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/51/">
+         <img src="https://static2.101weiqi.com/file/newimg/51.png"/>
+         <br/>
+         <span class="qname">
+          Q-51
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20400/">
+         <img src="https://static2.101weiqi.com/file/newimg/20400.png"/>
+         <br/>
+         <span class="qname">
+          Q-20400
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8334/">
+         <img src="https://static2.101weiqi.com/file/newimg/8334.png"/>
+         <br/>
+         <span class="qname">
+          Q-8334
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/42820/">
+         <img src="https://static2.101weiqi.com/file/newimg/42820.png"/>
+         <br/>
+         <span class="qname">
+          Q-42820
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5602/">
+         <img src="https://static2.101weiqi.com/file/newimg/5602.png"/>
+         <br/>
+         <span class="qname">
+          Q-5602
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8763/">
+         <img src="https://static2.101weiqi.com/file/newimg/8763.png"/>
+         <br/>
+         <span class="qname">
+          Q-8763
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/89772/">
+         <img src="https://static2.101weiqi.com/file/newimg/89772.png"/>
+         <br/>
+         <span class="qname">
+          Q-89772
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11761/">
+         <img src="https://static2.101weiqi.com/file/newimg/11761.png"/>
+         <br/>
+         <span class="qname">
+          Q-11761
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1658/">
+         <img src="https://static2.101weiqi.com/file/newimg/1658.png"/>
+         <br/>
+         <span class="qname">
+          Q-1658
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12792/">
+         <img src="https://static2.101weiqi.com/file/newimg/12792.png"/>
+         <br/>
+         <span class="qname">
+          Q-12792
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10448/">
+         <img src="https://static2.101weiqi.com/file/newimg/10448.png"/>
+         <br/>
+         <span class="qname">
+          Q-10448
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9820/">
+         <img src="https://static2.101weiqi.com/file/newimg/9820.png"/>
+         <br/>
+         <span class="qname">
+          Q-9820
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61582/">
+         <img src="https://static2.101weiqi.com/file/newimg/61582.png"/>
+         <br/>
+         <span class="qname">
+          Q-61582
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7603/">
+         <img src="https://static2.101weiqi.com/file/newimg/7603.png"/>
+         <br/>
+         <span class="qname">
+          Q-7603
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/21234/">
+         <img src="https://static2.101weiqi.com/file/newimg/21234.png"/>
+         <br/>
+         <span class="qname">
+          Q-21234
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5642/">
+         <img src="https://static2.101weiqi.com/file/newimg/5642.png"/>
+         <br/>
+         <span class="qname">
+          Q-5642
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/19847/">
+         <img src="https://static2.101weiqi.com/file/newimg/19847.png"/>
+         <br/>
+         <span class="qname">
+          Q-19847
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/40325/">
+         <img src="https://static2.101weiqi.com/file/newimg/40325.png"/>
+         <br/>
+         <span class="qname">
+          Q-40325
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20008/">
+         <img src="https://static2.101weiqi.com/file/newimg/20008.png"/>
+         <br/>
+         <span class="qname">
+          Q-20008
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22650/">
+         <img src="https://static2.101weiqi.com/file/newimg/22650.png"/>
+         <br/>
+         <span class="qname">
+          Q-22650
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10665/">
+         <img src="https://static2.101weiqi.com/file/newimg/10665.png"/>
+         <br/>
+         <span class="qname">
+          Q-10665
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/69744/">
+         <img src="https://static2.101weiqi.com/file/newimg/69744.png"/>
+         <br/>
+         <span class="qname">
+          Q-69744
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9631/">
+         <img src="https://static2.101weiqi.com/file/newimg/9631.png"/>
+         <br/>
+         <span class="qname">
+          Q-9631
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27429/">
+         <img src="https://static2.101weiqi.com/file/newimg/27429.png"/>
+         <br/>
+         <span class="qname">
+          Q-27429
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/56016/">
+         <img src="https://static2.101weiqi.com/file/newimg/56016.png"/>
+         <br/>
+         <span class="qname">
+          Q-56016
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/62287/">
+         <img src="https://static2.101weiqi.com/file/newimg/62287.png"/>
+         <br/>
+         <span class="qname">
+          Q-62287
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27523/">
+         <img src="https://static2.101weiqi.com/file/newimg/27523.png"/>
+         <br/>
+         <span class="qname">
+          Q-27523
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14410/">
+         <img src="https://static2.101weiqi.com/file/newimg/14410.png"/>
+         <br/>
+         <span class="qname">
+          Q-14410
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27579/">
+         <img src="https://static2.101weiqi.com/file/newimg/27579.png"/>
+         <br/>
+         <span class="qname">
+          Q-27579
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8716/">
+         <img src="https://static2.101weiqi.com/file/newimg/8716.png"/>
+         <br/>
+         <span class="qname">
+          Q-8716
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20553/">
+         <img src="https://static2.101weiqi.com/file/newimg/20553.png"/>
+         <br/>
+         <span class="qname">
+          Q-20553
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9137/">
+         <img src="https://static2.101weiqi.com/file/newimg/9137.png"/>
+         <br/>
+         <span class="qname">
+          Q-9137
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/28107/">
+         <img src="https://static2.101weiqi.com/file/newimg/28107.png"/>
+         <br/>
+         <span class="qname">
+          18
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9989/">
+         <img src="https://static2.101weiqi.com/file/newimg/9989.png"/>
+         <br/>
+         <span class="qname">
+          Q-9989
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1648/">
+         <img src="https://static2.101weiqi.com/file/newimg/1648.png"/>
+         <br/>
+         <span class="qname">
+          Q-1648
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1660/">
+         <img src="https://static2.101weiqi.com/file/newimg/1660.png"/>
+         <br/>
+         <span class="qname">
+          Q-1660
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/28329/">
+         <img src="https://static2.101weiqi.com/file/newimg/28329.png"/>
+         <br/>
+         <span class="qname">
+          Q-28329
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14191/">
+         <img src="https://static2.101weiqi.com/file/newimg/14191.png"/>
+         <br/>
+         <span class="qname">
+          Q-14191
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9039/">
+         <img src="https://static2.101weiqi.com/file/newimg/9039.png"/>
+         <br/>
+         <span class="qname">
+          Q-9039
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61125/">
+         <img src="https://static2.101weiqi.com/file/newimg/61125.png"/>
+         <br/>
+         <span class="qname">
+          Q-61125
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3735/">
+         <img src="https://static2.101weiqi.com/file/newimg/3735.png"/>
+         <br/>
+         <span class="qname">
+          Q-3735
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/43574/">
+         <img src="https://static2.101weiqi.com/file/newimg/43574.png"/>
+         <br/>
+         <span class="qname">
+          Q-43574
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10659/">
+         <img src="https://static2.101weiqi.com/file/newimg/10659.png"/>
+         <br/>
+         <span class="qname">
+          Q-10659
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27393/">
+         <img src="https://static2.101weiqi.com/file/newimg/27393.png"/>
+         <br/>
+         <span class="qname">
+          Q-27393
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22675/">
+         <img src="https://static2.101weiqi.com/file/newimg/22675.png"/>
+         <br/>
+         <span class="qname">
+          Q-22675
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4542/">
+         <img src="https://static2.101weiqi.com/file/newimg/4542.png"/>
+         <br/>
+         <span class="qname">
+          Q-4542
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/96/">
+         <img src="https://static2.101weiqi.com/file/newimg/96.png"/>
+         <br/>
+         <span class="qname">
+          Q-96
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14420/">
+         <img src="https://static2.101weiqi.com/file/newimg/14420.png"/>
+         <br/>
+         <span class="qname">
+          Q-14420
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5125/">
+         <img src="https://static2.101weiqi.com/file/newimg/5125.png"/>
+         <br/>
+         <span class="qname">
+          Q-5125
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/56242/">
+         <img src="https://static2.101weiqi.com/file/newimg/56242.png"/>
+         <br/>
+         <span class="qname">
+          Q-56242
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5621/">
+         <img src="https://static2.101weiqi.com/file/newimg/5621.png"/>
+         <br/>
+         <span class="qname">
+          Q-5621
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1647/">
+         <img src="https://static2.101weiqi.com/file/newimg/1647.png"/>
+         <br/>
+         <span class="qname">
+          Q-1647
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22882/">
+         <img src="https://static2.101weiqi.com/file/newimg/22882.png"/>
+         <br/>
+         <span class="qname">
+          Q-22882
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9424/">
+         <img src="https://static2.101weiqi.com/file/newimg/9424.png"/>
+         <br/>
+         <span class="qname">
+          Q-9424
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/44370/">
+         <img src="https://static2.101weiqi.com/file/newimg/44370.png"/>
+         <br/>
+         <span class="qname">
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1650/">
+         <img src="https://static2.101weiqi.com/file/newimg/1650.png"/>
+         <br/>
+         <span class="qname">
+          Q-1650
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/40347/">
+         <img src="https://static2.101weiqi.com/file/newimg/40347.png"/>
+         <br/>
+         <span class="qname">
+          Q-40347
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11940/">
+         <img src="https://static2.101weiqi.com/file/newimg/11940.png"/>
+         <br/>
+         <span class="qname">
+          Q-11940
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/67878/">
+         <img src="https://static2.101weiqi.com/file/newimg/67878.png"/>
+         <br/>
+         <span class="qname">
+          Q-67878
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11058/">
+         <img src="https://static2.101weiqi.com/file/newimg/11058.png"/>
+         <br/>
+         <span class="qname">
+          Q-11058
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12/">
+         <img src="https://static2.101weiqi.com/file/newimg/12.png"/>
+         <br/>
+         <span class="qname">
+          Q-12
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27585/">
+         <img src="https://static2.101weiqi.com/file/newimg/27585.png"/>
+         <br/>
+         <span class="qname">
+          Q-27585
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11185/">
+         <img src="https://static2.101weiqi.com/file/newimg/11185.png"/>
+         <br/>
+         <span class="qname">
+          Q-11185
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9159/">
+         <img src="https://static2.101weiqi.com/file/newimg/9159.png"/>
+         <br/>
+         <span class="qname">
+          Q-9159
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22673/">
+         <img src="https://static2.101weiqi.com/file/newimg/22673.png"/>
+         <br/>
+         <span class="qname">
+          Q-22673
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/18034/">
+         <img src="https://static2.101weiqi.com/file/newimg/18034.png"/>
+         <br/>
+         <span class="qname">
+          Q-18034
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/17949/">
+         <img src="https://static2.101weiqi.com/file/newimg/17949.png"/>
+         <br/>
+         <span class="qname">
+          Q-17949
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3355/">
+         <img src="https://static2.101weiqi.com/file/newimg/3355.png"/>
+         <br/>
+         <span class="qname">
+          Q-3355
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1575/">
+         <img src="https://static2.101weiqi.com/file/newimg/1575.png"/>
+         <br/>
+         <span class="qname">
+          Q-1575
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12640/">
+         <img src="https://static2.101weiqi.com/file/newimg/12640.png"/>
+         <br/>
+         <span class="qname">
+          Q-12640
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12039/">
+         <img src="https://static2.101weiqi.com/file/newimg/12039.png"/>
+         <br/>
+         <span class="qname">
+          Q-12039
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61932/">
+         <img src="https://static2.101weiqi.com/file/newimg/61932.png"/>
+         <br/>
+         <span class="qname">
+          Q-61932
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14467/">
+         <img src="https://static2.101weiqi.com/file/newimg/14467.png"/>
+         <br/>
+         <span class="qname">
+          Q-14467
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1665/">
+         <img src="https://static2.101weiqi.com/file/newimg/1665.png"/>
+         <br/>
+         <span class="qname">
+          Q-1665
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/47437/">
+         <img src="https://static2.101weiqi.com/file/newimg/47437.png"/>
+         <br/>
+         <span class="qname">
+          Q-47437
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22573/">
+         <img src="https://static2.101weiqi.com/file/newimg/22573.png"/>
+         <br/>
+         <span class="qname">
+          Q-22573
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/2478/">
+         <img src="https://static2.101weiqi.com/file/newimg/2478.png"/>
+         <br/>
+         <span class="qname">
+          Q-2478
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/2598/">
+         <img src="https://static2.101weiqi.com/file/newimg/2598.png"/>
+         <br/>
+         <span class="qname">
+          Q-2598
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10265/">
+         <img src="https://static2.101weiqi.com/file/newimg/10265.png"/>
+         <br/>
+         <span class="qname">
+          Q-10265
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7184/">
+         <img src="https://static2.101weiqi.com/file/newimg/7184.png"/>
+         <br/>
+         <span class="qname">
+          Q-7184
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/25440/">
+         <img src="https://static2.101weiqi.com/file/newimg/25440.png"/>
+         <br/>
+         <span class="qname">
+          Q-25440
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27390/">
+         <img src="https://static2.101weiqi.com/file/newimg/27390.png"/>
+         <br/>
+         <span class="qname">
+          Q-27390
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3734/">
+         <img src="https://static2.101weiqi.com/file/newimg/3734.png"/>
+         <br/>
+         <span class="qname">
+          Q-3734
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9917/">
+         <img src="https://static2.101weiqi.com/file/newimg/9917.png"/>
+         <br/>
+         <span class="qname">
+          Q-9917
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27645/">
+         <img src="https://static2.101weiqi.com/file/newimg/27645.png"/>
+         <br/>
+         <span class="qname">
+          征子
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22881/">
+         <img src="https://static2.101weiqi.com/file/newimg/22881.png"/>
+         <br/>
+         <span class="qname">
+          Q-22881
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/3786/">
+         <img src="https://static2.101weiqi.com/file/newimg/3786.png"/>
+         <br/>
+         <span class="qname">
+          Q-3786
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/42818/">
+         <img src="https://static2.101weiqi.com/file/newimg/42818.png"/>
+         <br/>
+         <span class="qname">
+          Q-42818
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14032/">
+         <img src="https://static2.101weiqi.com/file/newimg/14032.png"/>
+         <br/>
+         <span class="qname">
+          Q-14032
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/60827/">
+         <img src="https://static2.101weiqi.com/file/newimg/60827.png"/>
+         <br/>
+         <span class="qname">
+          Q-60827
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/52439/">
+         <img src="https://static2.101weiqi.com/file/newimg/52439.png"/>
+         <br/>
+         <span class="qname">
+          乌龟不出头
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/13788/">
+         <img src="https://static2.101weiqi.com/file/newimg/13788.png"/>
+         <br/>
+         <span class="qname">
+          Q-13788
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1651/">
+         <img src="https://static2.101weiqi.com/file/newimg/1651.png"/>
+         <br/>
+         <span class="qname">
+          Q-1651
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8595/">
+         <img src="https://static2.101weiqi.com/file/newimg/8595.png"/>
+         <br/>
+         <span class="qname">
+          Q-8595
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1664/">
+         <img src="https://static2.101weiqi.com/file/newimg/1664.png"/>
+         <br/>
+         <span class="qname">
+          Q-1664
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1653/">
+         <img src="https://static2.101weiqi.com/file/newimg/1653.png"/>
+         <br/>
+         <span class="qname">
+          Q-1653
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11852/">
+         <img src="https://static2.101weiqi.com/file/newimg/11852.png"/>
+         <br/>
+         <span class="qname">
+          Q-11852
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14330/">
+         <img src="https://static2.101weiqi.com/file/newimg/14330.png"/>
+         <br/>
+         <span class="qname">
+          Q-14330
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/5601/">
+         <img src="https://static2.101weiqi.com/file/newimg/5601.png"/>
+         <br/>
+         <span class="qname">
+          Q-5601
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20396/">
+         <img src="https://static2.101weiqi.com/file/newimg/20396.png"/>
+         <br/>
+         <span class="qname">
+          先手
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/56332/">
+         <img src="https://static2.101weiqi.com/file/newimg/56332.png"/>
+         <br/>
+         <span class="qname">
+          Q-56332
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14612/">
+         <img src="https://static2.101weiqi.com/file/newimg/14612.png"/>
+         <br/>
+         <span class="qname">
+          Q-14612
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7334/">
+         <img src="https://static2.101weiqi.com/file/newimg/7334.png"/>
+         <br/>
+         <span class="qname">
+          Q-7334
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14393/">
+         <img src="https://static2.101weiqi.com/file/newimg/14393.png"/>
+         <br/>
+         <span class="qname">
+          Q-14393
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12192/">
+         <img src="https://static2.101weiqi.com/file/newimg/12192.png"/>
+         <br/>
+         <span class="qname">
+          Q-12192
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11588/">
+         <img src="https://static2.101weiqi.com/file/newimg/11588.png"/>
+         <br/>
+         <span class="qname">
+          Q-11588
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/27311/">
+         <img src="https://static2.101weiqi.com/file/newimg/27311.png"/>
+         <br/>
+         <span class="qname">
+          Q-27311
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/161/">
+         <img src="https://static2.101weiqi.com/file/newimg/161.png"/>
+         <br/>
+         <span class="qname">
+          Q-161
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1656/">
+         <img src="https://static2.101weiqi.com/file/newimg/1656.png"/>
+         <br/>
+         <span class="qname">
+          Q-1656
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/43573/">
+         <img src="https://static2.101weiqi.com/file/newimg/43573.png"/>
+         <br/>
+         <span class="qname">
+          为了在对杀中取胜请给黑棋长气
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10633/">
+         <img src="https://static2.101weiqi.com/file/newimg/10633.png"/>
+         <br/>
+         <span class="qname">
+          Q-10633
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20013/">
+         <img src="https://static2.101weiqi.com/file/newimg/20013.png"/>
+         <br/>
+         <span class="qname">
+          Q-20013
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9237/">
+         <img src="https://static2.101weiqi.com/file/newimg/9237.png"/>
+         <br/>
+         <span class="qname">
+          Q-9237
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61983/">
+         <img src="https://static2.101weiqi.com/file/newimg/61983.png"/>
+         <br/>
+         <span class="qname">
+          Q-61983
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/44581/">
+         <img src="https://static2.101weiqi.com/file/newimg/44581.png"/>
+         <br/>
+         <span class="qname">
+          3
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11646/">
+         <img src="https://static2.101weiqi.com/file/newimg/11646.png"/>
+         <br/>
+         <span class="qname">
+          Q-11646
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14376/">
+         <img src="https://static2.101weiqi.com/file/newimg/14376.png"/>
+         <br/>
+         <span class="qname">
+          Q-14376
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/26484/">
+         <img src="https://static2.101weiqi.com/file/newimg/26484.png"/>
+         <br/>
+         <span class="qname">
+          Q-26484
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/33394/">
+         <img src="https://static2.101weiqi.com/file/newimg/33394.png"/>
+         <br/>
+         <span class="qname">
+          Q-33394
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14493/">
+         <img src="https://static2.101weiqi.com/file/newimg/14493.png"/>
+         <br/>
+         <span class="qname">
+          Q-14493
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1643/">
+         <img src="https://static2.101weiqi.com/file/newimg/1643.png"/>
+         <br/>
+         <span class="qname">
+          Q-1643
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/56216/">
+         <img src="https://static2.101weiqi.com/file/newimg/56216.png"/>
+         <br/>
+         <span class="qname">
+          Q-56216
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/49356/">
+         <img src="https://static2.101weiqi.com/file/newimg/49356.png"/>
+         <br/>
+         <span class="qname">
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20012/">
+         <img src="https://static2.101weiqi.com/file/newimg/20012.png"/>
+         <br/>
+         <span class="qname">
+          Q-20012
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11974/">
+         <img src="https://static2.101weiqi.com/file/newimg/11974.png"/>
+         <br/>
+         <span class="qname">
+          Q-11974
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/25379/">
+         <img src="https://static2.101weiqi.com/file/newimg/25379.png"/>
+         <br/>
+         <span class="qname">
+          Q-25379
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/57418/">
+         <img src="https://static2.101weiqi.com/file/newimg/57418.png"/>
+         <br/>
+         <span class="qname">
+          Q-57418
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1666/">
+         <img src="https://static2.101weiqi.com/file/newimg/1666.png"/>
+         <br/>
+         <span class="qname">
+          Q-1666
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/47300/">
+         <img src="https://static2.101weiqi.com/file/newimg/47300.png"/>
+         <br/>
+         <span class="qname">
+          Q-47300
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9149/">
+         <img src="https://static2.101weiqi.com/file/newimg/9149.png"/>
+         <br/>
+         <span class="qname">
+          Q-9149
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/346/">
+         <img src="https://static2.101weiqi.com/file/newimg/346.png"/>
+         <br/>
+         <span class="qname">
+          Q-346
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/61190/">
+         <img src="https://static2.101weiqi.com/file/newimg/61190.png"/>
+         <br/>
+         <span class="qname">
+          Q-61190
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4193/">
+         <img src="https://static2.101weiqi.com/file/newimg/4193.png"/>
+         <br/>
+         <span class="qname">
+          Q-4193
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14741/">
+         <img src="https://static2.101weiqi.com/file/newimg/14741.png"/>
+         <br/>
+         <span class="qname">
+          Q-14741
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7487/">
+         <img src="https://static2.101weiqi.com/file/newimg/7487.png"/>
+         <br/>
+         <span class="qname">
+          Q-7487
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1654/">
+         <img src="https://static2.101weiqi.com/file/newimg/1654.png"/>
+         <br/>
+         <span class="qname">
+          Q-1654
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/33763/">
+         <img src="https://static2.101weiqi.com/file/newimg/33763.png"/>
+         <br/>
+         <span class="qname">
+          Q-33763
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20009/">
+         <img src="https://static2.101weiqi.com/file/newimg/20009.png"/>
+         <br/>
+         <span class="qname">
+          Q-20009
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1663/">
+         <img src="https://static2.101weiqi.com/file/newimg/1663.png"/>
+         <br/>
+         <span class="qname">
+          Q-1663
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14548/">
+         <img src="https://static2.101weiqi.com/file/newimg/14548.png"/>
+         <br/>
+         <span class="qname">
+          Q-14548
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22571/">
+         <img src="https://static2.101weiqi.com/file/newimg/22571.png"/>
+         <br/>
+         <span class="qname">
+          Q-22571
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/43334/">
+         <img src="https://static2.101weiqi.com/file/newimg/43334.png"/>
+         <br/>
+         <span class="qname">
+          吃子练习
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/52701/">
+         <img src="https://static2.101weiqi.com/file/newimg/52701.png"/>
+         <br/>
+         <span class="qname">
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4653/">
+         <img src="https://static2.101weiqi.com/file/newimg/4653.png"/>
+         <br/>
+         <span class="qname">
+          Q-4653
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/11041/">
+         <img src="https://static2.101weiqi.com/file/newimg/11041.png"/>
+         <br/>
+         <span class="qname">
+          Q-11041
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/6075/">
+         <img src="https://static2.101weiqi.com/file/newimg/6075.png"/>
+         <br/>
+         <span class="qname">
+          Q-6075
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14515/">
+         <img src="https://static2.101weiqi.com/file/newimg/14515.png"/>
+         <br/>
+         <span class="qname">
+          Q-14515
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1661/">
+         <img src="https://static2.101weiqi.com/file/newimg/1661.png"/>
+         <br/>
+         <span class="qname">
+          Q-1661
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8429/">
+         <img src="https://static2.101weiqi.com/file/newimg/8429.png"/>
+         <br/>
+         <span class="qname">
+          Q-8429
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1717/">
+         <img src="https://static2.101weiqi.com/file/newimg/1717.png"/>
+         <br/>
+         <span class="qname">
+          Q-1717
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1720/">
+         <img src="https://static2.101weiqi.com/file/newimg/1720.png"/>
+         <br/>
+         <span class="qname">
+          Q-1720
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/12978/">
+         <img src="https://static2.101weiqi.com/file/newimg/12978.png"/>
+         <br/>
+         <span class="qname">
+          Q-12978
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/13841/">
+         <img src="https://static2.101weiqi.com/file/newimg/13841.png"/>
+         <br/>
+         <span class="qname">
+          Q-13841
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/2963/">
+         <img src="https://static2.101weiqi.com/file/newimg/2963.png"/>
+         <br/>
+         <span class="qname">
+          Q-2963
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/31888/">
+         <img src="https://static2.101weiqi.com/file/newimg/31888.png"/>
+         <br/>
+         <span class="qname">
+          第36题
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/57081/">
+         <img src="https://static2.101weiqi.com/file/newimg/57081.png"/>
+         <br/>
+         <span class="qname">
+          Q-57081
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/23230/">
+         <img src="https://static2.101weiqi.com/file/newimg/23230.png"/>
+         <br/>
+         <span class="qname">
+          Q-23230
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/17044/">
+         <img src="https://static2.101weiqi.com/file/newimg/17044.png"/>
+         <br/>
+         <span class="qname">
+          Q-17044
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22925/">
+         <img src="https://static2.101weiqi.com/file/newimg/22925.png"/>
+         <br/>
+         <span class="qname">
+          左右同形走中央
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/35366/">
+         <img src="https://static2.101weiqi.com/file/newimg/35366.png"/>
+         <br/>
+         <span class="qname">
+          Q-35366
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/51624/">
+         <img src="https://static2.101weiqi.com/file/newimg/51624.png"/>
+         <br/>
+         <span class="qname">
+          方四 第 5 型
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/29232/">
+         <img src="https://static2.101weiqi.com/file/newimg/29232.png"/>
+         <br/>
+         <span class="qname">
+          Q-29232
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/25452/">
+         <img src="https://static2.101weiqi.com/file/newimg/25452.png"/>
+         <br/>
+         <span class="qname">
+          Q-25452
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14552/">
+         <img src="https://static2.101weiqi.com/file/newimg/14552.png"/>
+         <br/>
+         <span class="qname">
+          Q-14552
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/28235/">
+         <img src="https://static2.101weiqi.com/file/newimg/28235.png"/>
+         <br/>
+         <span class="qname">
+          6
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/14881/">
+         <img src="https://static2.101weiqi.com/file/newimg/14881.png"/>
+         <br/>
+         <span class="qname">
+          Q-14881
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/10958/">
+         <img src="https://static2.101weiqi.com/file/newimg/10958.png"/>
+         <br/>
+         <span class="qname">
+          Q-10958
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/1669/">
+         <img src="https://static2.101weiqi.com/file/newimg/1669.png"/>
+         <br/>
+         <span class="qname">
+          Q-1669
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7773/">
+         <img src="https://static2.101weiqi.com/file/newimg/7773.png"/>
+         <br/>
+         <span class="qname">
+          Q-7773
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/25108/">
+         <img src="https://static2.101weiqi.com/file/newimg/25108.png"/>
+         <br/>
+         <span class="qname">
+          Q-25108
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/4586/">
+         <img src="https://static2.101weiqi.com/file/newimg/4586.png"/>
+         <br/>
+         <span class="qname">
+          Q-4586
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22488/">
+         <img src="https://static2.101weiqi.com/file/newimg/22488.png"/>
+         <br/>
+         <span class="qname">
+          Q-22488
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/2010/">
+         <img src="https://static2.101weiqi.com/file/newimg/2010.png"/>
+         <br/>
+         <span class="qname">
+          Q-2010
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/38108/">
+         <img src="https://static2.101weiqi.com/file/newimg/38108.png"/>
+         <br/>
+         <span class="qname">
+          Q-38108
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/6102/">
+         <img src="https://static2.101weiqi.com/file/newimg/6102.png"/>
+         <br/>
+         <span class="qname">
+          Q-6102
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/21023/">
+         <img src="https://static2.101weiqi.com/file/newimg/21023.png"/>
+         <br/>
+         <span class="qname">
+          Q-21023
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/51164/">
+         <img src="https://static2.101weiqi.com/file/newimg/51164.png"/>
+         <br/>
+         <span class="qname">
+          白先死活题
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/29884/">
+         <img src="https://static2.101weiqi.com/file/newimg/29884.png"/>
+         <br/>
+         <span class="qname">
+          Q-29884
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/64359/">
+         <img src="https://static2.101weiqi.com/file/newimg/64359.png"/>
+         <br/>
+         <span class="qname">
+          Q-64359
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/18510/">
+         <img src="https://static2.101weiqi.com/file/newimg/18510.png"/>
+         <br/>
+         <span class="qname">
+          日重轮势
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/52068/">
+         <img src="https://static2.101weiqi.com/file/newimg/52068.png"/>
+         <br/>
+         <span class="qname">
+          对杀130
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/16073/">
+         <img src="https://static2.101weiqi.com/file/newimg/16073.png"/>
+         <br/>
+         <span class="qname">
+          Q-16073
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8934/">
+         <img src="https://static2.101weiqi.com/file/newimg/8934.png"/>
+         <br/>
+         <span class="qname">
+          Q-8934
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/7649/">
+         <img src="https://static2.101weiqi.com/file/newimg/7649.png"/>
+         <br/>
+         <span class="qname">
+          Q-7649
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/8478/">
+         <img src="https://static2.101weiqi.com/file/newimg/8478.png"/>
+         <br/>
+         <span class="qname">
+          Q-8478
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/43621/">
+         <img src="https://static2.101weiqi.com/file/newimg/43621.png"/>
+         <br/>
+         <span class="qname">
+          请吃白棋
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9297/">
+         <img src="https://static2.101weiqi.com/file/newimg/9297.png"/>
+         <br/>
+         <span class="qname">
+          Q-9297
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/20020/">
+         <img src="https://static2.101weiqi.com/file/newimg/20020.png"/>
+         <br/>
+         <span class="qname">
+          Q-20020
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9910/">
+         <img src="https://static2.101weiqi.com/file/newimg/9910.png"/>
+         <br/>
+         <span class="qname">
+          Q-9910
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/19966/">
+         <img src="https://static2.101weiqi.com/file/newimg/19966.png"/>
+         <br/>
+         <span class="qname">
+          Q-19966
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/9316/">
+         <img src="https://static2.101weiqi.com/file/newimg/9316.png"/>
+         <br/>
+         <span class="qname">
+          Q-9316
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/22608/">
+         <img src="https://static2.101weiqi.com/file/newimg/22608.png"/>
+         <br/>
+         <span class="qname">
+          Q-22608
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/31380/">
+         <img src="https://static2.101weiqi.com/file/newimg/31380.png"/>
+         <br/>
+         <span class="qname">
+          枯木生花
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/26528/">
+         <img src="https://static2.101weiqi.com/file/newimg/26528.png"/>
+         <br/>
+         <span class="qname">
+          Q-26528
+         </span>
+        </a>
+       </div>
+       <div class="col-md-4 col-xs-6" style="text-align:center;">
+        <a href="/book/21744/0/24569/">
+         <img src="https://static2.101weiqi.com/file/newimg/24569.png"/>
+         <br/>
+         <span class="qname">
+          Q-24569
+         </span>
+        </a>
+       </div>
+       <div class="clear">
+       </div>
+      </div>
+      <div class="clear">
+      </div>
+      <div class="qis_bottom">
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="col-md-5 fontsize qis" style="margin:0">
+    <div class="play_pinglun">
+     <table class="table table-hover">
+      <tr ng-mouseout="out_comment(s)" ng-mouseover="over_comment(s)" ng-repeat="s in comments track by $index">
+       <td class="head">
+        <img ng-show="!s.ishide" ng-src="https://static2.101weiqi.com/file/[[s.headpath]]" style="width:60px;height:60px;"/>
+       </td>
+       <td class="commentblock">
+        <h6 ng-show="!s.ishide">
+         <span class="pull-left">
+          <a ng-href="/u/[[::s.username]]/">
+           [[::s.username]]
+          </a>
+          写于 [[::s.updatestr]]
+         </span>
+         <span class="pull-right text-info" style="margin-right:10px;">
+          <span class="rightdropmenu" ng-if="s.dou &gt; 0">
+           <span class="glyphicon glyphicon-ok" ng-if="s.doustatus == 2">
+            [[::s.douname]]赢取[[s.dou]]围豆
+           </span>
+           <span ng-if="s.doustatus != 2">
+            <span class="dropdown" ng-if="udata.userid == s.userid || udata.ismanager" on-toggle="show_douname(s)" uib-dropdown="">
+             <a id="dLabel_[[::s.id]]" uib-dropdown-toggle="">
+              <span class="glyphicon glyphicon-star">
+              </span>
+              [[::s.dou]]围豆
+              <i class="caret">
+              </i>
+             </a>
+             <ul aria-labelledby="dLabel_[[::s.id]]" class="dropdown-menu" role="menu" uib-dropdown-menu="">
+              <li ng-if="un != udata.username" ng-repeat="un in dounames" role="menuitem">
+               <a ng-click="douwin(s,un)">
+                向 [[un]] 支付[[::s.dou]]围豆
+               </a>
+              </li>
+              <li ng-if="udata.ismanager" role="menuitem">
+               <a ng-click="canceldouwin(s)">
+                取消
+               </a>
+              </li>
+             </ul>
+            </span>
+            <span class="dropdown" ng-if="udata.userid !== s.userid &amp;&amp; !udata.ismanager">
+             <i class="glyphicon glyphicon-star">
+             </i>
+             [[::s.dou]]围豆
+            </span>
+           </span>
+          </span>
+          <span ng-if="isintopic">
+           [[$index + 1]]楼
+          </span>
+          <span ng-if="udata.userid === s.userid || udata.isoper || udata.ismanager">
+           <span ng-if="s.dou === 0" ng-show="s.isover">
+            <a ng-click="removecomment(s)">
+             删除
+            </a>
+           </span>
+          </span>
+         </span>
+        </h6>
+        <div class="clear">
+        </div>
+        <div class="width100 breakword" ng-show="!s.ishide" style="margin-top:10px;">
+         <div ng-bind-html="s.contentHtml">
+         </div>
+        </div>
+        <span class="pull-right" ng-show="s.ishide" style="color:green;">
+         已经删除，
+         <a ng-click="restorecomment(s)">
+          撤销
+         </a>
+         |
+         <a ng-click="destorycomment(s)">
+          关闭
+         </a>
+        </span>
+       </td>
+      </tr>
+     </table>
+     <div class="col-md-12">
+      <p>
+       我的回复
+      </p>
+      <input name="csrfmiddlewaretoken" type="hidden" value="Y4GaOHwbuIkku3nuwjreNwPuh4KSRgcYbeoxpt39DMIWuIFejiY8pttGGJXdmSkp"/>
+      <textarea name="content" ng-model="newc.commenttext" placeholder="" rows="6"></textarea>
+      <div class="clearfix">
+      </div>
+      <p style="margin-top:10px;">
+       注册三天之后，以及在
+       <a href="/guan/">
+        棋力测试
+       </a>
+       中有通关记录的棋友才能发言。
+      </p>
+     </div>
+    </div>
+   </div>
+   <div class="clear">
+   </div>
+   <div class="clear">
+   </div>
+  </div>
+  <footer id="myfooter">
+   <div class="container tc-main" style="margin-bottom: 10px;">
+    <div class="spliter">
+    </div>
+    <span class="pull-left">
+     © 2012-2025 101weiqi.com
+    </span>
+    <span class="pull-right" style="padding-right:10px;">
+     <a href="https://doc.101weiqi.com/">
+      帮助中心
+     </a>
+    </span>
+   </div>
+   <input id="curuser" login="/" type="hidden" value="33excited"/>
+  </footer>
+  <script type="text/javascript">
+   var is_secure = true;
+  </script>
+  <script src="https://static2.101weiqi.com/static/cache/a8bd9e5dc91f652e613dddf51fdd25dc.js" type="text/javascript">
+  </script>
+  <script src="https://static2.101weiqi.com/static/cache/1259566f8925db6142107d9e75c8b15e.js" type="text/javascript">
+  </script>
+  <script>
+   var g_userdata = {"isbad": false, "truename": "33excited", "iseditor": false, "fee": 0, "playcount": 0, "unread_attion": 0, "showcomment": true, "qmusic": true, "has_open_level": true, "username": "33excited", "power": 0, "isvest": false, "ishigh": false, "playreq_count": 0, "islogin": true, "isoper": false, "numbermode": 0, "ismanager": false, "level": 405, "userid": 2278693, "aligncenter": false, "arrow": 1, "isdroppos": false, "unread": 0, "levelname": "3D", "dou": 0};var comments = [];var book = {"id": 21744};
+  </script>
+  <script src="https://static2.101weiqi.com/static/cache/5beeed3515160eb70e013c6e6863224c.js" type="text/javascript">
+  </script>
+  <script>
+   var static_server = "https://static2.101weiqi.com";
+  </script>
+  <script type="text/javascript">
+   $(document).ready(function(){var x = 0;set_action_action();set_bookshare_action();set_bookdownload_action();set_book_star_action();var y = 0;});
+  </script>
+  <script>
+   var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?13a338d58a330cc6f97cd0c32cf6dd47";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();
+  </script>
+  <script crossorigin="anonymous" data-cf-beacon='{"rayId":"9229bddb5d84aa2c","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"a870cf35e515469b89a360f984dd3c51"}' defer="" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015">
+  </script>
+ </body>
+</html>

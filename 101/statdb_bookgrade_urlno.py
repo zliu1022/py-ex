@@ -22,7 +22,8 @@ def stat_unique_urlno():
 
         unique_url_nos.update(url_nos)
 
-    print(f"all book len(unique_url_nos)} unique 'url_no'")
+    print(f"all book {len(unique_url_nos)} unique 'url_no'")
+    print()
 
     client.close()
     return list(unique_url_nos)

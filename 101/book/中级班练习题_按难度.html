@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>按难度 - 中级班练习题 - 101围棋网</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content=""/>
+        <meta name="description" content="按难度显示《中级班练习题》中的题目。"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="shortcut icon"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="Bookmark"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="apple-touch-icon" sizes="144x144" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="stylesheet" href="https://static2.101weiqi.com/static/cache/a8e4ded57c9e2c03a4443127da6b1fd7.css">
+        <style type="text/css">
+            [ng-cloak] {
+                display: none !important
+            }
+        </style>
+    </head>
+    <body ng-app="wqapp">
+        <nav class="navbar nav101" style="margin:0" id="whead" ng-controller="headctrl" ng-cloak>
+            <div class="container" id="headid">
+                <script>
+                    var hlinks = [{
+                        htype: 1,
+                        h: '/home/',
+                        name: '我的首页'
+                    }, {
+                        htype: 1,
+                        h: '/task/',
+                        name: '作业'
+                    }, {
+                        htype: 1,
+                        h: '/questionlib/',
+                        name: '题库'
+                    }, {
+                        htype: 1,
+                        h: '/playai/',
+                        name: '训练营'
+                    }, {
+                        htype: 1,
+                        h: '/play/',
+                        name: '对弈'
+                    }, {
+                        htype: 1,
+                        h: '/forum/',
+                        name: '讨论区'
+                    }, {
+                        htype: 1,
+                        h: '/book/',
+                        name: '棋书'
+                    }, {
+                        htype: 1,
+                        h: '/chessbook/',
+                        name: '棋谱'
+                    }, ];
+                    var rightlinks = [{
+                        htype: 3,
+                        h: '/u/33excited/',
+                        name: '33excited 3D'
+                    }, {
+                        htype: 3,
+                        h: '/logout/',
+                        name: '退出'
+                    }]
+                </script>
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand" href="/">
+                        <img src="https://static2.101weiqi.com/static/images/logo.png">
+                    </a>
+                </div>
+                <div class="pull-left" style="margin-left: 40px;">
+                    <div class="navbar-item" ng-repeat="h in activelinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand" ng-if="h.htype == 1">
+                            <div class="navdiv">[[h.name]]</div>
+                        </a>
+                        <a ng-href="[[h.h]]" class="navbar-brand" style="position: relative;" ng-if="h.htype == 2" title="[[h.name]]">
+                            <div class="navdiv">
+                                <dd ng-if="h.icon == '@'">@</dd>
+                                <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            </div>
+                            <dd class="headnumber">[[h.number]]</dd>
+                        </a>
+                    </div>
+                </div>
+                <div class="pull-right" ng-if="hasright">
+                    <div class="navbar-item" ng-repeat="h in rightlinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand2">
+                            <span class="navspan">[[h.name]]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="toggleright" ng-if="hasmore">
+                    <button type="button" class="navbar-toggle2" ng-click="showmore()">
+                        <span class="sr-only">101围棋网</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="clear"></div>
+                <div class="width100 headsplit" ng-if="is_showmore">
+                    <div class="col-xs-4 navmore-item" ng-repeat="h in morelinks">
+                        <a ng-href="[[h.h]]" class="morelink">
+                            <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            [[h.name]]
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="container tc-main " id="main">
+            <div class="height20" id="toph"></div>
+            <div class="col-md-12">
+                <h3>
+                    按难度显示 &nbsp;
+                    <small>
+                        ---&nbsp;&nbsp;<a href="/book/zhongjiban/">中级班练习题</a>
+                    </small>
+                </h3>
+                <hr/>
+                <p>
+                    <a href="/book/zhongjiban/?m=restore">&rarr;按章节显示</a>
+                </p>
+                <div style="margin-top:10px;" class="fontsize12">
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/1/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43115.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">15K+ &nbsp;Q-43115</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/2/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43148.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">15K+ &nbsp;Q-43148</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/3/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43150.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">14K &nbsp;Q-43150</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/4/">
+                            <img src="https://static2.101weiqi.com/file/newimg/25873.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">14K &nbsp;Q-25873</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/5/">
+                            <img src="https://static2.101weiqi.com/file/newimg/21200.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">14K &nbsp;Q-21200</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/6/">
+                            <img src="https://static2.101weiqi.com/file/newimg/68.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">14K &nbsp;Q-68</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/7/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43154.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">14K &nbsp;Q-43154</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/8/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43122.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">14K+ &nbsp;Q-43122</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/9/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43138.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">14K+ &nbsp;Q-43138</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/10/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43108.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">13K &nbsp;Q-43108</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/11/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43377.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">13K+ &nbsp;Q-43377</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/12/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43112.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">13K+ &nbsp;Q-43112</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/13/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43167.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">13K+ &nbsp;Q-43167</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/14/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43111.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">13K+ &nbsp;Q-43111</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/15/">
+                            <img src="https://static2.101weiqi.com/file/newimg/14563.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">13K+ &nbsp;Q-14563</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/16/">
+                            <img src="https://static2.101weiqi.com/file/newimg/14553.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K &nbsp;Q-14553</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/17/">
+                            <img src="https://static2.101weiqi.com/file/newimg/245.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K &nbsp;Q-245</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/18/">
+                            <img src="https://static2.101weiqi.com/file/newimg/42808.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K &nbsp;Q-42808</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/19/">
+                            <img src="https://static2.101weiqi.com/file/newimg/42818.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K &nbsp;Q-42818</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/20/">
+                            <img src="https://static2.101weiqi.com/file/newimg/14635.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K &nbsp;Q-14635</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/21/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43117.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K &nbsp;Q-43117</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/22/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43193.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K &nbsp;Q-43193</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/23/">
+                            <img src="https://static2.101weiqi.com/file/newimg/49374.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-49374</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/24/">
+                            <img src="https://static2.101weiqi.com/file/newimg/42812.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-42812</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/25/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43128.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43128</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/26/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43132.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43132</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/27/">
+                            <img src="https://static2.101weiqi.com/file/newimg/25874.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-25874</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/28/">
+                            <img src="https://static2.101weiqi.com/file/newimg/49371.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-49371</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/29/">
+                            <img src="https://static2.101weiqi.com/file/newimg/14567.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-14567</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/30/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43163.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43163</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/31/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43120.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43120</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/32/">
+                            <img src="https://static2.101weiqi.com/file/newimg/21208.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-21208</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/33/">
+                            <img src="https://static2.101weiqi.com/file/newimg/1139.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-1139</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/34/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43055.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43055</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/35/">
+                            <img src="https://static2.101weiqi.com/file/newimg/21202.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-21202</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/36/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43085.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43085</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/37/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43157.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43157</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/38/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43180.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43180</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/39/">
+                            <img src="https://static2.101weiqi.com/file/newimg/37.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-37</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/40/">
+                            <img src="https://static2.101weiqi.com/file/newimg/42835.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-42835</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/41/">
+                            <img src="https://static2.101weiqi.com/file/newimg/49377.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-49377</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/42/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43042.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">12K+ &nbsp;Q-43042</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/43/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43084.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43084</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/44/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43131.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43131</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/45/">
+                            <img src="https://static2.101weiqi.com/file/newimg/21207.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-21207</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/46/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43107.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43107</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/47/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43114.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43114</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/48/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43118.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43118</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/49/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43007.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43007</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/50/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43052.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43052</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/51/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43054.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43054</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/52/">
+                            <img src="https://static2.101weiqi.com/file/newimg/5.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-5</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/53/">
+                            <img src="https://static2.101weiqi.com/file/newimg/42847.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-42847</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/54/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43029.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43029</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/55/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43062.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43062</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/56/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43119.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43119</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/57/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43159.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43159</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/58/">
+                            <img src="https://static2.101weiqi.com/file/newimg/21195.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-21195</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/59/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43053.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43053</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-3">
+                        <a href="/book/levelorder/361/60/">
+                            <img src="https://static2.101weiqi.com/file/newimg/43139.png" class="img-rounded">
+                            <br/>
+                            <span class="warptext">11K &nbsp;Q-43139</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <input type='hidden' name='csrfmiddlewaretoken' value='omstO6KEtItOpl2DeFhiuJMt3wDTvqAmiZBaIAWAQkFA5TnjQ1eaVGjxRDWE7Ql0'/>
+                <div class="clearfix">
+                    <ul class="pagination pull-right">
+                        <li class="disabled">
+                            <a href="#">上一页</a>
+                        </li>
+                        <li class="active">
+                            <a href="?page=1">1</a>
+                        </li>
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                        <li class="disabled">
+                            <a href="#">...</a>
+                        </li>
+                        <li>
+                            <a href="?page=13">13</a>
+                        </li>
+                        <li>
+                            <a href="?page=2">下一页</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="clear"></div>
+        </div>
+        <footer id="myfooter">
+            <div class="container tc-main" style="margin-bottom: 10px;">
+                <div class="spliter"></div>
+                <span class="pull-left">© 2012-2025 101weiqi.com</span>
+                <span class="pull-right" style="padding-right:10px;">
+                    <a href="https://doc.101weiqi.com/">帮助中心</a>
+                </span>
+            </div>
+            <input type="hidden" id="curuser" value="33excited" login="/">
+        </footer>
+        <script type="text/javascript">
+            var is_secure = true;
+        </script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/a8bd9e5dc91f652e613dddf51fdd25dc.js"></script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/1259566f8925db6142107d9e75c8b15e.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var x = 0;
+                var y = 0;
+            });
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?13a338d58a330cc6f97cd0c32cf6dd47";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            }
+            )();
+        </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"921a454d6c54e15c","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"a870cf35e515469b89a360f984dd3c51"}' crossorigin="anonymous"></script>
+    </body>
+</html>
+

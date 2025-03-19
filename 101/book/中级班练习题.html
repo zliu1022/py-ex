@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>中级班练习题 - 101围棋网</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content="中级班练习题"/>
+        <meta name="description" content="中级班练习题"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="shortcut icon"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="Bookmark"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="apple-touch-icon" sizes="144x144" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="stylesheet" href="https://static2.101weiqi.com/static/cache/a8e4ded57c9e2c03a4443127da6b1fd7.css">
+        <style type="text/css">
+            [ng-cloak] {
+                display: none !important
+            }
+        </style>
+        <link rel="stylesheet" href="https://static2.101weiqi.com/static/cache/269550530cc127b6aa5a35925a7de6ce.css">
+        <style>
+            .qis_bg {
+                width: 95%;
+                background: url(https://static2.101weiqi.com/static/images/qis_all_2.jpg) repeat-y center top;
+                background-size: 100%;
+                border-radius: 10px;
+            }
+
+            .qis_title {
+                width: 100%;
+                height: 80px;
+                background: url(https://static2.101weiqi.com/static/images/qis_title_2.png) no-repeat right top;
+                background-size: 80px ;
+                text-align: center;
+                line-height: 80px;
+                font-family: '微软雅黑';
+                font-size: 22px;
+                font-weight: bold;
+            }
+
+            .qis_bottom {
+                width: 100%;
+                height: 80px;
+                background: url(https://static2.101weiqi.com/static/images/qis_bottom_2.png) no-repeat left bottom;
+                background-size: 80px;
+            }
+        </style>
+    </head>
+    <body ng-app="wqapp">
+        <nav class="navbar nav101" style="margin:0" id="whead" ng-controller="headctrl" ng-cloak>
+            <div class="container" id="headid">
+                <script>
+                    var hlinks = [{
+                        htype: 1,
+                        h: '/home/',
+                        name: '我的首页'
+                    }, {
+                        htype: 1,
+                        h: '/task/',
+                        name: '作业'
+                    }, {
+                        htype: 1,
+                        h: '/questionlib/',
+                        name: '题库'
+                    }, {
+                        htype: 1,
+                        h: '/playai/',
+                        name: '训练营'
+                    }, {
+                        htype: 1,
+                        h: '/play/',
+                        name: '对弈'
+                    }, {
+                        htype: 1,
+                        h: '/forum/',
+                        name: '讨论区'
+                    }, {
+                        htype: 1,
+                        h: '/book/',
+                        name: '棋书'
+                    }, {
+                        htype: 1,
+                        h: '/chessbook/',
+                        name: '棋谱'
+                    }, ];
+                    var rightlinks = [{
+                        htype: 3,
+                        h: '/u/33excited/',
+                        name: '33excited 3D'
+                    }, {
+                        htype: 3,
+                        h: '/logout/',
+                        name: '退出'
+                    }]
+                </script>
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand" href="/">
+                        <img src="https://static2.101weiqi.com/static/images/logo.png">
+                    </a>
+                </div>
+                <div class="pull-left" style="margin-left: 40px;">
+                    <div class="navbar-item" ng-repeat="h in activelinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand" ng-if="h.htype == 1">
+                            <div class="navdiv">[[h.name]]</div>
+                        </a>
+                        <a ng-href="[[h.h]]" class="navbar-brand" style="position: relative;" ng-if="h.htype == 2" title="[[h.name]]">
+                            <div class="navdiv">
+                                <dd ng-if="h.icon == '@'">@</dd>
+                                <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            </div>
+                            <dd class="headnumber">[[h.number]]</dd>
+                        </a>
+                    </div>
+                </div>
+                <div class="pull-right" ng-if="hasright">
+                    <div class="navbar-item" ng-repeat="h in rightlinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand2">
+                            <span class="navspan">[[h.name]]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="toggleright" ng-if="hasmore">
+                    <button type="button" class="navbar-toggle2" ng-click="showmore()">
+                        <span class="sr-only">101围棋网</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="clear"></div>
+                <div class="width100 headsplit" ng-if="is_showmore">
+                    <div class="col-xs-4 navmore-item" ng-repeat="h in morelinks">
+                        <a ng-href="[[h.h]]" class="morelink">
+                            <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            [[h.name]]
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="container tc-main " id="main" ng-controller="BookCtrl" ng-cloak>
+            <div class="height20" id="toph"></div>
+            <div class="col-md-7" style="margin:0">
+                <div class="danghu_left">
+                    <div class="qis_bg">
+                        <div class="qis_title">中级班练习题</div>
+                        <div class="qis_content">
+                            <p>
+                                由 <a href="/u/qzwq01/">qzwq01</a>
+                                分享
+                            </p>
+                            <p></p>
+                            <p class="text-success">共785道题目，平均难度：6K &nbsp;做题次数：11526145次</p>
+                            <p>
+                                <a class="btn btn-success" href="/book/doing/1935417/">开始做题</a>
+                                &nbsp;<a href="/book/dosetting/1935417/">做题形式设置</a>
+                                &nbsp;&nbsp;<a href="/book/myerror/1935417/">我的棋书错题本</a>
+                            </p>
+                            <p class="text-success" style="line-height:150%;">
+                                棋友完成棋书作业后，将在此显示本书做题数据统计（每天晚上统计，针对<a href="/changepower/">银卡以上会员</a>
+                                ）
+                            </p>
+                            <p>
+                                <a href="javascript:void(0);" class="starbook" bid="361">
+                                    <img class="starimg" src="https://static2.101weiqi.com/static/images/star_inactive.gif">
+                                    &nbsp;&nbsp;<span class="startip">收藏本棋书</span>
+                                </a>
+                            </p>
+                            <p class="text-success" style="margin-top:5px;">
+                                <a href="/book/levelorder/361/">&rarr;按难度顺序查阅本书</a>
+                            </p>
+                            中级班练习题
+                            <ul>
+                                <li style="width:100%;">
+                                    1、<a class="node" href="/book/zhongjiban/4167/">连接</a>
+                                    (74)
+                                </li>
+                                <li style="width:100%;">
+                                    2、<a class="node" href="/book/zhongjiban/784/">布局选点</a>
+                                    (51)
+                                </li>
+                                <li style="width:100%;">
+                                    3、<a class="node" href="/book/zhongjiban/785/">吃子技巧练习之 大头鬼</a>
+                                    (11)
+                                </li>
+                                <li style="width:100%;">
+                                    4、<a class="node" href="/book/zhongjiban/786/">吃子技巧练习之 滚打包收</a>
+                                    (12)
+                                </li>
+                                <li style="width:100%;">
+                                    5、<a class="node" href="/book/zhongjiban/787/">吃子技巧练习之 胀牯牛</a>
+                                    (8)
+                                </li>
+                                <li style="width:100%;">
+                                    6、<a class="node" href="/book/zhongjiban/788/">吃子技巧练习之 金鸡独立</a>
+                                    (12)
+                                </li>
+                                <li style="width:100%;">
+                                    7、<a class="node" href="/book/zhongjiban/789/">吃子技巧练习之 倒脱靴</a>
+                                    (12)
+                                </li>
+                                <li style="width:100%;">
+                                    8、<a class="node" href="/book/zhongjiban/790/">吃子技巧练习之 高级征子</a>
+                                    (19)
+                                </li>
+                                <li style="width:100%;">
+                                    9、<a class="node" href="/book/zhongjiban/791/">常型死活</a>
+                                    (69)
+                                </li>
+                                <li style="width:100%;">
+                                    10、<a class="node" href="/book/zhongjiban/792/">中级手筋</a>
+                                    (102)
+                                </li>
+                                <li style="width:100%;">
+                                    11、<a class="node" href="/book/zhongjiban/793/">对杀技巧</a>
+                                    (29)
+                                </li>
+                                <li style="width:100%;">
+                                    12、<a class="node" href="/book/zhongjiban/794/">速成围棋计算力训练（中级）</a>
+                                    (144)
+                                </li>
+                                <li style="width:100%;">
+                                    13、<a class="node" href="/book/zhongjiban/795/">基本手筋</a>
+                                    (198)
+                                </li>
+                                <li style="width:100%;">
+                                    14、<a class="node" href="/book/zhongjiban/796/">初级吃子练习</a>
+                                    (8)
+                                </li>
+                                <li style="width:100%;">
+                                    15、<a class="node" href="/book/zhongjiban/797/">中级吃子练习</a>
+                                    (36)
+                                </li>
+                                <div class="clear"></div>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="qis_bottom"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 fontsize qis" style="margin:0">
+                <div class="play_pinglun">
+                    <table class="table table-hover">
+                        <tr ng-repeat="s in comments track by $index" ng-mouseover="over_comment(s)" ng-mouseout="out_comment(s)">
+                            <td class="head">
+                                <img ng-show="!s.ishide" style="width:60px;height:60px;" ng-src="https://static2.101weiqi.com/file/[[s.headpath]]">
+                            </td>
+                            <td class="commentblock">
+                                <h6 ng-show="!s.ishide">
+                                    <span class="pull-left">
+                                        <a ng-href="/u/[[::s.username]]/">[[::s.username]]</a>
+                                        写于 [[::s.updatestr]]
+                                    </span>
+                                    <span class="pull-right text-info" style="margin-right:10px;">
+                                        <span ng-if="s.dou > 0" class="rightdropmenu">
+                                            <span ng-if="s.doustatus == 2" class="glyphicon glyphicon-ok">[[::s.douname]]赢取[[s.dou]]围豆 </span>
+                                            <span ng-if="s.doustatus != 2">
+                                                <span uib-dropdown on-toggle="show_douname(s)" class="dropdown" ng-if="udata.userid == s.userid || udata.ismanager">
+                                                    <a uib-dropdown-toggle id="dLabel_[[::s.id]]">
+                                                        <span class="glyphicon glyphicon-star"></span>
+                                                        [[::s.dou]]围豆 <i class="caret"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="dLabel_[[::s.id]]">
+                                                        <li role="menuitem" ng-repeat="un in dounames" ng-if="un != udata.username">
+                                                            <a ng-click="douwin(s,un)">向 [[un]] 支付[[::s.dou]]围豆</a>
+                                                        </li>
+                                                        <li role="menuitem" ng-if="udata.ismanager">
+                                                            <a ng-click="canceldouwin(s)">取消</a>
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                                <span class="dropdown" ng-if="udata.userid !== s.userid && !udata.ismanager">
+                                                    <i class="glyphicon glyphicon-star"></i>
+                                                    [[::s.dou]]围豆
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span ng-if="isintopic">[[$index + 1]]楼 &nbsp;</span>
+                                        <span ng-if="udata.userid === s.userid || udata.isoper || udata.ismanager">
+                                            <span ng-if="s.dou === 0" ng-show="s.isover">
+                                                <a ng-click="removecomment(s)">删除</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </h6>
+                                <div class="clear"></div>
+                                <div ng-show="!s.ishide" style="margin-top:10px;" class="width100 breakword ">
+                                    <div ng-bind-html="s.contentHtml"></div>
+                                </div>
+                                <span class="pull-right" ng-show="s.ishide" style="color:green;">
+                                    已经删除，<a ng-click="restorecomment(s)">撤销</a>
+                                    | <a ng-click="destorycomment(s)">关闭</a>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="col-md-12">
+                        <p>我的回复</p>
+                        <input type='hidden' name='csrfmiddlewaretoken' value='ZILEbzJhxNX6SP9GS6UOVKiEfn1L5U7STlUl53VdUp9SynumusRGmHPI3ukwHkSw'/>
+                        <textarea ng-model="newc.commenttext" name="content" rows="6" placeholder=""></textarea>
+                        <div class="clearfix"></div>
+                        <p style="margin-top:10px;">
+                            注册三天之后，以及在 <a href="/guan/">棋力测试</a>
+                            中有通关记录的棋友才能发言。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="clear"></div>
+        </div>
+        <footer id="myfooter">
+            <div class="container tc-main" style="margin-bottom: 10px;">
+                <div class="spliter"></div>
+                <span class="pull-left">© 2012-2025 101weiqi.com</span>
+                <span class="pull-right" style="padding-right:10px;">
+                    <a href="https://doc.101weiqi.com/">帮助中心</a>
+                </span>
+            </div>
+            <input type="hidden" id="curuser" value="33excited" login="/">
+        </footer>
+        <script type="text/javascript">
+            var is_secure = true;
+        </script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/a8bd9e5dc91f652e613dddf51fdd25dc.js"></script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/1259566f8925db6142107d9e75c8b15e.js"></script>
+        <script>
+            var g_userdata = {
+                "isbad": false,
+                "truename": "33excited",
+                "iseditor": false,
+                "fee": 0,
+                "playcount": 0,
+                "unread_attion": 0,
+                "showcomment": true,
+                "qmusic": true,
+                "has_open_level": true,
+                "username": "33excited",
+                "power": 0,
+                "isvest": false,
+                "ishigh": false,
+                "playreq_count": 0,
+                "islogin": true,
+                "isoper": false,
+                "numbermode": 0,
+                "ismanager": false,
+                "level": 405,
+                "userid": 2278693,
+                "aligncenter": false,
+                "arrow": 1,
+                "isdroppos": false,
+                "unread": 0,
+                "levelname": "3D",
+                "dou": 0
+            };
+            var comments = [{
+                "username": "roboter",
+                "showcontent": "\u8c22\u8c22<a href=\"/u/qzwq01/\" target=\"_blank\">@qzwq01</a> \u6574\u7406\uff0c\u5f88\u7cfb\u7edf\u7684\u4e00\u672c\u4e66\u3002",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 2,
+                "updated": 1414328877,
+                "doustatus": 0,
+                "id": 46895,
+                "dou": 0
+            }, {
+                "username": "chunyujinglei",
+                "showcontent": "\u975e\u5e38\u611f\u8c22\uff01",
+                "douname": "",
+                "headpath": "head/2016/7/12/7538_58392_24_1.png",
+                "userid": 7538,
+                "updated": 1468050956,
+                "doustatus": 0,
+                "id": 134642,
+                "dou": 0
+            }, {
+                "username": "xihegudi",
+                "showcontent": "\u4e0d\u9519",
+                "douname": "",
+                "headpath": "head/2016/9/7/51810_39678_13_15.png",
+                "userid": 51810,
+                "updated": 1479094324,
+                "doustatus": 0,
+                "id": 160759,
+                "dou": 0
+            }, {
+                "username": "\u5c0f\u68cb\u725b",
+                "showcontent": "\u5f88\u597d\u7684\u4e00\u672c\u4e66\uff01\u2196(^\u03c9^)\u2197",
+                "douname": "",
+                "headpath": "head/2023/2/12/42155_92553_27_10.png",
+                "userid": 42155,
+                "updated": 1501735921,
+                "doustatus": 0,
+                "id": 211940,
+                "dou": 0
+            }, {
+                "username": "\u94f6\u5188\u674e\u96e8\u8fb0",
+                "showcontent": "\u597d",
+                "douname": "",
+                "headpath": "head/2017/5/5/48015_98239_42_43.png",
+                "userid": 48015,
+                "updated": 1507701835,
+                "doustatus": 0,
+                "id": 231766,
+                "dou": 0
+            }, {
+                "username": "\u6c6a\u884c\u5065",
+                "showcontent": "\u8c22\u8c22",
+                "douname": "",
+                "headpath": "head/2018/4/30/106214_31030_49_59.png",
+                "userid": 106214,
+                "updated": 1520686758,
+                "doustatus": 0,
+                "id": 284170,
+                "dou": 0
+            }, {
+                "username": "\u6674\u7238\u7238",
+                "showcontent": "\u597d\u4e66\uff01",
+                "douname": "",
+                "headpath": "head/2019/3/9/250858_7086_34_51.png",
+                "userid": 250858,
+                "updated": 1579680401,
+                "doustatus": 0,
+                "id": 552221,
+                "dou": 0
+            }, {
+                "username": "wzyjoe101",
+                "showcontent": "\u56e0\u8be5\u662f\u9ad8\u7ea7\u5427\uff01",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 477999,
+                "updated": 1582181204,
+                "doustatus": 0,
+                "id": 574218,
+                "dou": 0
+            }, {
+                "username": "\u9ed1\u732b\u8b66\u957f",
+                "showcontent": "\u597d\u4e66",
+                "douname": "",
+                "headpath": "head/2018/3/19/154306_7373_0_20.png",
+                "userid": 154306,
+                "updated": 1582525782,
+                "doustatus": 0,
+                "id": 578373,
+                "dou": 0
+            }, {
+                "username": "\u6d77\u5e02\u8703\u697c\uff5e",
+                "showcontent": "\u597d\u4e66666666666",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 737076,
+                "updated": 1585445605,
+                "doustatus": 0,
+                "id": 631210,
+                "dou": 0
+            }, {
+                "username": "\u9648\u661f\u701a\u6bb5",
+                "showcontent": "\u597d\u4e66",
+                "douname": "",
+                "headpath": "head/2020/12/24/612008_75993_26_34.png",
+                "userid": 612008,
+                "updated": 1585911375,
+                "doustatus": 0,
+                "id": 644169,
+                "dou": 0
+            }, {
+                "username": "\u9648\u661f\u701a\u6bb5",
+                "showcontent": "\u8c22\u8c22<a href=\"/u/qzwq01/\" target=\"_blank\">@qzwq01</a> \u6574\u7406\uff0c\u5f88\u7cfb\u7edf\u7684\u4e00\u672c\u4e66\u3002",
+                "douname": "",
+                "headpath": "head/2020/12/24/612008_75993_26_34.png",
+                "userid": 612008,
+                "updated": 1585911724,
+                "doustatus": 0,
+                "id": 644185,
+                "dou": 0
+            }, {
+                "username": "wx_5130112319213",
+                "showcontent": "\u597d\u597d\u597d\uff0c\u597d\u4e66",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 731004,
+                "updated": 1594373294,
+                "doustatus": 0,
+                "id": 823169,
+                "dou": 0
+            }, {
+                "username": "wzyjoe101",
+                "showcontent": "\u597d\u597d\u7684\u4e66\u554a",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 477999,
+                "updated": 1598853055,
+                "doustatus": 0,
+                "id": 881800,
+                "dou": 0
+            }, {
+                "username": "Yangtaoyu",
+                "showcontent": "\u8d85\u7ea7\u597d\u7684\u4e66",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 312062,
+                "updated": 1600421604,
+                "doustatus": 0,
+                "id": 891103,
+                "dou": 0
+            }, {
+                "username": "\u6797\u6cfd\u8c6a",
+                "showcontent": "\u8c22\u8c22\u63d0\u4f9b",
+                "douname": "",
+                "headpath": "head/2022/7/30/1014606_92926_36_17.png",
+                "userid": 1014606,
+                "updated": 1625280016,
+                "doustatus": 0,
+                "id": 1045717,
+                "dou": 0
+            }, {
+                "username": "wx_51581293192016",
+                "showcontent": "(\u25d4\u25e1\u25d4)",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1291579,
+                "updated": 1660459502,
+                "doustatus": 0,
+                "id": 1318362,
+                "dou": 0
+            }, {
+                "username": "\u81e7\u5609\u709c1",
+                "showcontent": "\u597d\u4e66",
+                "douname": "",
+                "headpath": "head/2023/4/23/1705102_32669_20_44.png",
+                "userid": 1705102,
+                "updated": 1684404224,
+                "doustatus": 0,
+                "id": 1544115,
+                "dou": 0
+            }, {
+                "username": "wx_5769640119568",
+                "showcontent": "\u597d\u4e66",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1508007,
+                "updated": 1689249551,
+                "doustatus": 0,
+                "id": 1575108,
+                "dou": 0
+            }, {
+                "username": "wx_39851632195913",
+                "showcontent": "\u55ef",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1777109,
+                "updated": 1698065085,
+                "doustatus": 0,
+                "id": 1653980,
+                "dou": 0
+            }, {
+                "username": "\u771f\u5f00\u5fc3",
+                "showcontent": "\u8c22\u8c22<a href=\"/u/qzwq01/\" target=\"_blank\">@qzwq01</a> \u6574\u7406\uff0c\u5f88\u7cfb\u7edf\u7684\u4e00\u672c\u4e66\u3002",
+                "douname": "",
+                "headpath": "head/2023/8/16/1739510_17862_5_51.png",
+                "userid": 1739510,
+                "updated": 1706589466,
+                "doustatus": 0,
+                "id": 1717751,
+                "dou": 0
+            }, {
+                "username": "\u5c0f\u767d\u5c0f\u767d\u6000\u5ff5\u7740\u4f60\u7684\u5c0f\u53f7",
+                "showcontent": "\u770b\u6211\u7684",
+                "douname": "",
+                "headpath": "head/2024/2/14/1952960_57348_43_20.png",
+                "userid": 1952960,
+                "updated": 1707098736,
+                "doustatus": 0,
+                "id": 1724069,
+                "dou": 0
+            }, {
+                "username": "\u771f\u5f00\u5fc3",
+                "showcontent": "\u5f88\u597d\u7684\u4e00\u672c\u4e66\uff01\u2196(^\u03c9^)\u2197",
+                "douname": "",
+                "headpath": "head/2023/8/16/1739510_17862_5_51.png",
+                "userid": 1739510,
+                "updated": 1707200232,
+                "doustatus": 0,
+                "id": 1725582,
+                "dou": 0
+            }, {
+                "username": "\u5927\u540d\u6842\u783a\u4e4b",
+                "showcontent": "\u8c22\u8c22<a href=\"/u/qzwq01/\" target=\"_blank\">@qzwq01</a> \u6574\u7406\uff0c\u5f88\u7cfb\u7edf\u7684\u4e00\u672c\u4e66\u3002",
+                "douname": "",
+                "headpath": "head/2024/4/20/1819977_87787_29_3.png",
+                "userid": 1819977,
+                "updated": 1707442603,
+                "doustatus": 0,
+                "id": 1728716,
+                "dou": 0
+            }, {
+                "username": "\u6c88\u9a7f\u67688890",
+                "showcontent": "\u597d\u4e66",
+                "douname": "",
+                "headpath": "head/2023/6/24/1538752_60226_11_6.png",
+                "userid": 1538752,
+                "updated": 1712376926,
+                "doustatus": 0,
+                "id": 1772105,
+                "dou": 0
+            }, {
+                "username": "\u662f\u5c0f\u4e00\u5416",
+                "showcontent": "\u597d\u4e66",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1858433,
+                "updated": 1714714445,
+                "doustatus": 0,
+                "id": 1794607,
+                "dou": 0
+            }, {
+                "username": "\u6db5\u6db5\u5b66\u5f08\u68cb",
+                "showcontent": "<a href=\"/u/\u662f\u5c0f\u4e00\u5416/\" target=\"_blank\">@\u662f\u5c0f\u4e00\u5416</a>\uff0c\u4f60\u4e0d\u4f1a\u4e0d\u8ba4\u5f97\u6211\u5427",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1482770,
+                "updated": 1714714514,
+                "doustatus": 0,
+                "id": 1794610,
+                "dou": 0
+            }, {
+                "username": "\u6db5\u6db5\u5b66\u5f08\u68cb",
+                "showcontent": "\u4f60\u662f\u5218\u5bb6\u745e\u5427",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1482770,
+                "updated": 1714714547,
+                "doustatus": 0,
+                "id": 1794612,
+                "dou": 0
+            }, {
+                "username": "wx_4884358919281",
+                "showcontent": "\u4e66\u597d",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1763788,
+                "updated": 1721129257,
+                "doustatus": 0,
+                "id": 1854075,
+                "dou": 0
+            }, {
+                "username": "\u5f20\u7693\u8317",
+                "showcontent": "ADDZDF\u5730\u65b9\u53d8\u5f62",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 2092166,
+                "updated": 1725005239,
+                "doustatus": 0,
+                "id": 1904971,
+                "dou": 0
+            }, {
+                "username": "Tommylau",
+                "showcontent": "\u597d\u66f8",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 1481055,
+                "updated": 1730088287,
+                "doustatus": 0,
+                "id": 1949413,
+                "dou": 0
+            }, {
+                "username": "wx_8110001819178",
+                "showcontent": "\u8c22\u8c22@ qzwq01\u7684\u6574\u7406\uff0c\u628a\u57fa\u672c\u624b\u7b4b\u3001\u6b7b\u6d3b\u90fd\u6574\u7406\u51fa\u6765",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 2164813,
+                "updated": 1732708089,
+                "doustatus": 0,
+                "id": 1971926,
+                "dou": 0
+            }, {
+                "username": "\u90ed\u4e66\u9038",
+                "showcontent": "\u7b80\u5355\u7c97\u66b4",
+                "douname": "",
+                "headpath": "head/2025/1/16/2118403_34341_0_37.png",
+                "userid": 2118403,
+                "updated": 1739698115,
+                "doustatus": 0,
+                "id": 2032454,
+                "dou": 0
+            }, {
+                "username": "wx_57661068195710",
+                "showcontent": "<a href=\"/u/roboter/\" target=\"_blank\">@roboter</a>\uff0c\u8c22\u8c22\ud83d\ude4f",
+                "douname": "",
+                "headpath": "head/2023/10/12/1447562_3907_4_19.png",
+                "userid": 1447562,
+                "updated": 1740059032,
+                "doustatus": 0,
+                "id": 2035240,
+                "dou": 0
+            }];
+            var book = {
+                "id": 361
+            };
+        </script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/5beeed3515160eb70e013c6e6863224c.js"></script>
+        <script>
+            var static_server = "https://static2.101weiqi.com";
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var x = 0;
+                set_action_action();
+                set_bookshare_action();
+                set_bookdownload_action();
+                set_book_star_action();
+                var y = 0;
+            });
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?13a338d58a330cc6f97cd0c32cf6dd47";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            }
+            )();
+        </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"921a44849a4ce15c","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"a870cf35e515469b89a360f984dd3c51"}' crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -51,9 +51,21 @@ def save_html(response, html_name):
         file.write(pretty_html)
     print(f"html页面保存 {html_name}。")
 
+def sanitize_filename(filename):
+    # Remove or replace invalid characters
+    # Define a set of characters that are invalid in filenames
+    invalid_chars = r'[<>:"/\\|?*\']'
+    # Replace invalid characters with an underscore or any safe character
+    sanitized = re.sub(invalid_chars, '_', filename)
+    # Additionally, remove leading and trailing whitespace
+    sanitized = sanitized.strip()
+    # Optionally, remove sequences like '..' that could represent parent directories
+    sanitized = sanitized.replace('..', '_')
+    return sanitized
+
 # 获取一个level的所有book，比如获取book_1，入门的所有棋书
 def getonebooklevel(session, documents):
-    last_id = 21744
+    last_id = 57503
     last_page = 0
     begin_status = False
 
@@ -88,7 +100,9 @@ def getonebooklevel(session, documents):
             book_cover_fail.append(book_url_id)
             print('fail_list', book_cover_fail)
             continue
-        html_name = '.cache/' + str(book_url_id) + '_' + book_name + '.html'
+
+        safe_book_name = sanitize_filename(book_name)
+        html_name = '.cache/' + str(book_url_id) + '_' + safe_book_name + '.html'
         save_html(response, html_name)
         ret = getonebook_cover(response.text)
         '''

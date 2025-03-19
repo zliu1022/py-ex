@@ -117,6 +117,7 @@ if __name__ == '__main__':
     #book_complete_htmlname = 'book/中级班练习题_按难度.html'
     book_complete_htmlname = 'book/1097_page10.html'
     #book_complete_htmlname = 'book/2762_cover.html'
+    book_complete_htmlname = 'book/21744_cover.html'
     with open(book_complete_htmlname, "r", encoding="utf-8") as file:
         html_content = file.read()
 

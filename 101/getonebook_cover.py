@@ -82,6 +82,7 @@ def getonebook_cover(html_content):
 if __name__ == "__main__":
     bookcover_name = "book/中级班练习题.html"
     #bookcover_name = 'book/21744_cover.html'
+    bookcover_name = 'book/28238_cover.html'
     with open(bookcover_name, 'r', encoding='utf-8') as f:
         html_content = f.read()
 

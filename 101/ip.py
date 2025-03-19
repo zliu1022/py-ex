@@ -30,7 +30,8 @@ eth_ip  = '192.168.8.46'
 wifi_ip = '192.168.4.9'
 
 # home
-#wifi_ip = '192.168.3.24'
+eth_ip = '172.16.0.2'
+wifi_ip = '192.168.3.24'
 
 # 选择走有线 or Wi-Fi
 source_ip_list = [
@@ -42,13 +43,20 @@ for ip in source_ip_list:
     print(ip)
     source_ip = ip['ip']
 
-    # 新建 Session，绑定 IP
-    session = requests.Session()
-    adapter = SourceIPAdapter(source_ip)
-    session.mount('http://', adapter)
-    session.mount('https://', adapter)
+    try:
+        # 新建 Session，绑定 IP
+        session = requests.Session()
+        adapter = SourceIPAdapter(source_ip)
+        session.mount('http://', adapter)
+        session.mount('https://', adapter)
 
-    # 测试请求，看看出口 IP
-    resp = session.get('https://api.ipify.org?format=json')
+        # 测试请求，看看出口 IP
+        resp = session.get('https://api.ipify.org?format=json')
+    except Exception as e:
+        print(e)
+        print()
+        continue
+
     print(f'出口 IP ({source_ip}) 返回结果: {resp.json()}')
+    print()
 

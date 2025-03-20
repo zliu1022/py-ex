@@ -20,8 +20,9 @@ def getonebook_cover_q(html_content):
         if match:
             url_no = match.group(1)
         else:
-            url_no = '' # title_name为空,url_no藏在problem_url里面
+            # title_name为空,url_no藏在problem_url里面
             url_list = problem_url.split('/') # 不放入book_n_q了，后续特殊处理
+            url_no = url_list[4]
         data.append({'url_no': url_no, 'url_level': '15K', 'url_frombook': problem_url})
     return data
 
@@ -110,12 +111,13 @@ def getonebook_cover(html_content):
 from pprint import pprint
 if __name__ == "__main__":
     bookcover_list = [
-        "book/中级班练习题.html",
+        #"book/中级班练习题.html",
         'book/21744_cover.html',
-        'book/28238_cover.html',
-        'book/64239_cover_nocomplete.html',
-        'book/52398_cover_emptytitle.html',
-        'book/30268_cover_all.html'
+        #'book/28238_cover.html',
+        #'book/64239_cover_nocomplete.html',
+        #'book/52398_cover_emptytitle.html',
+        #'book/30268_cover_all.html',
+        #'book/64312_cover.html'
     ]
     for b in bookcover_list:
         print(b)
@@ -124,5 +126,6 @@ if __name__ == "__main__":
         ret, ret_q = getonebook_cover(html_content)
         pprint(ret)
         pprint(ret_q)
+        print(len(ret_q))
         print()
 

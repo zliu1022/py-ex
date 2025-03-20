@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>C章 - 101围棋网</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content=" C章"/>
+        <meta name="description" content="显示 官子計算題目の收集中的C章。"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="shortcut icon"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="Bookmark"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="apple-touch-icon" sizes="144x144" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="stylesheet" href="https://static2.101weiqi.com/static/cache/a8e4ded57c9e2c03a4443127da6b1fd7.css">
+        <style type="text/css">
+            [ng-cloak] {
+                display: none !important
+            }
+        </style>
+    </head>
+    <body ng-app="wqapp">
+        <nav class="navbar nav101" style="margin:0" id="whead" ng-controller="headctrl" ng-cloak>
+            <div class="container" id="headid">
+                <script>
+                    var hlinks = [{
+                        htype: 1,
+                        h: '/home/',
+                        name: '我的首页'
+                    }, {
+                        htype: 1,
+                        h: '/task/',
+                        name: '作业'
+                    }, {
+                        htype: 1,
+                        h: '/questionlib/',
+                        name: '题库'
+                    }, {
+                        htype: 1,
+                        h: '/playai/',
+                        name: '训练营'
+                    }, {
+                        htype: 1,
+                        h: '/play/',
+                        name: '对弈'
+                    }, {
+                        htype: 1,
+                        h: '/forum/',
+                        name: '讨论区'
+                    }, {
+                        htype: 1,
+                        h: '/book/',
+                        name: '棋书'
+                    }, {
+                        htype: 1,
+                        h: '/chessbook/',
+                        name: '棋谱'
+                    }, ];
+                    var rightlinks = [{
+                        htype: 3,
+                        h: '/u/33excited/',
+                        name: '33excited 3D'
+                    }, {
+                        htype: 3,
+                        h: '/logout/',
+                        name: '退出'
+                    }]
+                </script>
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand" href="/">
+                        <img src="https://static2.101weiqi.com/static/images/logo.png">
+                    </a>
+                </div>
+                <div class="pull-left" style="margin-left: 40px;">
+                    <div class="navbar-item" ng-repeat="h in activelinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand" ng-if="h.htype == 1">
+                            <div class="navdiv">[[h.name]]</div>
+                        </a>
+                        <a ng-href="[[h.h]]" class="navbar-brand" style="position: relative;" ng-if="h.htype == 2" title="[[h.name]]">
+                            <div class="navdiv">
+                                <dd ng-if="h.icon == '@'">@</dd>
+                                <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            </div>
+                            <dd class="headnumber">[[h.number]]</dd>
+                        </a>
+                    </div>
+                </div>
+                <div class="pull-right" ng-if="hasright">
+                    <div class="navbar-item" ng-repeat="h in rightlinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand2">
+                            <span class="navspan">[[h.name]]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="toggleright" ng-if="hasmore">
+                    <button type="button" class="navbar-toggle2" ng-click="showmore()">
+                        <span class="sr-only">101围棋网</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="clear"></div>
+                <div class="width100 headsplit" ng-if="is_showmore">
+                    <div class="col-xs-4 navmore-item" ng-repeat="h in morelinks">
+                        <a ng-href="[[h.h]]" class="morelink">
+                            <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            [[h.name]]
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="container tc-main " id="main">
+            <div class="height20" id="toph"></div>
+            <div class="col-md-12">
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/book/62635/">官子計算題目の收集</a>
+                    </li>
+                    <li class="active">C章</li>
+                </ul>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462823/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462823.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412096<span class="pull-right">4K</span>
+                    <br/>
+                    <div style="text-align:center;">195对/385错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464408/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464408.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413480<span class="pull-right">3K</span>
+                    <br/>
+                    <div style="text-align:center;">135对/209错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462793/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462793.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412066<span class="pull-right">3K</span>
+                    <br/>
+                    <div style="text-align:center;">197对/297错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464021/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464021.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413124<span class="pull-right">3K</span>
+                    <br/>
+                    <div style="text-align:center;">158对/182错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464691/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464691.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413762<span class="pull-right">4K+</span>
+                    <br/>
+                    <div style="text-align:center;">204对/194错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462791/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462791.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412064<span class="pull-right">4K+</span>
+                    <br/>
+                    <div style="text-align:center;">202对/263错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462826/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462826.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412099<span class="pull-right">4K+</span>
+                    <br/>
+                    <div style="text-align:center;">230对/216错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/467452/">
+                            <img src="https://static2.101weiqi.com/file/newimg/467452.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-416397<span class="pull-right">4K+</span>
+                    <br/>
+                    <div style="text-align:center;">220对/213错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464041/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464041.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413144<span class="pull-right">3K</span>
+                    <br/>
+                    <div style="text-align:center;">185对/240错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464872/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464872.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413929<span class="pull-right">3K</span>
+                    <br/>
+                    <div style="text-align:center;">113对/198错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464299/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464299.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413393<span class="pull-right">3K+</span>
+                    <br/>
+                    <div style="text-align:center;">201对/182错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464078/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464078.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413181<span class="pull-right">3K+</span>
+                    <br/>
+                    <div style="text-align:center;">201对/263错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466389/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466389.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415366<span class="pull-right">3K+</span>
+                    <br/>
+                    <div style="text-align:center;">173对/210错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466255/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466255.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415283<span class="pull-right">3K+</span>
+                    <br/>
+                    <div style="text-align:center;">217对/149错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/315362/">
+                            <img src="https://static2.101weiqi.com/file/newimg/315362.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-279699<span class="pull-right">2K</span>
+                    <br/>
+                    <div style="text-align:center;">237对/359错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464870/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464870.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413927<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">134对/188错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466253/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466253.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415281<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">115对/144错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463035/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463035.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412308<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">152对/138错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466145/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466145.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415177<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">116对/178错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/470674/">
+                            <img src="https://static2.101weiqi.com/file/newimg/470674.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-419529<span class="pull-right">1K</span>
+                    <br/>
+                    <div style="text-align:center;">76对/75错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463883/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463883.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412986<span class="pull-right">2K</span>
+                    <br/>
+                    <div style="text-align:center;">148对/118错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/470382/">
+                            <img src="https://static2.101weiqi.com/file/newimg/470382.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-419250<span class="pull-right">2K</span>
+                    <br/>
+                    <div style="text-align:center;">131对/82错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462795/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462795.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412068<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">159对/226错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/468176/">
+                            <img src="https://static2.101weiqi.com/file/newimg/468176.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-417101<span class="pull-right">2K</span>
+                    <br/>
+                    <div style="text-align:center;">158对/108错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469861/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469861.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418730<span class="pull-right">3K+</span>
+                    <br/>
+                    <div style="text-align:center;">127对/135错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464282/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464282.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413379<span class="pull-right">1K</span>
+                    <br/>
+                    <div style="text-align:center;">123对/198错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463227/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463227.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412468<span class="pull-right">1K</span>
+                    <br/>
+                    <div style="text-align:center;">126对/170错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463373/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463373.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412614<span class="pull-right">1K</span>
+                    <br/>
+                    <div style="text-align:center;">121对/95错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463882/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463882.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412985<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">201对/116错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462794/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462794.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412067<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">194对/127错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465734/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465734.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414767<span class="pull-right">1K</span>
+                    <br/>
+                    <div style="text-align:center;">142对/91错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462710/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462710.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-411983<span class="pull-right">1K+</span>
+                    <br/>
+                    <div style="text-align:center;">142对/182错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464051/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464051.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413154<span class="pull-right">1K+</span>
+                    <br/>
+                    <div style="text-align:center;">184对/135错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466834/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466834.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415783<span class="pull-right">1K+</span>
+                    <br/>
+                    <div style="text-align:center;">125对/147错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466254/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466254.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415282<span class="pull-right">1K+</span>
+                    <br/>
+                    <div style="text-align:center;">127对/155错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465943/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465943.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414976<span class="pull-right">1K+</span>
+                    <br/>
+                    <div style="text-align:center;">154对/163错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463658/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463658.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412894<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">112对/190错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466251/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466251.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415279<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">99对/148错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462797/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462797.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412070<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">101对/135错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469146/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469146.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418036<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">77对/85错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469343/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469343.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418233<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">73对/89错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462825/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462825.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412098<span class="pull-right">1K+</span>
+                    <br/>
+                    <div style="text-align:center;">159对/94错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/468002/">
+                            <img src="https://static2.101weiqi.com/file/newimg/468002.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-416941<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">99对/63错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465942/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465942.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414975<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">110对/116错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462824/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462824.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412097<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">141对/102错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464550/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464550.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413622<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">96对/114错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/470677/">
+                            <img src="https://static2.101weiqi.com/file/newimg/470677.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-419532<span class="pull-right">2K+</span>
+                    <br/>
+                    <div style="text-align:center;">133对/92错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463229/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463229.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412470<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">107对/92错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463451/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463451.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412691<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">112对/130错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466143/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466143.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415175<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">63对/141错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463656/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463656.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412892<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">108对/82错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469147/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469147.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418037<span class="pull-right">1K+</span>
+                    <br/>
+                    <div style="text-align:center;">85对/106错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463233/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463233.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412474<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">121对/93错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464154/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464154.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413257<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">94对/87错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/470676/">
+                            <img src="https://static2.101weiqi.com/file/newimg/470676.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-419531<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">58对/50错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464077/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464077.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413180<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">106对/93错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/470500/">
+                            <img src="https://static2.101weiqi.com/file/newimg/470500.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-419363<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">82对/65错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464039/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464039.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413142<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">85对/64错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469340/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469340.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418230<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">92对/57错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465912/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465912.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414945<span class="pull-right">1K</span>
+                    <br/>
+                    <div style="text-align:center;">132对/76错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466005/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466005.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415038<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">89对/79错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463033/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463033.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412306<span class="pull-right">1D+</span>
+                    <br/>
+                    <div style="text-align:center;">116对/122错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463032/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463032.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412305<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">81对/162错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462601/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462601.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-411876<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">102对/93错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465738/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465738.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414771<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">85对/111错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465740/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465740.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414773<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">98对/81错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/467453/">
+                            <img src="https://static2.101weiqi.com/file/newimg/467453.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-416398<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">119对/69错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464073/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464073.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413176<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">151对/55错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465927/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465927.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414960<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">122对/81错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465741/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465741.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414774<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">127对/69错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463072/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463072.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412345<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">87对/88错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463031/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463031.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412304<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">110对/93错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464104/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464104.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413207<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">104对/67错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464556/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464556.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413628<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">97对/89错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465962/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465962.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414995<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">102对/56错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466252/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466252.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415280<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">109对/65错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463034/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463034.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412307<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">90对/106错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465946/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465946.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414979<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">84对/101错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/467454/">
+                            <img src="https://static2.101weiqi.com/file/newimg/467454.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-416399<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">112对/70错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/461310/">
+                            <img src="https://static2.101weiqi.com/file/newimg/461310.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-410646<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">154对/85错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466002/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466002.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415035<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">105对/46错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464075/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464075.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413178<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">113对/83错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463080/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463080.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412353<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">114对/71错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463454/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463454.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412694<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">107对/95错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/470381/">
+                            <img src="https://static2.101weiqi.com/file/newimg/470381.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-419249<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">95对/54错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464040/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464040.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413143<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">118对/55错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466006/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466006.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415039<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">104对/75错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469209/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469209.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418099<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">102对/61错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466914/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466914.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415863<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">71对/76错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465998/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465998.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415031<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">108对/97错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/467450/">
+                            <img src="https://static2.101weiqi.com/file/newimg/467450.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-416395<span class="pull-right">2D</span>
+                    <br/>
+                    <div style="text-align:center;">112对/66错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465739/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465739.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414772<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">98对/79错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465743/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465743.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414776<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">107对/69错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462857/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462857.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412130<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">115对/53错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/468175/">
+                            <img src="https://static2.101weiqi.com/file/newimg/468175.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-417100<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">123对/45错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463925/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463925.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413028<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">120对/86错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466140/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466140.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415172<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">82对/105错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466001/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466001.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415034<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">96对/98错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464505/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464505.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413577<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">99对/97错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469145/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469145.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418035<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">95对/58错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466828/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466828.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415777<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">85对/96错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464549/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464549.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413621<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">94对/126错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/469215/">
+                            <img src="https://static2.101weiqi.com/file/newimg/469215.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-418105<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">97对/94错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/467451/">
+                            <img src="https://static2.101weiqi.com/file/newimg/467451.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-416396<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">100对/90错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462790/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462790.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412063<span class="pull-right">3D+</span>
+                    <br/>
+                    <div style="text-align:center;">70对/131错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466152/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466152.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415184<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">95对/121错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462822/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462822.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412095<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">131对/52错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/462827/">
+                            <img src="https://static2.101weiqi.com/file/newimg/462827.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412100<span class="pull-right">2D+</span>
+                    <br/>
+                    <div style="text-align:center;">149对/61错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/465737/">
+                            <img src="https://static2.101weiqi.com/file/newimg/465737.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-414770<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">109对/98错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466153/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466153.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415185<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">129对/79错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/461234/">
+                            <img src="https://static2.101weiqi.com/file/newimg/461234.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-410570<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">143对/78错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/464548/">
+                            <img src="https://static2.101weiqi.com/file/newimg/464548.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-413620<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">115对/76错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463375/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463375.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412616<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">97对/60错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466256/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466256.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415284<span class="pull-right">3D</span>
+                    <br/>
+                    <div style="text-align:center;">115对/77错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466142/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466142.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415174<span class="pull-right">4D</span>
+                    <br/>
+                    <div style="text-align:center;">64对/106错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466833/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466833.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415782<span class="pull-right">3D+</span>
+                    <br/>
+                    <div style="text-align:center;">80对/103错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/461454/">
+                            <img src="https://static2.101weiqi.com/file/newimg/461454.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-410777<span class="pull-right">3D+</span>
+                    <br/>
+                    <div style="text-align:center;">111对/81错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/463659/">
+                            <img src="https://static2.101weiqi.com/file/newimg/463659.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-412895<span class="pull-right">4D</span>
+                    <br/>
+                    <div style="text-align:center;">78对/88错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/466916/">
+                            <img src="https://static2.101weiqi.com/file/newimg/466916.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-415865<span class="pull-right">4D</span>
+                    <br/>
+                    <div style="text-align:center;">38对/97错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/471743/">
+                            <img src="https://static2.101weiqi.com/file/newimg/471743.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-420563<span class="pull-right">1K</span>
+                    <br/>
+                    <div style="text-align:center;">106对/82错</div>
+                </div>
+                <div class="questionitem">
+                    <div style="text-align:center;">
+                        <a href="/book/62635/121970/348798/">
+                            <img src="https://static2.101weiqi.com/file/newimg/348798.png">
+                            <br/>
+                        </a>
+                    </div>
+                    Q-311889<span class="pull-right">1D</span>
+                    <br/>
+                    <div style="text-align:center;">0对/0错</div>
+                </div>
+            </div>
+            <input type='hidden' name='csrfmiddlewaretoken' value='SRppyMggZyvoYWAFwg5jD9k3OJqCEpWkDRwAPXeceYlWdewi0OuqcHK312uFiJZL'/>
+            <script type="text/javascript">
+                function set_xz_action() {
+                    $(".xzitem").unbind();
+                    $(".xzitem").change(function() {
+                        var xz = parseInt($(this).val());
+                        var qid = $(this).attr("qid");
+                        var bookid = $(this).attr("bookid");
+                        save_xz(bookid, qid, xz);
+                    });
+                }
+                function save_xz(bookid, qid, xz) {
+                    var mid = $("input[name='csrfmiddlewaretoken']").val();
+                    console.log(bookid, qid, xz);
+                    $.post("/book/savexz/", {
+                        bookid: bookid,
+                        qid: qid,
+                        xz: xz,
+                        csrfmiddlewaretoken: mid
+                    }, function(msg) {
+                        if (msg.result == 0) {} else if (msg.result == 4) {}
+                    }, "json")
+                }
+            </script>
+            <div class="clear"></div>
+            <div class="clear"></div>
+        </div>
+        <footer id="myfooter">
+            <div class="container tc-main" style="margin-bottom: 10px;">
+                <div class="spliter"></div>
+                <span class="pull-left">© 2012-2025 101weiqi.com</span>
+                <span class="pull-right" style="padding-right:10px;">
+                    <a href="https://doc.101weiqi.com/">帮助中心</a>
+                </span>
+            </div>
+            <input type="hidden" id="curuser" value="33excited" login="/">
+        </footer>
+        <script type="text/javascript">
+            var is_secure = true;
+        </script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/a8bd9e5dc91f652e613dddf51fdd25dc.js"></script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/1259566f8925db6142107d9e75c8b15e.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var x = 0;
+                set_xz_action();
+                var y = 0;
+            });
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?13a338d58a330cc6f97cd0c32cf6dd47";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            }
+            )();
+        </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"92322ed18a720ba3","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"a870cf35e515469b89a360f984dd3c51"}' crossorigin="anonymous"></script>
+    </body>
+</html>
+

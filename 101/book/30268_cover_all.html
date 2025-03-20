@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>入门必做 - 101围棋网</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content="入门必做"/>
+        <meta name="description" content="原创棋书"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="shortcut icon"/>
+        <link href="https://static2.101weiqi.com/static/images/apple_1442.png" rel="Bookmark"/>
+        <link rel="apple-touch-icon" sizes="57x57" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="https://static2.101weiqi.com/static/images/apple_1142.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="apple-touch-icon" sizes="144x144" href="https://static2.101weiqi.com/static/images/apple_1442.png"/>
+        <link rel="stylesheet" href="https://static2.101weiqi.com/static/cache/a8e4ded57c9e2c03a4443127da6b1fd7.css">
+        <style type="text/css">
+            [ng-cloak] {
+                display: none !important
+            }
+        </style>
+        <link rel="stylesheet" href="https://static2.101weiqi.com/static/cache/269550530cc127b6aa5a35925a7de6ce.css">
+        <style>
+            .qis_bg {
+                width: 95%;
+                background: url(https://static2.101weiqi.com/static/images/qis_all_2.jpg) repeat-y center top;
+                background-size: 100%;
+                border-radius: 10px;
+            }
+
+            .qis_title {
+                width: 100%;
+                height: 80px;
+                background: url(https://static2.101weiqi.com/static/images/qis_title_2.png) no-repeat right top;
+                background-size: 80px ;
+                text-align: center;
+                line-height: 80px;
+                font-family: '微软雅黑';
+                font-size: 22px;
+                font-weight: bold;
+            }
+
+            .qis_bottom {
+                width: 100%;
+                height: 80px;
+                background: url(https://static2.101weiqi.com/static/images/qis_bottom_2.png) no-repeat left bottom;
+                background-size: 80px;
+            }
+        </style>
+    </head>
+    <body ng-app="wqapp">
+        <nav class="navbar nav101" style="margin:0" id="whead" ng-controller="headctrl" ng-cloak>
+            <div class="container" id="headid">
+                <script>
+                    var hlinks = [{
+                        htype: 1,
+                        h: '/home/',
+                        name: '我的首页'
+                    }, {
+                        htype: 1,
+                        h: '/task/',
+                        name: '作业'
+                    }, {
+                        htype: 1,
+                        h: '/questionlib/',
+                        name: '题库'
+                    }, {
+                        htype: 1,
+                        h: '/playai/',
+                        name: '训练营'
+                    }, {
+                        htype: 1,
+                        h: '/play/',
+                        name: '对弈'
+                    }, {
+                        htype: 1,
+                        h: '/forum/',
+                        name: '讨论区'
+                    }, {
+                        htype: 1,
+                        h: '/book/',
+                        name: '棋书'
+                    }, {
+                        htype: 1,
+                        h: '/chessbook/',
+                        name: '棋谱'
+                    }, ];
+                    var rightlinks = [{
+                        htype: 3,
+                        h: '/u/33excited/',
+                        name: '33excited 3D'
+                    }, {
+                        htype: 3,
+                        h: '/logout/',
+                        name: '退出'
+                    }]
+                </script>
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand" href="/">
+                        <img src="https://static2.101weiqi.com/static/images/logo.png">
+                    </a>
+                </div>
+                <div class="pull-left" style="margin-left: 40px;">
+                    <div class="navbar-item" ng-repeat="h in activelinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand" ng-if="h.htype == 1">
+                            <div class="navdiv">[[h.name]]</div>
+                        </a>
+                        <a ng-href="[[h.h]]" class="navbar-brand" style="position: relative;" ng-if="h.htype == 2" title="[[h.name]]">
+                            <div class="navdiv">
+                                <dd ng-if="h.icon == '@'">@</dd>
+                                <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            </div>
+                            <dd class="headnumber">[[h.number]]</dd>
+                        </a>
+                    </div>
+                </div>
+                <div class="pull-right" ng-if="hasright">
+                    <div class="navbar-item" ng-repeat="h in rightlinks">
+                        <a ng-href="[[h.h]]" class="navbar-brand2">
+                            <span class="navspan">[[h.name]]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="toggleright" ng-if="hasmore">
+                    <button type="button" class="navbar-toggle2" ng-click="showmore()">
+                        <span class="sr-only">101围棋网</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="clear"></div>
+                <div class="width100 headsplit" ng-if="is_showmore">
+                    <div class="col-xs-4 navmore-item" ng-repeat="h in morelinks">
+                        <a ng-href="[[h.h]]" class="morelink">
+                            <i ng-if="h.icon != '@'" class="glyphicon glyphicon-[[h.icon]]"></i>
+                            [[h.name]]
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="container tc-main " id="main" ng-controller="BookCtrl" ng-cloak>
+            <div class="height20" id="toph"></div>
+            <div class="col-md-7" style="margin:0">
+                <div class="danghu_left">
+                    <div class="qis_bg">
+                        <div class="qis_title">入门必做</div>
+                        <div class="qis_content">
+                            <p>
+                                由 <a href="/u/胡凯峰/">胡凯峰</a>
+                                分享
+                            </p>
+                            <p></p>
+                            <p class="text-success">共15道题目，平均难度：13K &nbsp;做题次数：16次</p>
+                            <p>
+                                <a class="btn btn-success" href="/book/doing/1936663/">开始做题</a>
+                                &nbsp;<a href="/book/dosetting/1936663/">做题形式设置</a>
+                                &nbsp;&nbsp;<a href="/book/myerror/1936663/">我的棋书错题本</a>
+                            </p>
+                            <p class="text-success" style="line-height:150%;">
+                                棋友完成棋书作业后，将在此显示本书做题数据统计（每天晚上统计，针对<a href="/changepower/">银卡以上会员</a>
+                                ）
+                            </p>
+                            <p>
+                                <a href="javascript:void(0);" class="starbook" bid="30268">
+                                    <img class="starimg" src="https://static2.101weiqi.com/static/images/star_inactive.gif">
+                                    &nbsp;&nbsp;<span class="startip">收藏本棋书</span>
+                                </a>
+                            </p>
+                            <p class="text-success" style="margin-top:5px;">
+                                <a href="/book/levelorder/30268/">&rarr;按难度顺序查阅本书</a>
+                            </p>
+                            原创棋书
+                            <ul>
+                                <li style="width:100%;">
+                                    1、<a class="node" href="/book/30268/22924/">真眼与假眼👀</a>
+                                    (1)
+                                </li>
+                                <div class="clear"></div>
+                            </ul>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/201584/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/201584.png">
+                                    <br/>
+                                    <span class="qname">Q-174490</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/201003/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/201003.png">
+                                    <br/>
+                                    <span class="qname">Q-173915</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/195368/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/195368.png">
+                                    <br/>
+                                    <span class="qname">Q-170330</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/193594/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/193594.png">
+                                    <br/>
+                                    <span class="qname">Q-168907</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/193158/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/193158.png">
+                                    <br/>
+                                    <span class="qname">Q-168488</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/192719/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/192719.png">
+                                    <br/>
+                                    <span class="qname">Q-168119</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/192317/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/192317.png">
+                                    <br/>
+                                    <span class="qname">Q-167807</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/192318/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/192318.png">
+                                    <br/>
+                                    <span class="qname">Q-167808</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/192112/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/192112.png">
+                                    <br/>
+                                    <span class="qname">黑先杀白</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/190922/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/190922.png">
+                                    <br/>
+                                    <span class="qname">Q-166616</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/191989/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/191989.png">
+                                    <br/>
+                                    <span class="qname">黑棋是死是活？</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/201261/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/201261.png">
+                                    <br/>
+                                    <span class="qname">Q-174173</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/201680/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/201680.png">
+                                    <br/>
+                                    <span class="qname">€€€</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-xs-6" style="text-align:center;">
+                                <a href="/book/30268/0/203980/">
+                                    <img src="https://static2.101weiqi.com/file/newimg/203980.png">
+                                    <br/>
+                                    <span class="qname">Q-176303</span>
+                                </a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="qis_bottom"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 fontsize qis" style="margin:0">
+                <div class="play_pinglun">
+                    <table class="table table-hover">
+                        <tr ng-repeat="s in comments track by $index" ng-mouseover="over_comment(s)" ng-mouseout="out_comment(s)">
+                            <td class="head">
+                                <img ng-show="!s.ishide" style="width:60px;height:60px;" ng-src="https://static2.101weiqi.com/file/[[s.headpath]]">
+                            </td>
+                            <td class="commentblock">
+                                <h6 ng-show="!s.ishide">
+                                    <span class="pull-left">
+                                        <a ng-href="/u/[[::s.username]]/">[[::s.username]]</a>
+                                        写于 [[::s.updatestr]]
+                                    </span>
+                                    <span class="pull-right text-info" style="margin-right:10px;">
+                                        <span ng-if="s.dou > 0" class="rightdropmenu">
+                                            <span ng-if="s.doustatus == 2" class="glyphicon glyphicon-ok">[[::s.douname]]赢取[[s.dou]]围豆 </span>
+                                            <span ng-if="s.doustatus != 2">
+                                                <span uib-dropdown on-toggle="show_douname(s)" class="dropdown" ng-if="udata.userid == s.userid || udata.ismanager">
+                                                    <a uib-dropdown-toggle id="dLabel_[[::s.id]]">
+                                                        <span class="glyphicon glyphicon-star"></span>
+                                                        [[::s.dou]]围豆 <i class="caret"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="dLabel_[[::s.id]]">
+                                                        <li role="menuitem" ng-repeat="un in dounames" ng-if="un != udata.username">
+                                                            <a ng-click="douwin(s,un)">向 [[un]] 支付[[::s.dou]]围豆</a>
+                                                        </li>
+                                                        <li role="menuitem" ng-if="udata.ismanager">
+                                                            <a ng-click="canceldouwin(s)">取消</a>
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                                <span class="dropdown" ng-if="udata.userid !== s.userid && !udata.ismanager">
+                                                    <i class="glyphicon glyphicon-star"></i>
+                                                    [[::s.dou]]围豆
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span ng-if="isintopic">[[$index + 1]]楼 &nbsp;</span>
+                                        <span ng-if="udata.userid === s.userid || udata.isoper || udata.ismanager">
+                                            <span ng-if="s.dou === 0" ng-show="s.isover">
+                                                <a ng-click="removecomment(s)">删除</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </h6>
+                                <div class="clear"></div>
+                                <div ng-show="!s.ishide" style="margin-top:10px;" class="width100 breakword ">
+                                    <div ng-bind-html="s.contentHtml"></div>
+                                </div>
+                                <span class="pull-right" ng-show="s.ishide" style="color:green;">
+                                    已经删除，<a ng-click="restorecomment(s)">撤销</a>
+                                    | <a ng-click="destorycomment(s)">关闭</a>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="col-md-12">
+                        <p>我的回复</p>
+                        <input type='hidden' name='csrfmiddlewaretoken' value='UcYuo9BMuAmFo9hBH2KI7UzllFsi1bCFFc5FFkzIJ0cdDrdebA9PGsZlyYwlFvF6'/>
+                        <textarea ng-model="newc.commenttext" name="content" rows="6" placeholder=""></textarea>
+                        <div class="clearfix"></div>
+                        <p style="margin-top:10px;">
+                            注册三天之后，以及在 <a href="/guan/">棋力测试</a>
+                            中有通关记录的棋友才能发言。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="clear"></div>
+        </div>
+        <footer id="myfooter">
+            <div class="container tc-main" style="margin-bottom: 10px;">
+                <div class="spliter"></div>
+                <span class="pull-left">© 2012-2025 101weiqi.com</span>
+                <span class="pull-right" style="padding-right:10px;">
+                    <a href="https://doc.101weiqi.com/">帮助中心</a>
+                </span>
+            </div>
+            <input type="hidden" id="curuser" value="33excited" login="/">
+        </footer>
+        <script type="text/javascript">
+            var is_secure = true;
+        </script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/a8bd9e5dc91f652e613dddf51fdd25dc.js"></script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/1259566f8925db6142107d9e75c8b15e.js"></script>
+        <script>
+            var g_userdata = {
+                "isbad": false,
+                "truename": "33excited",
+                "iseditor": false,
+                "fee": 0,
+                "playcount": 0,
+                "unread_attion": 0,
+                "showcomment": true,
+                "qmusic": true,
+                "has_open_level": true,
+                "username": "33excited",
+                "power": 0,
+                "isvest": false,
+                "ishigh": false,
+                "playreq_count": 0,
+                "islogin": true,
+                "isoper": false,
+                "numbermode": 0,
+                "ismanager": false,
+                "level": 405,
+                "userid": 2278693,
+                "aligncenter": false,
+                "arrow": 1,
+                "isdroppos": false,
+                "unread": 0,
+                "levelname": "3D",
+                "dou": 0
+            };
+            var comments = [{
+                "username": "wx_29258717193030",
+                "showcontent": "\u8fd9\u592a\u7b80\u5355\u4e86",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 642045,
+                "updated": 1590210847,
+                "doustatus": 0,
+                "id": 765840,
+                "dou": 0
+            }, {
+                "username": "wx_29258717193030",
+                "showcontent": "\u518d\u96be\u4e00\u70b9",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 642045,
+                "updated": 1590210869,
+                "doustatus": 0,
+                "id": 765841,
+                "dou": 0
+            }, {
+                "username": "wx_29258717193030",
+                "showcontent": "\u8fd9\u5b8c\u5168\u662f\u5165\u95e8\u4e86",
+                "douname": "",
+                "headpath": "headicon_128.png",
+                "userid": 642045,
+                "updated": 1590210900,
+                "doustatus": 0,
+                "id": 765844,
+                "dou": 0
+            }];
+            var book = {
+                "id": 30268
+            };
+        </script>
+        <script type="text/javascript" src="https://static2.101weiqi.com/static/cache/5beeed3515160eb70e013c6e6863224c.js"></script>
+        <script>
+            var static_server = "https://static2.101weiqi.com";
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var x = 0;
+                set_action_action();
+                set_bookshare_action();
+                set_bookdownload_action();
+                set_book_star_action();
+                var y = 0;
+            });
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?13a338d58a330cc6f97cd0c32cf6dd47";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            }
+            )();
+        </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"923176c9bf0ce1ec","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"a870cf35e515469b89a360f984dd3c51"}' crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -113,10 +113,11 @@ def getonebook(html_content):
         'url_contents': url_contents
     }
 
+from pprint import pprint
 if __name__ == '__main__':
     #book_complete_htmlname = 'book/中级班练习题_按难度.html'
-    book_complete_htmlname = 'book/1097_page10.html'
-    #book_complete_htmlname = 'book/2762_first.html'
+    #book_complete_htmlname = 'book/1097_page10.html'
+    book_complete_htmlname = 'book/2762_first.html'
     with open(book_complete_htmlname, "r", encoding="utf-8") as file:
         html_content = file.read()
 

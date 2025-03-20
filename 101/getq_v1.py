@@ -13,11 +13,15 @@ import base64
 from matchq import canonicalize_positions
 from bson import ObjectId
 
-base_dir = './.cache/'
+cache_dir = './.cache/'
+site_name = "www.101weiqi.com"
+base_url = "https://" + site_name
 
 def login(username):
-    # MongoDB连接参数
-    mongo_client = MongoClient("mongodb://localhost:27017/")
+    global base_url
+    global site_name
+    global mongo_client
+
     db = mongo_client["101"]
     login_collection = db["login"]
 
@@ -51,9 +55,9 @@ def login(username):
         password = input('请输入密码：')
 
     # 执行登录操作
-    login_url = "https://www.101weiqi.com/login/"
+    login_url = base_url + "/login/"
     headers = {
-        "authority": "www.101weiqi.com",
+        "authority": site_name,
         "method": "POST",
         "path": "/login/",
         "scheme": "https",
@@ -63,9 +67,9 @@ def login(username):
         "cache-control": "no-cache",
         "content-type": "application/x-www-form-urlencoded",
         "dnt": "1",
-        "origin": "https://www.101weiqi.com",
+        "origin": base_url,
         "pragma": "no-cache",
-        "referer": "https://www.101weiqi.com/",
+        "referer": base_url,
         "sec-fetch-dest": "document",
         "sec-fetch-mode": "navigate",
         "sec-fetch-site": "same-origin",
@@ -83,15 +87,12 @@ def login(username):
     response = session.post(login_url, data=data, headers=headers)
 
     if response.status_code == 200:
-        #print("登录请求成功。")
-
         # 检查登录是否成功
         if "登录失败" in response.text or "密码错误" in response.text:
             print("登录失败，请检查您的用户名和密码。")
             return None
         else:
             print("登录成功，保存session。")
-
             # 提取cookie并保存到MongoDB
             session_cookies = []
             for cookie in session.cookies:
@@ -133,7 +134,6 @@ def get_url(session, url):
     }
     response = session.get(url, headers=headers)
     if response.status_code == 200:
-        #print("成功获取URL内容。")
         return response
     else:
         print(f"获取URL失败，状态码：{response.status_code}")
@@ -177,7 +177,7 @@ def answer_status(st):
     return status
 
 def resp_json(resp, level_str, no):
-    global base_dir
+    global cache_dir
 
     title_id = ""
     title_level = ""
@@ -219,7 +219,7 @@ def resp_json(resp, level_str, no):
         print(f'Failed to find g_qq: {no}')
         return {'ret': False, 'code': 1}
 
-    json_name  = base_dir + no + '-' + title_id + '-g_qq.json'
+    json_name  = cache_dir + no + '-' + title_id + '-g_qq.json'
     with open(json_name, 'w', encoding='utf-8') as f:
         json.dump(obj, f, ensure_ascii=False, indent=4)
 
@@ -295,8 +295,9 @@ def resp_json(resp, level_str, no):
 
 # 分析title_id和url_no不一致，更新level集合
 def insert_level_urlno(level_str, url_no):
-    client = MongoClient()
-    db = client['101']
+    global mongo_client
+
+    db = mongo_client['101']
     collection = db['level']
 
     docs = collection.find({'level': level_str})
@@ -331,7 +332,8 @@ def dict_diff(old, new, path=''):
     return differences
 
 def inc_getqnum(username):
-    mongo_client = MongoClient("mongodb://localhost:27017/")
+    global mongo_client
+
     db = mongo_client["101"]
     login_collection = db["login"]
     ret = login_collection.update_one(
@@ -343,8 +345,9 @@ def inc_getqnum(username):
     return ret
 
 def update_q(doc):
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client['101']
+    global mongo_client
+
+    db = mongo_client['101']
     collection = db['q']
     #collection.create_index('no', unique=True)
 
@@ -376,14 +379,16 @@ def update_q(doc):
         print(f"q集合插入新文档 {doc['url_no']}")
     client.close()
 
-def getq(level_str, no):
-    global base_dir
-    base_url = "https://www.101weiqi.com/"
+def getq(username, level_str, no):
+    global cache_dir
+    global base_url
+    global mongo_client
 
-    url = base_url + level_str + "/" + no
-    html_name = base_dir + no + ".html"
+    mongo_client = MongoClient("mongodb://localhost:27017/")
 
-    username = 'xiuheaiswtynxvjxrx'
+    url = base_url + "/" + level_str + "/" + no
+    html_name = cache_dir + no + ".html"
+
     session = login(username)
     if session:
         response = get_url(session, url)

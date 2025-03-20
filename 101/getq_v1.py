@@ -435,4 +435,4 @@ if __name__ == "__main__":
     username = 'formidableblush@indigobook.com'
     mongo_client = MongoClient("mongodb://localhost:27017/")
     getq(username, level_str, url_no)
-    client.close()
+    mongo_client.close()

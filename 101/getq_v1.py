@@ -17,10 +17,9 @@ cache_dir = './.cache/'
 site_name = "www.101weiqi.com"
 base_url = "https://" + site_name
 
-def login(username):
+def login(mongo_client, username):
     global base_url
     global site_name
-    global mongo_client
 
     db = mongo_client["101"]
     login_collection = db["login"]
@@ -294,9 +293,7 @@ def resp_json(resp, level_str, no):
     return {'ret': True, 'data': doc}
 
 # 分析title_id和url_no不一致，更新level集合
-def insert_level_urlno(level_str, url_no):
-    global mongo_client
-
+def insert_level_urlno(mongo_client, level_str, url_no):
     db = mongo_client['101']
     collection = db['level']
 
@@ -330,9 +327,7 @@ def dict_diff(old, new, path=''):
             differences[current_path] = {'old': old_value, 'new': new_value}
     return differences
 
-def inc_getqnum(username):
-    global mongo_client
-
+def inc_getqnum(mongo_client, username):
     db = mongo_client["101"]
     login_collection = db["login"]
     ret = login_collection.update_one(
@@ -342,9 +337,7 @@ def inc_getqnum(username):
     )
     return ret
 
-def update_q(doc):
-    global mongo_client
-
+def update_q(mongo_client, doc):
     db = mongo_client['101']
     collection = db['q']
     #collection.create_index('no', unique=True)
@@ -376,10 +369,9 @@ def update_q(doc):
     else:
         print(f"q集合插入新文档 {doc['url_no']}")
 
-def getq(username, level_str, no):
+def getq(mongo_client, username, level_str, no):
     global cache_dir
     global base_url
-    global mongo_client
 
     url = base_url + "/" + level_str + "/" + no
     html_name = cache_dir + no + ".html"
@@ -434,5 +426,5 @@ if __name__ == "__main__":
 
     username = 'formidableblush@indigobook.com'
     mongo_client = MongoClient("mongodb://localhost:27017/")
-    getq(username, level_str, url_no)
+    getq(mongo_client, username, level_str, url_no)
     mongo_client.close()

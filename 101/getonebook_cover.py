@@ -6,6 +6,25 @@ import re
 
 #读取book的封面页，获取完整页面url
 
+def getonebook_cover_q(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    divs = soup.find_all('div', class_='col-md-4 col-xs-6')
+    data = []
+    for div in divs:
+        a = div.find('a')
+        title = a.find('span', class_='qname').text
+        img_url = a.find('img')['src']
+        problem_url = a['href']
+
+        match = re.search(r'Q-(\d+).*?', title)
+        if match:
+            url_no = match.group(1)
+        else:
+            url_no = '' # title_name为空,url_no藏在problem_url里面
+            url_list = problem_url.split('/') # 不放入book_n_q了，后续特殊处理
+        data.append({'url_no': url_no, 'url_level': '15K', 'url_frombook': problem_url})
+    return data
+
 def getonebook_cover(html_content):
     book_name = ''
     book_qnum = ''
@@ -17,6 +36,10 @@ def getonebook_cover(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
 
     div_content = soup.find('div', class_='qis_content')
+
+    # is_share: false
+    if div_content is None:
+        return None, None
 
     # 提取book_name
     # book_name位于<div class="qis_content">下的直接文本内容中
@@ -67,7 +90,9 @@ def getonebook_cover(html_content):
                 'name': content_name,
                 'num':  content_num
             })
-
+    else:
+        print('Warning: getonebook_cover no content')
+    
     doc = {
         'book_name': book_name,
         'book_qnum': book_qnum,
@@ -77,17 +102,27 @@ def getonebook_cover(html_content):
         'book_content': book_content
     }
 
-    return doc
+    #继续解，level1,30268
+    doc_q = getonebook_cover_q(html_content)
 
+    return doc, doc_q
+
+from pprint import pprint
 if __name__ == "__main__":
-    bookcover_name = "book/中级班练习题.html"
-    #bookcover_name = 'book/21744_cover.html'
-    bookcover_name = 'book/28238_cover.html'
-    with open(bookcover_name, 'r', encoding='utf-8') as f:
-        html_content = f.read()
-
-    ret = getonebook_cover(html_content)
-
-    from pprint import pprint
-    pprint(ret)
+    bookcover_list = [
+        "book/中级班练习题.html",
+        'book/21744_cover.html',
+        'book/28238_cover.html',
+        'book/64239_cover_nocomplete.html',
+        'book/52398_cover_emptytitle.html',
+        'book/30268_cover_all.html'
+    ]
+    for b in bookcover_list:
+        print(b)
+        with open(b, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        ret, ret_q = getonebook_cover(html_content)
+        pprint(ret)
+        pprint(ret_q)
+        print()
 

@@ -312,7 +312,6 @@ def insert_level_urlno(level_str, url_no):
                 {'$push': {'list': url_no}}
             )
             print(f'insert to level {level_str} table')
-    client.close()
 
 def dict_diff(old, new, path=''):
     differences = {}
@@ -341,7 +340,6 @@ def inc_getqnum(username):
         {'$inc': {'getq_num': 1}},
         upsert=True # 如果文档不存在则创建
     )
-    mongo_client.close()
     return ret
 
 def update_q(doc):
@@ -377,14 +375,11 @@ def update_q(doc):
             print("数据已存在，且无任何变化。")
     else:
         print(f"q集合插入新文档 {doc['url_no']}")
-    client.close()
 
 def getq(username, level_str, no):
     global cache_dir
     global base_url
     global mongo_client
-
-    mongo_client = MongoClient("mongodb://localhost:27017/")
 
     url = base_url + "/" + level_str + "/" + no
     html_name = cache_dir + no + ".html"
@@ -436,4 +431,8 @@ if __name__ == "__main__":
         print('getq level_str url_no')
         print('getq url_no (level_str=q)')
         quit()
-    getq(level_str, url_no)
+
+    username = 'formidableblush@indigobook.com'
+    mongo_client = MongoClient("mongodb://localhost:27017/")
+    getq(username, level_str, url_no)
+    client.close()

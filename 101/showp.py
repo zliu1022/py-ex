@@ -239,12 +239,10 @@ if __name__ == "__main__":
         obj_id_str = sys.argv[1]
         problems_cursor = collection.find({"_id": ObjectId(obj_id_str)})
     else:
-        problems_cursor = collection.find()
+        problems_cursor = collection.find({"status":2})
         #problems_cursor = collection.find({"qtype": "死活题"})
     problems = list(problems_cursor)
     print(len(problems))
-    for p in problems:
-        print(p.get('url_no'), p.get('title_id'), p.get('status'))
 
     # Check if any problems are found
     if not problems:

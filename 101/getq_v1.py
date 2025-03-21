@@ -175,7 +175,7 @@ def answer_status(st):
         status = '未知'
     return status
 
-def resp_json(resp, level_str, no):
+def resp_json(mongo_client, resp, level_str, no):
     global cache_dir
 
     title_id = ""
@@ -196,7 +196,7 @@ def resp_json(resp, level_str, no):
         print('html title', title_id, title_level)
         if title_id != no:
             print(f'warning title_id {title_level} {title_id} != url_no {no}')
-            insert_level_urlno(title_level, title_id)
+            insert_level_urlno(mongo_client, title_level, title_id)
     else:
         print('warning match title failed {level_str} {no}')
         quit()
@@ -376,10 +376,10 @@ def getq(mongo_client, username, level_str, no):
     url = base_url + "/" + level_str + "/" + no
     html_name = cache_dir + no + ".html"
 
-    session = login(username)
+    session = login(mongo_client, username)
     if session:
         response = get_url(session, url)
-        inc_getqnum(username)
+        inc_getqnum(mongo_client, username)
         if response:
             soup = BeautifulSoup(response.text, 'html.parser')
             pretty_html = soup.prettify()
@@ -387,9 +387,9 @@ def getq(mongo_client, username, level_str, no):
                 file.write(pretty_html)
             #print(f"页面已保存到 {html_name}。")
 
-            ret = resp_json(response, level_str, no)
+            ret = resp_json(mongo_client, response, level_str, no)
             if ret.get('ret'):
-                update_q(ret.get('data'))
+                update_q(mongo_client, ret.get('data'))
                 return {'ret': True, 'data': ret.get('data')}
             else:
                 return {'ret': False, 'code': 3, 'message':'解析json失败'}
@@ -403,7 +403,7 @@ def getq(mongo_client, username, level_str, no):
                  "status":   404,
                 'min_pp':    stones_key_list
             }
-            update_q(err_json)
+            update_q(mongo_client, err_json)
             print(f"无法获取页面内容, 插入404，{no}")
             return {'ret': False, 'code': 1, 'message':'获取页面失败'}
     else:

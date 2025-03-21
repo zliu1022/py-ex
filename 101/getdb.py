@@ -149,4 +149,8 @@ def getdb_level(level_str):
 
 if __name__ == "__main__":
     #getdb_q()
-    getdb_level('4K')
+    level_list = ['1K',   '1D',  '2D',  '3D',  '4D',  '5D', '6D']
+    for i in level_list:
+        getdb_level(i)
+        print('---------------------------')
+

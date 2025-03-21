@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from getq_v1 import getq
 import time
 import random
+import sys
 
 def getdb_level_doc(client, username, level_str, documents):
     start_t = time.time()
@@ -73,7 +74,11 @@ def getdb_level(username, level_str):
 if __name__ == "__main__":
     level_list = ['10K', '11K', '12K', '13K', '14K', '15K', '7D']
     username = 'formidableblush@indigobook.com'
-    for l in level_list:
-        getdb_level(username, l)
-        print('------------------------------')
+    if len(sys.argv) == 3:
+        username = sys.argv[1]
+        level_str = sys.argv[2]
+    else:
+        quit()
+    getdb_level(username, level_str)
+    print(username, level_str, 'done')
 

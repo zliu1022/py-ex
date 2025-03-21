@@ -6,6 +6,7 @@ from getq import getq
 
 import time
 import random
+import sys
 
 def getdb_doc(documents):
     code_1_list = []  # 获取页面失败
@@ -149,8 +150,14 @@ def getdb_level(level_str):
 
 if __name__ == "__main__":
     #getdb_q()
-    level_list = ['1K',   '1D',  '2D',  '3D',  '4D',  '5D', '6D']
-    for i in level_list:
-        getdb_level(i)
-        print('---------------------------')
 
+    level_list = ['1K',   '1D',  '2D',  '3D',  '4D',  '5D', '6D']
+
+    if len(sys.argv) == 3:
+        username = sys.argv[1]
+        level_str = sys.argv[2]
+    else:
+        quit()
+        getdb_level(i)
+    getdb_level(level_str)
+    print(level_str, 'done')

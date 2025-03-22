@@ -262,7 +262,7 @@ def resp_json(mongo_client, resp, level_str, no):
         'url_level':  level_str,
         'title_id':   title_id,
         'id':         obj.get('id'),
-        'publicid':   obj.get('publicid'),
+        'publicid':   obj.get('publicid'), #唯一id，但不一定能通过level/id访问
         'size':       obj.get('lu'),
         'status':     obj.get('status'), # 0未入库，1被淘汰，2正常
         'c':          obj.get('c'),
@@ -273,7 +273,7 @@ def resp_json(mongo_client, resp, level_str, no):
         'title':      obj.get('title'),
         'blackfirst': obj.get('blackfirst'),
         'qtype':      obj.get('qtypename'),
-        'level':      obj.get('levelname'),
+        'level':      obj.get('levelname'), #level
         'name':       obj.get('name'),
         'options':    obj.get('options'),
         'answers':    ans,
@@ -364,9 +364,6 @@ def update_q(mongo_client, doc):
 def getq(mongo_client, username, level_str, no):
     url = base_url + "/" + level_str + "/" + no
     html_name = cache_dir + no + ".html"
-
-    print(url)
-    quit()
 
     session = login(mongo_client, username)
     if session:

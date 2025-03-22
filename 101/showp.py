@@ -233,11 +233,11 @@ if __name__ == "__main__":
 
     # Filter for "qtype": "死活题" and retrieve problems
     if len(sys.argv) == 2:
-        #url_no = sys.argv[1]
-        #problems_cursor = collection.find({"url_no": url_no})
+        url_no = sys.argv[1]
+        problems_cursor = collection.find({"url_no": url_no})
 
-        obj_id_str = sys.argv[1]
-        problems_cursor = collection.find({"_id": ObjectId(obj_id_str)})
+        #obj_id_str = sys.argv[1]
+        #problems_cursor = collection.find({"_id": ObjectId(obj_id_str)})
     else:
         problems_cursor = collection.find({"status":2})
         #problems_cursor = collection.find({"qtype": "死活题"})

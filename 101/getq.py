@@ -12,8 +12,7 @@ import json
 import base64
 from matchq import canonicalize_positions
 from bson import ObjectId
-
-base_dir = './.cache/'
+from config import site_name, base_url, cache_dir
 
 def login(username):
     # MongoDB连接参数
@@ -51,9 +50,9 @@ def login(username):
         password = input('请输入密码：')
 
     # 执行登录操作
-    login_url = "https://www.101weiqi.com/login/"
+    login_url = base_url + "/login/"
     headers = {
-        "authority": "www.101weiqi.com",
+        "authority": site_name,
         "method": "POST",
         "path": "/login/",
         "scheme": "https",
@@ -63,9 +62,9 @@ def login(username):
         "cache-control": "no-cache",
         "content-type": "application/x-www-form-urlencoded",
         "dnt": "1",
-        "origin": "https://www.101weiqi.com",
+        "origin": base_url,
         "pragma": "no-cache",
-        "referer": "https://www.101weiqi.com/",
+        "referer": base_url,
         "sec-fetch-dest": "document",
         "sec-fetch-mode": "navigate",
         "sec-fetch-site": "same-origin",
@@ -177,8 +176,6 @@ def answer_status(st):
     return status
 
 def resp_json(resp, level_str, no):
-    global base_dir
-
     title_id = ""
     title_level = ""
 
@@ -219,7 +216,7 @@ def resp_json(resp, level_str, no):
         print(f'Failed to find g_qq: {no}')
         return {'ret': False, 'code': 1}
 
-    json_name  = base_dir + no + '-' + title_id + '-g_qq.json'
+    json_name  = cache_dir + no + '-' + title_id + '-g_qq.json'
     with open(json_name, 'w', encoding='utf-8') as f:
         json.dump(obj, f, ensure_ascii=False, indent=4)
 
@@ -377,13 +374,9 @@ def update_q(doc):
     client.close()
 
 def getq(level_str, no):
-    global base_dir
-    base_url = "https://www.101weiqi.com/"
-
     url = base_url + level_str + "/" + no
-    html_name = base_dir + no + ".html"
+    html_name = cache_dir + no + ".html"
 
-    username = 'xiuheaiswtynxvjxrx'
     session = login(username)
     if session:
         response = get_url(session, url)

@@ -20,7 +20,11 @@ def getdb_level_doc(client, username, level_str, documents):
     getq_counter = 0
     cur_no = 0
     for no in documents:
-        ret = q_collection.find_one({'url_no': no})
+        #ret = q_collection.find_one({'url_no': no})
+        ret = q_collection.find_one({
+            'url_no': no,
+            'status': {'$ne': 404}
+        })
         if ret:
             print(f'{no} 已经存在')
             continue
@@ -38,12 +42,15 @@ def getdb_level_doc(client, username, level_str, documents):
                 code_3_list.append(no)
 
         getq_counter += 1
-        if getq_counter == 180:
-            print("Reached 50 calls to getq. Waiting for 300 seconds.")
-            time.sleep(310)
+        if getq_counter == 125:
+            # 189th: 189 x 21.5/22.5 = 180
+            # 130th: 130 x 21.5/22.5 = 125
+            wait_time = 300
+            print(f"Reached 125 calls to getq. Waiting for {wait_time} seconds")
+            time.sleep(wait_time)
             getq_counter = 0  # 重置计数器
         else:
-            wait_time = random.randint(15, 30) #189个后失败
+            wait_time = random.randint(15, 30) #189th失败,130th失败
             print(f"Waiting for {wait_time} seconds.")
             time.sleep(wait_time)
 
@@ -72,8 +79,6 @@ def getdb_level(username, level_str):
         print(f"No document found with level {level_str}")
 
 if __name__ == "__main__":
-    level_list = ['10K', '11K', '12K', '13K', '14K', '15K', '7D']
-    username = 'formidableblush@indigobook.com'
     if len(sys.argv) == 3:
         username = sys.argv[1]
         level_str = sys.argv[2]

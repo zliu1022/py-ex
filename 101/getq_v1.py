@@ -12,15 +12,9 @@ import json
 import base64
 from matchq import canonicalize_positions
 from bson import ObjectId
-
-cache_dir = './.cache/'
-site_name = "www.101weiqi.com"
-base_url = "https://" + site_name
+from config import site_name, base_url, cache_dir
 
 def login(mongo_client, username):
-    global base_url
-    global site_name
-
     db = mongo_client["101"]
     login_collection = db["login"]
 
@@ -176,8 +170,6 @@ def answer_status(st):
     return status
 
 def resp_json(mongo_client, resp, level_str, no):
-    global cache_dir
-
     title_id = ""
     title_level = ""
 
@@ -370,11 +362,11 @@ def update_q(mongo_client, doc):
         print(f"q集合插入新文档 {doc['url_no']}")
 
 def getq(mongo_client, username, level_str, no):
-    global cache_dir
-    global base_url
-
     url = base_url + "/" + level_str + "/" + no
     html_name = cache_dir + no + ".html"
+
+    print(url)
+    quit()
 
     session = login(mongo_client, username)
     if session:
@@ -411,20 +403,14 @@ def getq(mongo_client, username, level_str, no):
         return {'ret': False, 'code': 2, 'message':'登录失败'}
 
 if __name__ == "__main__":
-    level_str = ''
-    url_no = ''
-    if len(sys.argv) == 3:
-        level_str = sys.argv[1]
-        url_no = sys.argv[2]
-    elif len(sys.argv) == 2:
-        url_no = sys.argv[1]
+    if len(sys.argv) == 4:
+        username = sys.argv[1]
+        level_str = sys.argv[2]
+        url_no = sys.argv[3]
     else:
         print('command:')
-        print('getq level_str url_no')
-        print('getq url_no (level_str=q)')
+        print('getq username level_str url_no')
         quit()
-
-    username = 'formidableblush@indigobook.com'
     mongo_client = MongoClient("mongodb://localhost:27017/")
     getq(mongo_client, username, level_str, url_no)
     mongo_client.close()

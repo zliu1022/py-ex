@@ -7,10 +7,9 @@ import pandas as pd
 import getq
 from pymongo import MongoClient, ReturnDocument
 import sys
+from config import site_name, base_url
 
 #获取 level的下一题的url_no
-
-base_url = "https://www.101weiqi.com/"
 
 header = {
     'cookie':'csrftoken=ujJhAxo83Z5mg0oRfxtwC2BqgQ0nTjvdeQSBbm3XHqqCWOB9FHF78lqvPA3MF6Ct;sessionid=gbszfob6tjb67kscg6uytllqskcczewu',
@@ -51,7 +50,6 @@ def req_url_retry(url, retry):
     return 1, {}
 
 def get_nextnum(url_level, url_no):
-    global base_url
     level_url = base_url + '/' + url_level + '/' + url_no
 
     ret, resp = req_url_retry(level_url, 3)

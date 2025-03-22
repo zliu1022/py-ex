@@ -12,14 +12,13 @@ import json
 import base64
 from matchq import canonicalize_positions
 from bson import ObjectId
+from config import site_name, base_url, cache_dir
 
 '''
 通过提取level最后一题的"下一题"里的url_no
 获取q
 反复循环
 '''
-
-base_dir = './.cache/'
 
 def login(username):
     # MongoDB连接参数
@@ -57,9 +56,9 @@ def login(username):
         password = input('请输入密码：')
 
     # 执行登录操作
-    login_url = "https://www.101weiqi.com/login/"
+    login_url = base_url + "/login/"
     headers = {
-        "authority": "www.101weiqi.com",
+        "authority": site_name,
         "method": "POST",
         "path": "/login/",
         "scheme": "https",
@@ -69,9 +68,9 @@ def login(username):
         "cache-control": "no-cache",
         "content-type": "application/x-www-form-urlencoded",
         "dnt": "1",
-        "origin": "https://www.101weiqi.com",
+        "origin": base_url,
         "pragma": "no-cache",
-        "referer": "https://www.101weiqi.com/",
+        "referer": base_url,
         "sec-fetch-dest": "document",
         "sec-fetch-mode": "navigate",
         "sec-fetch-site": "same-origin",
@@ -242,8 +241,6 @@ def get_nextnum(soup, url_level, url_no):
     return prev_url_level, prev_url_no, next_url_level, next_url_no
 
 def resp_json(resp, level_str, no):
-    global base_dir
-
     title_id = ""
     title_level = ""
 
@@ -283,7 +280,7 @@ def resp_json(resp, level_str, no):
         print(f'Failed to find g_qq: {no}')
         return {'ret': False, 'code': 1}
 
-    json_name  = base_dir + no + '-' + title_id + '-g_qq.json'
+    json_name  = cache_dir + no + '-' + title_id + '-g_qq.json'
     with open(json_name, 'w', encoding='utf-8') as f:
         json.dump(obj, f, ensure_ascii=False, indent=4)
 
@@ -421,20 +418,13 @@ def update_q(doc):
         print(f"q集合插入新文档 {doc['url_no']}")
     client.close()
 
-def getq_levelnext(url_level, url_no):
-    global base_dir
-    base_url = "https://www.101weiqi.com/"
-
+def getq_levelnext(username, url_level, url_no):
     level_str = url_level
     no = url_no
 
-    url = base_url + url_level + "/" + url_no
-    html_name = base_dir + url_no + ".html"
+    url = base_url + "/" + url_level + "/" + url_no
+    html_name = cache_dir + url_no + ".html"
 
-    #username = 'tpmbjudlwtlyogggkk@ytnhy.com'
-    #username = 'oqsacoutigkgvwevyt@poplk.com'
-    #username = 'uozpcnawwgyieblfpy@nbmbb.com'
-    username = 'dnqqlipfynqqvejyml@ytnhy.com'
     session = login(username)
     if session:
         response = get_url(session, url)
@@ -479,12 +469,14 @@ def getq_levelnext(url_level, url_no):
 if __name__ == "__main__":
     url_level = ''
     url_no = ''
-    if len(sys.argv) == 3:
-        url_level = sys.argv[1]
-        url_no = sys.argv[2]
+
+    if len(sys.argv) == 4:
+        username = sys.argv[1]
+        url_level = sys.argv[2]
+        url_no = sys.argv[3]
     else:
         print('command:')
-        print('getq level_str url_no')
+        print('getq username level_str url_no')
         quit()
     ret = getq_levelnext(url_level, url_no)
     print()

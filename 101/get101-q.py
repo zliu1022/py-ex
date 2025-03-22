@@ -8,13 +8,12 @@ import re
 import json
 from pprint import pprint
 import sys
+from config import site_name, base_url
 
 #
 # 获取9K 第1题，4958，不需要登录
 # 所有分支都是正解
 # 另存为sgf
-
-base_url = "https://www.101weiqi.com/"
 
 import base64
 
@@ -29,7 +28,7 @@ def testcdata(e, t):
 
 def login():
     headers = {
-        "authority": "www.101weiqi.com",
+        "authority": site_name,
         "method": "POST",
         "path": "/login/",
         "scheme": "https",
@@ -40,9 +39,9 @@ def login():
         "content-type": "application/x-www-form-urlencoded",
         "cookie": "csrftoken=E2sOo7ibFaS05ThNBqBGEXx72fIINxsWP3brB5NDPYkWXQAS6J2gTI9zW8AegOZv",
         "dnt": "1",
-        "origin": "https://www.101weiqi.com",
+        "origin": base_url,
         "pragma": "no-cache",
-        "referer": "https://www.101weiqi.com/",
+        "referer": base_url,
         "sec-fetch-dest": "document",
         "sec-fetch-mode": "navigate",
         "sec-fetch-site": "same-origin",
@@ -54,11 +53,11 @@ def login():
     data = {
         "csrfmiddlewaretoken": "j7uxusoV2TEmcvpOyDnx4eA07UMlbuV4u8daHqTncH6i4sIT3WO7jZcs1NERELsD",
         "source": "index_nav",
-        "form_username": "zliu1022",
-        "form_password": "zliu123"
+        "form_username": "",
+        "form_password": ""
     }
 
-    login_url = "https://www.101weiqi.com/login/"
+    login_url = base_url + "/login/"
     sess = requests.Session()
     resp = sess.post(login_url, data=data, headers=headers)
     print('login-resp-status', resp.status_code)
@@ -298,7 +297,7 @@ def getq_token(url, token, sessionid):
         'Cache-Control': 'no-cache',
         'DNT': '1',
         'Pragma': 'no-cache',
-        'Referer': 'https://www.101weiqi.com/9K/',
+        'Referer': base_url,
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-Site': 'same-origin',
@@ -319,10 +318,10 @@ def getq_token(url, token, sessionid):
     print(response.text.find('g_qq'))
 
 if __name__ == '__main__':
-    base_url = "https://www.101weiqi.com/"
     level_str = "9K"
     q_str = "4958"
-    url = "https://www.101weiqi.com/9K/4958/"
+    url = base_url + "/" + level_str + "/" + q_str + "/"
+
     if len(sys.argv) == 3:
         level_str = sys.argv[1]
         q_str = sys.argv[2]

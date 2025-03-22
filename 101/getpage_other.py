@@ -7,6 +7,7 @@ import pandas as pd
 import getq
 from pymongo import MongoClient, ReturnDocument
 import sys
+from config import site_name, base_url
 
 #获取 chizi 和guanzi等, 地址：question/chizi
 #获取 9 和13等, 地址：size/9
@@ -17,8 +18,6 @@ import sys
 #}
 #获取clone, 需要单独处理, url类似level，地址：clone/
 #但是level代码是数组，希望放入单独的集合，包含url_level和url_no
-
-base_url = "https://www.101weiqi.com/"
 
 header = {
     'cookie':'csrftoken=ujJhAxo83Z5mg0oRfxtwC2BqgQ0nTjvdeQSBbm3XHqqCWOB9FHF78lqvPA3MF6Ct;sessionid=gbszfob6tjb67kscg6uytllqskcczewu',

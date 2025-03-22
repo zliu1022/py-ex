@@ -7,6 +7,7 @@ import pandas as pd
 import getq
 from pymongo import MongoClient, ReturnDocument
 import sys
+from config import site_name, base_url
 
 #
 # 获取level list，不需要登录
@@ -15,8 +16,6 @@ import sys
 # 获取全部需要去掉break注释，get_content_level 中的遍历所有页面
 # url_no列表，数组形式存放到level集合
 # url_no列表，单个文档形式存放到grade集合
-
-base_url = "https://www.101weiqi.com/"
 
 header = {
     'cookie':'csrftoken=ujJhAxo83Z5mg0oRfxtwC2BqgQ0nTjvdeQSBbm3XHqqCWOB9FHF78lqvPA3MF6Ct;sessionid=gbszfob6tjb67kscg6uytllqskcczewu',
@@ -151,8 +150,6 @@ def update_grade(level_str, new_list):
     client.close()  # 关闭连接
 
 def get_content_level(level_str):
-    global base_url
-
     level_url = base_url + level_str
 
     ret, resp = req_url_retry(level_url, 3)

@@ -18,6 +18,8 @@ from pprint import pprint
 import time
 import random
 
+from config import site_name, base_url, cache_dir
+
 '''
 从mongodb，x库，book_1集合中提取文档,读取id到 book_url_id，
 
@@ -124,7 +126,7 @@ def getonebook_content(session, documents):
         book_content = doc['cover']['content']
         for content in book_content:
             book_url = content['url']
-            book_complete_url = 'https://www.101weiqi.com' + book_url
+            book_complete_url = base_url + book_url
 
             response = get_url(session, book_complete_url)
             if response is None:
@@ -138,12 +140,13 @@ def getonebook_content(session, documents):
 
 # 获取一个level的所有book，比如获取book_1，入门的所有棋书
 def getbook_level(session, documents):
+    global book_collection
+    global curbook_collection
+
     last_id = 0
     last_page = 0
     begin_status = True
 
-    global book_collection
-    global curbook_collection
     getbook_counter = 0
 
     for doc in documents:
@@ -157,7 +160,7 @@ def getbook_level(session, documents):
                 begin_status = True
 
         # book_cover
-        book_url = f'https://www.101weiqi.com/book/{book_url_id}/'
+        book_url = f'{base_url}/book/{book_url_id}/'
         print('cover', book_url)
 
         response = get_url(session, book_url)
@@ -166,7 +169,7 @@ def getbook_level(session, documents):
             ret, ret_q = getonebook_cover(response.text)
 
             safe_book_name = sanitize_filename(book_name)
-            html_name = '.cache/' + str(book_url_id) + '_' + safe_book_name + '.html'
+            html_name = cache_dir + str(book_url_id) + '_' + safe_book_name + '.html'
             save_html(response, html_name)
 
             if ret:
@@ -192,13 +195,13 @@ def getbook_level(session, documents):
         # book_complete, 第1页
         if response is None or ret is None: # 404 or is_share, try complete
             print(f'Info: {book_url_id} book_cover empty or 404')
-            book_complete_url = 'https://www.101weiqi.com/book/levelorder/' + str(book_url_id) + '/'
+            book_complete_url = base_url + '/book/levelorder/' + str(book_url_id) + '/'
         else:
             if ret.get('book_complete_url') != '':
-                book_complete_url = 'https://www.101weiqi.com' + ret.get('book_complete_url')
+                book_complete_url = base_url + ret.get('book_complete_url')
             else:
                 print(f'Info: {book_url_id} book_complete_url empty, make it')
-                book_complete_url = 'https://www.101weiqi.com/book/levelorder/' + str(book_url_id) + '/'
+                book_complete_url = base_url + "/book/levelorder/" + str(book_url_id) + "/"
 
         getonebook_complete(session, book_url_id, book_complete_url)
 
@@ -210,10 +213,10 @@ def getbook(session):
     db = client['101']
 
     books = [
-        {'file':"入门.html", 'level':1},
-        {'file':"初级.html", 'level':2},
-        {'file':"中级.html", 'level':3},
-        {'file':"进阶.html", 'level':4},
+        #{'file':"入门.html", 'level':1},
+        #{'file':"初级.html", 'level':2},
+        #{'file':"中级.html", 'level':3},
+        #{'file':"进阶.html", 'level':4},
         {'file':"高级.html", 'level':5}
     ]
     for b in books:
@@ -224,13 +227,14 @@ def getbook(session):
         curbook_collection = db['book_' + str(b['level'])]
 
         #获取这个level全部书
-        documents = curbook_collection.find({'comment': '难度页空'}, {'_id': 0, 'id': 1, 'name': 1}).sort('id', 1)
+        #documents = curbook_collection.find({'comment': '难度页空'}, {'_id': 0, 'id': 1, 'name': 1}).sort('id', 1)
+        documents = curbook_collection.find({}, {'_id': 0, 'id': 1, 'name': 1}).sort('id', 1)
         data_list = [{'id': doc.get('id'), 'name': doc.get('name')} for doc in documents]
         getbook_level(session, data_list)
 
         #获取一本book的complete页,以及后续所有页
-        #book_url_id = 3806
-        #book_complete_url = 'https://www.101weiqi.com/book/levelorder/' + str(book_url_id) + '/'
+        #book_url_id = 3764
+        #book_complete_url = base_url + '/book/levelorder/' + str(book_url_id) + '/'
         #getonebook_complete(session, book_url_id, book_complete_url)
 
         #获取book的content 里面!! 内容
@@ -239,7 +243,10 @@ def getbook(session):
         quit()
 
 if __name__ == "__main__":
-    username = '33excited@indigobook.com'
+    if len(sys.argv) == 2:
+        username = sys.argv[1]
+    else:
+        quit()
     session = login(username)
 
     if session is None:

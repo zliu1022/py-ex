@@ -8,6 +8,6 @@ config.read('config.ini')
 
 site_name = config['site']['name']
 base_url = "https://" + site_name
-cache_dir = ".cache/"
+cache_dir = ".cache"
 
 db_name = config['database']['name']

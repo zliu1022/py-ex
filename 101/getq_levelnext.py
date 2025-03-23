@@ -280,7 +280,7 @@ def resp_json(resp, level_str, no):
         print(f'Failed to find g_qq: {no}')
         return {'ret': False, 'code': 1}
 
-    json_name  = cache_dir + no + '-' + title_id + '-g_qq.json'
+    json_name  = cache_dir + "/" + no + '-' + title_id + '-g_qq.json'
     with open(json_name, 'w', encoding='utf-8') as f:
         json.dump(obj, f, ensure_ascii=False, indent=4)
 
@@ -423,7 +423,7 @@ def getq_levelnext(username, url_level, url_no):
     no = url_no
 
     url = base_url + "/" + url_level + "/" + url_no
-    html_name = cache_dir + url_no + ".html"
+    html_name = cache_dir + "/" + url_no + ".html"
 
     session = login(username)
     if session:

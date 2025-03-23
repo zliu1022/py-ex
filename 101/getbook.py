@@ -169,7 +169,7 @@ def getbook_level(session, documents):
             ret, ret_q = getonebook_cover(response.text)
 
             safe_book_name = sanitize_filename(book_name)
-            html_name = cache_dir + str(book_url_id) + '_' + safe_book_name + '.html'
+            html_name = cache_dir + "/" + str(book_url_id) + '_' + safe_book_name + '.html'
             save_html(response, html_name)
 
             if ret:

@@ -62,7 +62,7 @@ def find_min_max_url_numbers():
             if numbers:
                 min_num = min(numbers)
                 max_num = max(numbers)
-                print(f'  book_id {book_id} -> 最小值: {min_num}, 最大值: {max_num}')
+                print(f'  book_id {book_id} {len(numbers)} {min_num} - {max_num}')
             else:
                 print(f'  book_id {book_id} -> 无有效的 url_frombook')
 

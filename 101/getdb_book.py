@@ -59,7 +59,7 @@ def getdb_bookid(client, username, book_str, book_id):
         if result.get('ret') == False:
             code = result.get('code')
             if code == 1:
-                code_1_list.append(no)
+                code_1_list.append(url_frombook)
         getq_counter = wait_qcounter(getq_counter)
 
     end_t = time.time()

@@ -12,7 +12,8 @@ import json
 import base64
 from matchq import canonicalize_positions
 from bson import ObjectId
-from config import site_name, base_url, cache_dir, db_name
+from config import site_name, base_url, cache_dir, db_name, headers_get, headers_login
+import time
 
 def login(mongo_client, username):
     db = mongo_client[db_name]
@@ -49,27 +50,6 @@ def login(mongo_client, username):
 
     # 执行登录操作
     login_url = base_url + "/login/"
-    headers = {
-        "authority": site_name,
-        "method": "POST",
-        "path": "/login/",
-        "scheme": "https",
-        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "zh,en;q=0.9,zh-CN;q=0.8",
-        "cache-control": "no-cache",
-        "content-type": "application/x-www-form-urlencoded",
-        "dnt": "1",
-        "origin": base_url,
-        "pragma": "no-cache",
-        "referer": base_url,
-        "sec-fetch-dest": "document",
-        "sec-fetch-mode": "navigate",
-        "sec-fetch-site": "same-origin",
-        "sec-fetch-user": "?1",
-        "upgrade-insecure-requests": "1",
-        "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
-    }
 
     data = {
         "source": "index_nav",
@@ -77,7 +57,7 @@ def login(mongo_client, username):
         'form_password': password
     }
     session = requests.Session()
-    response = session.post(login_url, data=data, headers=headers)
+    response = session.post(login_url, data=data, headers=headers_login)
 
     if response.status_code == 200:
         # 检查登录是否成功
@@ -116,21 +96,32 @@ def login(mongo_client, username):
         return None
 
 def get_url(session, url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh,en;q=0.9,zh-CN;q=0.8',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-    }
-    response = session.get(url, headers=headers)
+    response = session.get(url, headers=headers_get)
     if response.status_code == 200:
         return response
     else:
         print(f"获取URL失败，状态码：{response.status_code}")
         return None
+
+def get_url_v1(session, url, max_retries=3, delay=3):
+    for attempt in range(max_retries):
+        try:
+            response = session.get(url, headers=headers_get, timeout=90)
+            if response.status_code == 200:
+                return response
+            elif response.status_code == 502:
+                print(f"请求失败（502 Bad Gateway），重试 {attempt + 1}/{max_retries} 次")
+                time.sleep(delay)
+            else:
+                print(f"请求失败，状态码：{response.status_code}")
+                return response
+        except requests.RequestException as e:
+            print(f"请求异常：{e}")
+            response = requests.Response()
+            response.status_code = 600  # 自定义状态码，表示请求异常
+            return response
+    print(f"多次重试失败，放弃，状态码：{response.status_code}")
+    return response
 
 def decode_prepos(c, r):
     # 101333 = atob("MTAx") + (obj['c']+1)
@@ -335,7 +326,6 @@ def inc_getqnum(mongo_client, username):
 def update_q(mongo_client, doc):
     db = mongo_client[db_name]
     collection = db['q']
-    #collection.create_index('no', unique=True)
 
     filter = {'min_pp': doc['min_pp']}
     old = collection.find_one_and_replace(
@@ -361,23 +351,56 @@ def update_q(mongo_client, doc):
                     print(f"{field}: 从 {change['old']} 更新为 {change['new']}")
         else:
             print("数据已存在，且无任何变化。")
+
+def update_q_v1(client, doc):
+    db = client[db_name]
+    collection = db['q']
+
+    filter = {'min_pp': doc['min_pp']}
+    old = collection.find_one(filter)  # 获取更新前的文档
+    # 插入数据只有：正常；
+    # 其他数据不进入q库，写book_q库：404/502等，is_share
+    if old is None:
+        collection.insert_one(doc)
+        print("新数据已插入", doc['url_frombook'])
+        return
+
+    # 仅更新提供的字段
+    update_data = {k: v for k, v in doc.items() if v is not None}
+    new = collection.find_one_and_update(
+        filter=filter,
+        update={"$set": update_data},
+        upsert=True,  # 如果不存在则插入
+        return_document=ReturnDocument.AFTER  # 返回更新后的文档
+    )
+
+    # 删除 '_id' 字段，避免比较干扰
+    old.pop('_id', None)
+    new.pop('_id', None)
+
+    # 计算差异
+    differences = dict_diff(old, new)
+    if differences:
+        print("以下字段已被更新：")
+        for field, change in differences.items():
+            if field in {'stat.fail_nums', 'stat.ok_nums', 'r', 'xv'}:
+                continue
+            elif field == 'c':
+                print(f"{field}: 从 {change['old'][0:10]} 更新为 {change['new'][0:10]}")
+            else:
+                print(f"{field}: 从 {change['old']} 更新为 {change['new']}")
     else:
-        print(f"q集合插入新文档 {doc['publicid']}")
+        print("数据已存在，且无任何变化。")
 
 def resp_json_url_frombook(mongo_client, resp, url_frombook):
-    title_id = ""
-    title_level = ""
-
+    title_id = None
+    title_level = None
     pattern = r"<title>\s*Q-(\d+)\s*-\s*(\S+?)\s*-"
     match = re.search(pattern, resp.text, re.S)
     if match:
         title_id = match.group(1)
         title_level = match.group(2)
         print('从html提取 id和level', title_id, title_level)
-    else:
-        #如果没有跳转到404，如果已经封杀，跳转到首页
-        print('warning match title failed {url_frombook}')
-        quit()
 
     # 提取js变量
     #re.DOTALL 标志使 . 可以匹配包括换行符在内的所有字符。
@@ -391,25 +414,20 @@ def resp_json_url_frombook(mongo_client, resp, url_frombook):
             obj = json.loads(json_str)
         except json.JSONDecodeError:
             print(f'Failed to decode json: {json_str}')
+            quit()
             return {'ret': False, 'code': 2}
     else:
         print(f'Failed to find g_qq: {url_frombook}')
+        quit()
         return {'ret': False, 'code': 1}
 
     if obj.get('is_public') == False:
-        new_doc_id = ObjectId()
-        stones_key_list = [['_invalid_', str(new_doc_id)]]
-        doc = {
-            'url_frombook':  url_frombook,
-            'title_id':   title_id,
-            'min_pp':     stones_key_list
-        }
-        print(f'Not public, insert empty p: {url_frombook} {title_id}')
-        return {'ret': True, 'data': doc}
+        print(f'Not public {url_frombook} {title_id}')
+        return {'ret': False, 'data': None}
 
     if obj.get('status') != 2:
         # status：0审核，1淘汰，2入库, 大量!=2可能异常
-        print(f'status != 2 {url_frombook}')
+        print(f'Info: status != 2 {url_frombook}')
 
     prepos = decode_prepos(obj.get('c'), obj.get('r'))
 
@@ -440,27 +458,26 @@ def resp_json_url_frombook(mongo_client, resp, url_frombook):
             ans.append(e)
 
     doc = {
-        'url_frombook':  url_frombook,
-        'title_id':   title_id,
-        'id':         obj.get('id'),
-        'publicid':   obj.get('publicid'), #唯一id，但不一定能通过level/id访问
-        'size':       obj.get('lu'),
-        'status':     obj.get('status'), # 0未入库，1被淘汰，2正常
+        'publicid':   obj.get('publicid'),  #唯一id，但不一定能通过level/id访问
+        'status':     obj.get('status'),    # 0未入库，1被淘汰，2正常
+        'level':      obj.get('levelname'), #level
+        'qtype':      obj.get('qtypename'),
+        'blackfirst': obj.get('blackfirst'),
         'c':          obj.get('c'),
         'r':          obj.get('r'),
         'xv':         obj.get('xv'),
         'prepos':     prepos_json, 
         'min_pp':     stones_key_json,
-        'title':      obj.get('title'),
-        'blackfirst': obj.get('blackfirst'),
-        'qtype':      obj.get('qtypename'),
-        'level':      obj.get('levelname'), #level
-        'name':       obj.get('name'),
-        'options':    obj.get('options'),
         'answers':    ans,
         'stat':       obj.get('taskresult'),
         'similar':    obj.get('sms_count'),
-        'bookinfos':    obj.get('bookinfos')
+        'bookinfos':    obj.get('bookinfos'),
+        'size':       obj.get('lu'),
+        'title_id':   title_id,
+        'id':         obj.get('id'),
+        'title':      obj.get('title'),
+        'name':       obj.get('name'),
+        'options':    obj.get('options')
     }
 
     return {'ret': True, 'data': doc}
@@ -468,27 +485,41 @@ def resp_json_url_frombook(mongo_client, resp, url_frombook):
 #q库唯一索引只有minpp
 #从url_level, url_no抓取，就更新url_level, url_no
 #从url_frombook抓取，就更新url_frombook
-def getq_url_frombook(mongo_client, session, url_frombook):
+def getq_url_frombook(mongo_client, session, book_str, url_frombook):
+    db = mongo_client[db_name]
+    book_q_collection = db[book_str + "_q"]
+
     url = base_url + url_frombook
-    response = get_url(session, url)
-    if response:
+    response = get_url_v1(session, url)
+    if response.status_code == 200:
         ret = resp_json_url_frombook(mongo_client, response, url_frombook)
         if ret.get('ret'):
-            update_q(mongo_client, ret.get('data'))
+            # 成功：更新q表，更新book_n_q表, 不锁定book_n_q表，确保一本book_id只有一个任务
+            update_q_v1(mongo_client, ret.get('data'))
+            result = book_q_collection.update_one(
+                {'url_frombook': url_frombook},
+                {'$set': {
+                    'publicid': ret.get('data').get('publicid'), 
+                    'min_pp':   ret.get('data').get('min_pp'), 
+                    'status':   ret.get('data').get('status')
+                }}
+            )
             return {'ret': True, 'data': ret.get('data')}
         else:
-            return {'ret': False, 'code': 3, 'message':'解析json失败'}
+            # 失败：只更新book_n_q表, is_share
+            print(f"不共享，{url_frombook}")
+            result = book_q_collection.update_one(
+                {'url_frombook': url_frombook},
+                {'$set': {'status': 700}}
+            )
+            return {'ret': False, 'code': 3, 'message':'不共享'}
     else:
-        # 404，插入空记录，网络失败可能也是这个
-        new_doc_id = ObjectId()
-        stones_key_list = [['_invalid_', str(new_doc_id)]]
-        err_json = {
-            'url_frombook': url_frombook,
-             "status":      404,
-            'min_pp':       stones_key_list
-        }
-        update_q(mongo_client, err_json)
-        print(f"无法获取页面内容, 插入404，{url_frombook}")
+        # 失败：只更新book_n_q表
+        print(f"获取页面失败，{url_frombook}")
+        result = book_q_collection.update_one(
+            {'url_frombook': url_frombook},
+            {'$set': {'status': status_code}}
+        )
         return {'ret': False, 'code': 1, 'message':'获取页面失败'}
 
 def getq(mongo_client, username, level_str, no):

@@ -487,7 +487,7 @@ def resp_json_url_frombook(mongo_client, resp, url_frombook):
 #从url_frombook抓取，就更新url_frombook
 def getq_url_frombook(mongo_client, session, book_str, url_frombook):
     db = mongo_client[db_name]
-    book_q_collection = db[book_str + "_q"]
+    book_q_collection = db[book_str]
 
     url = base_url + url_frombook
     response = get_url_v1(session, url)
@@ -512,7 +512,7 @@ def getq_url_frombook(mongo_client, session, book_str, url_frombook):
                 {'url_frombook': url_frombook},
                 {'$set': {'status': 700}}
             )
-            return {'ret': False, 'code': 3, 'message':'不共享'}
+            return {'ret': False, 'code': 2, 'message':'不共享'}
     else:
         # 失败：只更新book_n_q表
         print(f"获取页面失败，{url_frombook}")

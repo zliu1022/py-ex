@@ -60,13 +60,13 @@ def login(mongo_client, username):
     response = session.post(login_url, data=data, headers=headers_login)
 
     if response.status_code == 200:
-        print(response.text)
-        quit()
         # 检查登录是否成功
-        if "登录失败" in response.text or "你的用户名和密码不符，请再试一次" in response.text:
-            print("登录失败，请检查您的用户名和密码。")
-            return None
-        else:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        # 查找id为'curuser'的<input>元素
+        curuser_input = soup.find('input', {'id': 'curuser'})
+        if curuser_input and curuser_input.get('value'):
+            logged_in_username = curuser_input.get('value')
+            print(f"登录成功，用户名：{logged_in_username}")
             print("登录成功，保存session。")
             # 提取cookie并保存到MongoDB
             session_cookies = []
@@ -93,6 +93,9 @@ def login(mongo_client, username):
                 upsert=True
             )
             return session
+        else:
+            print("登录失败，请检查您的用户名和密码")
+            return None
     else:
         print("登录请求失败，状态码：", response.status_code)
         return None

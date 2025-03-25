@@ -60,8 +60,10 @@ def login(mongo_client, username):
     response = session.post(login_url, data=data, headers=headers_login)
 
     if response.status_code == 200:
+        print(response.text)
+        quit()
         # 检查登录是否成功
-        if "登录失败" in response.text or "密码错误" in response.text:
+        if "登录失败" in response.text or "你的用户名和密码不符，请再试一次" in response.text:
             print("登录失败，请检查您的用户名和密码。")
             return None
         else:
@@ -106,7 +108,7 @@ def get_url(session, url):
 def get_url_v1(session, url, max_retries=3, delay=3):
     for attempt in range(max_retries):
         try:
-            response = session.get(url, headers=headers_get, timeout=90)
+            response = session.get(url, headers=headers_get, timeout=120)
             if response.status_code == 200:
                 return response
             elif response.status_code == 502:
@@ -362,7 +364,7 @@ def update_q_v1(client, doc):
     # 其他数据不进入q库，写book_q库：404/502等，is_share
     if old is None:
         collection.insert_one(doc)
-        print("新数据已插入", doc['url_frombook'])
+        print("插入q表", doc['publicid'])
         return
 
     # 仅更新提供的字段
@@ -400,7 +402,7 @@ def resp_json_url_frombook(mongo_client, resp, url_frombook):
     if match:
         title_id = match.group(1)
         title_level = match.group(2)
-        print('从html提取 id和level', title_id, title_level)
+        print('html提取 id和level', title_id, title_level)
 
     # 提取js变量
     #re.DOTALL 标志使 . 可以匹配包括换行符在内的所有字符。
@@ -485,9 +487,9 @@ def resp_json_url_frombook(mongo_client, resp, url_frombook):
 #q库唯一索引只有minpp
 #从url_level, url_no抓取，就更新url_level, url_no
 #从url_frombook抓取，就更新url_frombook
-def getq_url_frombook(mongo_client, session, book_str, url_frombook):
+def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
     db = mongo_client[db_name]
-    book_q_collection = db[book_str]
+    book_q_collection = db[book_q_str]
 
     url = base_url + url_frombook
     response = get_url_v1(session, url)
@@ -518,7 +520,7 @@ def getq_url_frombook(mongo_client, session, book_str, url_frombook):
         print(f"获取页面失败，{url_frombook}")
         result = book_q_collection.update_one(
             {'url_frombook': url_frombook},
-            {'$set': {'status': status_code}}
+            {'$set': {'status': response.status_code}}
         )
         return {'ret': False, 'code': 1, 'message':'获取页面失败'}
 

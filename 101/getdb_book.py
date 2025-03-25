@@ -120,14 +120,34 @@ def getdb_book(source_ip, username, book_str):
         data_list = [doc.get('id') for doc in documents]
 
 if __name__ == "__main__":
-    if len(sys.argv) == 5:
+    client = MongoClient('mongodb://localhost:27017/')
+    if len(sys.argv) == 6:
+        source_ip = sys.argv[1]
+        username = sys.argv[2]
+        book_str = sys.argv[3]
+        book_id = int(sys.argv[4])
+        url_frombook = sys.argv[5]
+
+        session = login(client, username)
+        if session is None:
+            print("登录失败")
+            quit()
+        adapter = SourceIPAdapter(source_ip)
+        session.mount('http://', adapter)
+        session.mount('https://', adapter)
+
+        # get one url_frombook
+        book_q_str = 'book_' + book_str + '_q'
+        result = getq_url_frombook(client, session, book_q_str, url_frombook)
+        inc_getqnum(client, username)
+        print('getdb url_frombook', username, book_str, book_id, url_frombook, 'done')
+    elif len(sys.argv) == 5:
         source_ip = sys.argv[1]
         username = sys.argv[2]
         book_str = sys.argv[3]
         book_id = int(sys.argv[4])
 
         # get one book_id
-        client = MongoClient('mongodb://localhost:27017/')
         getdb_bookid(client, source_ip, username, book_str, book_id)
         print('getdb bookid', username, book_str, book_id, 'done')
     elif len(sys.argv) == 4:
@@ -139,6 +159,7 @@ if __name__ == "__main__":
         getdb_book(source_ip, username, book_str)
         print('getdb book', username, book_str, 'done')
     else:
+        print('getdb_book.py source_ip username book_str book_id url_frombook')
         print('getdb_book.py source_ip username book_str book_id')
         print('getdb_book.py source_ip username book_str: choose idle id to get')
         quit()

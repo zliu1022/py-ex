@@ -5,8 +5,6 @@ import random
 from pymongo import MongoClient
 import tkinter as tk
 from tkinter import messagebox
-import sys
-from bson import ObjectId
 
 def coord_to_position(coord):
     columns = 'abcdefghijklmnopqrst'
@@ -223,11 +221,7 @@ if __name__ == "__main__":
     collection = db['q']
 
     # Filter for "qtype": "死活题" and retrieve problems
-    if len(sys.argv) == 2:
-        url_no = sys.argv[1]
-        problems_cursor = collection.find({"publicid": int(url_no)})
-    else:
-        problems_cursor = collection.find({"qtype": "死活题", "status":2})
+    problems_cursor = collection.find({"qtype": "死活题", "status":2})
     problems = list(problems_cursor)
 
     # Check if any problems are found

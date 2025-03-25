@@ -8,7 +8,7 @@ import re
 import json
 from pprint import pprint
 import sys
-from config import site_name, base_url
+from config import site_name, base_url, db_name
 
 #
 # 获取9K 第1题，4958，不需要登录
@@ -222,9 +222,9 @@ def resp_sgf(resp, url):
     sgf_str += "CP[" + url + "]";
 
     # 获取题目
-    # 101333 = atob("MTAx") + (obj['c']+1)
+    # one0one333 = atob("MTAx") + (obj['c']+1)
     r = obj['r'] + 1
-    salt = "101" + str(r) + str(r) + str(r)
+    salt = db_name + str(r) + str(r) + str(r)
     result = testcdata(obj['c'], salt)
     json_ret = json.loads(result)
 

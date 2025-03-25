@@ -4,6 +4,7 @@
 import pymongo
 import json
 from matchq import canonicalize_positions
+from config import db_name
 
 '''
 读取mongodb，x库，q表，里面存放的是围棋死活题
@@ -20,7 +21,7 @@ from matchq import canonicalize_positions
 
 # 连接到 MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017/')
-db = client['101']
+db = client[db_name]
 collection = db['q']
 
 # 获取集合中的索引信息

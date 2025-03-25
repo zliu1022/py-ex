@@ -7,7 +7,7 @@ import pandas as pd
 import getq
 from pymongo import MongoClient, ReturnDocument
 import sys
-from config import site_name, base_url
+from config import site_name, base_url, db_name
 
 #
 # 获取level list，不需要登录
@@ -87,7 +87,7 @@ def get_pagenum(soup):
 
 def update_list(doc):
     client = MongoClient("mongodb://localhost:27017/")
-    db = client['101']
+    db = client[db_name]
     collection = db['level']
 
     collection.create_index('level', unique=True)
@@ -127,7 +127,7 @@ def update_grade(level_str, new_list):
     replace_list = []
 
     client = MongoClient("mongodb://localhost:27017/")  # 连接 MongoDB
-    db = client["101"]  # 选择数据库
+    db = client[db_name]  # 选择数据库
     collection = db["grade"]  # 选择集合
 
     for url_no in new_list:

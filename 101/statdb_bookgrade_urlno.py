@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from pymongo import MongoClient
+from config import db_name
 
 # 统计每个 book_n_q中唯一的 url_no个数
 # 统计所有 book_n_q中唯一的 url_no个数,返回
 def stat_unique_urlno():
     client = MongoClient("mongodb://localhost:27017/")
-    db = client['101']
+    db = client[db_name]
 
     #book_collections = ['book_1_q', 'book_2_q', 'book_3_q', 'book_4_q', 'book_5_q']
     book_collections = ['book_5_q']
@@ -32,7 +33,7 @@ def stat_unique_urlno():
 # 比对所有book_n_q中的唯一url_no和grade中的唯一url_no
 def stat_book_grade_unique(unique_url_nos):
     client = MongoClient("mongodb://localhost:27017/")
-    db = client['101']
+    db = client[db_name]
     grade_collection = db['grade']
 
     grade_url_nos = set(grade_collection.distinct('url_no'))
@@ -62,7 +63,7 @@ def stat_book_level(unique_url_nos):
     """
     # Connect to MongoDB
     client = MongoClient("mongodb://localhost:27017/")
-    db = client['101']
+    db = client[db_name]
 
     # List of book collection names
     #book_collections = ['book_1_q', 'book_2_q', 'book_3_q', 'book_4_q', 'book_5_q']

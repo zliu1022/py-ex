@@ -7,7 +7,7 @@ import pandas as pd
 import getq
 from pymongo import MongoClient, ReturnDocument
 import sys
-from config import site_name, base_url
+from config import site_name, base_url, db_name
 
 #获取 chizi 和guanzi等, 地址：question/chizi
 #获取 9 和13等, 地址：size/9
@@ -59,7 +59,7 @@ def req_url_retry(url, retry):
 
 def get_data(base_url, level_str, n):
     client = MongoClient("mongodb://localhost:27017/")  # 连接 MongoDB
-    db = client["101"]
+    db = client[db_name]
     collection = db[level_str]
 
     url = base_url + prefix + '/' + level_str + "?page=" + str(n)

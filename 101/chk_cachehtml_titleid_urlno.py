@@ -6,10 +6,10 @@
 import os
 import re
 from pymongo import MongoClient
+from config import db_name
 
 # Configure your MongoDB connection here
 MONGO_URI = 'mongodb://localhost:27017/'
-DATABASE_NAME = '101'
 COLLECTION_NAME = 'q'
 
 def extract_number_from_filename(filename):
@@ -24,7 +24,6 @@ def extract_number_and_level_from_title(content):
     if title_match:
         title = title_match.group(1).strip()
         # Extract the number after 'Q-' and the level following it
-        # Example title: 'Q-4958 - 9K - 101围棋网'
         num_level_match = re.search(r'Q-(\d+)\s*-\s*([^-]+?)\s*-\s*', title)
         if num_level_match:
             num_title = int(num_level_match.group(1))
@@ -38,7 +37,7 @@ def main():
 
     # Initialize MongoDB client
     client = MongoClient(MONGO_URI)
-    db = client[DATABASE_NAME]
+    db = client[db_name]
     collection = db[COLLECTION_NAME]
 
     # Iterate over all files in the directory

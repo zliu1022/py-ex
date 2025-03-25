@@ -3,13 +3,14 @@
 
 import pymongo
 import sys
+from config import db_name
 
 # 获取q库中的题目prepos的x，y范围，answer的x，y范围
 # 并检查answer的xy，是否在prepos的范围+2之内
 
 # 建立MongoDB连接
 client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["101"]
+db = client[db_name]
 collection = db["q"]
 
 # 定义字母到数字的映射，跳过字母 'i'

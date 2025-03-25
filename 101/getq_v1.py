@@ -129,9 +129,9 @@ def get_url_v1(session, url, max_retries=3, delay=3):
     return response
 
 def decode_prepos(c, r):
-    # 101333 = atob("MTAx") + (obj['c']+1)
+    # one0one333 = atob("MTAx") + (obj['c']+1)
     r_str = str(r + 1)
-    salt = "101" + r_str + r_str + r_str
+    salt = db_name + r_str + r_str + r_str
     
     n = base64.b64decode(c).decode('utf-8')
     l = 0

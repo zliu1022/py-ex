@@ -12,10 +12,11 @@
 '''
 
 from pymongo import MongoClient
+from config import db_name
 
 # 连接 MongoDB
 client = MongoClient('mongodb://localhost:27017/')
-db = client['101']
+db = client[db_name]
 
 # 要处理的集合
 collections_to_check = ['11', '13', '4', '5', '6', '7', '8', '9', 'buju', 'chizi', 'guanzi', 'pianzhao', 'qili', 'shizhan', 'zhongpan']

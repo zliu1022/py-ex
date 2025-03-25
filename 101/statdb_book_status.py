@@ -4,10 +4,11 @@
 # 统计各种status的文档个数
 
 from pymongo import MongoClient
+from config import db_name
 
 def stat_book_q_status(book_str):
     client = MongoClient('mongodb://localhost:27017/')
-    db = client['101']
+    db = client[db_name]
     collection = db['book_' + book_str + '_q']
 
     pipeline = [
@@ -28,7 +29,7 @@ def stat_book_q_status(book_str):
 def statdb_book_running_status(book_str):
     # 连接到MongoDB
     client = MongoClient()
-    db = client['101']
+    db = client[db_name]
     book_5 = db['book_'+book_str]
     book_5_q = db['book_' + book_str + '_q']
 

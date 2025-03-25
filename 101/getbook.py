@@ -18,7 +18,7 @@ from pprint import pprint
 import time
 import random
 
-from config import site_name, base_url, cache_dir
+from config import site_name, base_url, cache_dir, db_name
 
 '''
 从mongodb，x库，book_1集合中提取文档,读取id到 book_url_id，
@@ -210,7 +210,7 @@ def getbook(session):
     global curbook_collection
 
     client = pymongo.MongoClient('mongodb://localhost:27017/')
-    db = client['101']
+    db = client[db_name]
 
     books = [
         #{'file':"入门.html", 'level':1},

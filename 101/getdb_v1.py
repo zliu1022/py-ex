@@ -6,11 +6,12 @@ from getq_v1 import getq
 import time
 import random
 import sys
+from config import db_name
 
 def getdb_level_doc(client, username, level_str, documents):
     start_t = time.time()
 
-    db = client['101']
+    db = client[db_name]
     q_collection = db['q']
 
     code_1_list = []  # 获取页面失败
@@ -68,7 +69,7 @@ def getdb_level_doc(client, username, level_str, documents):
 # 针对 level表中的列表，进行获取
 def getdb_level(username, level_str):
     client = MongoClient('mongodb://localhost:27017/')
-    db = client['101']
+    db = client[db_name]
     level_collection = db['level']
     document = level_collection.find_one({'level': level_str})
 

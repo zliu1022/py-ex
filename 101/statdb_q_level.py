@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from pymongo import MongoClient
+from config import db_name
 
 # count_qtype_status_2: 统计 status:2的情况下，各种不同的 qtype各有多少个文档
 # count_level_status_2_sorted: 统计 status:2的情况下，各种不同的 level各有多少个文档，
 
 def count_qtype_status_2():
     client = MongoClient()  # 默认连接 localhost
-    db = client['101']
+    db = client[db_name]
     collection = db['q']
 
     pipeline = [
@@ -25,7 +26,7 @@ def count_qtype_status_2():
 
 def count_level_status_2_sorted():
     client = MongoClient()
-    db = client['101']
+    db = client[db_name]
     collection = db['q']
 
     pipeline = [

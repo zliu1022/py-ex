@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-mongodb, 101库，q集合
+mongodb, db_name库，q集合
 找没有 title_id字段的文档
 获得该文档的 url_no字段内容
 查找全部文档
@@ -11,10 +11,11 @@ mongodb, 101库，q集合
 '''
 
 from pymongo import MongoClient
+from config import db_name
 
 # 连接 MongoDB
 client = MongoClient("mongodb://localhost:27017/")
-db = client["101"]  # 选择数据库
+db = client[db_name]  # 选择数据库
 q_collection = db["q"]  # 选择集合
 
 empty_title_list = []

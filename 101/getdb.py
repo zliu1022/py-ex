@@ -7,6 +7,7 @@ from getq import getq
 import time
 import random
 import sys
+from config import db_name
 
 def getdb_doc(documents):
     code_1_list = []  # 获取页面失败
@@ -23,7 +24,7 @@ def getdb_doc(documents):
             continue
 
         client = MongoClient('mongodb://localhost:27017/')
-        db = client['101']
+        db = client[db_name]
         q_col = db['q']
         docs = q_col.find({'url_no': url_no})
         if docs and len(list(docs)) >1:
@@ -71,7 +72,7 @@ def getdb_doc(documents):
 # 针对 q表中已经有的题目，进行更新
 def getdb_q():
     client = MongoClient('mongodb://localhost:27017/')
-    db = client['101']
+    db = client[db_name]
     collection = db['q']
     documents = collection.find()
     if documents:
@@ -84,7 +85,7 @@ def getdb_level_doc(level_str, documents):
     start_t = time.time()
 
     client = MongoClient('mongodb://localhost:27017/')
-    db = client['101']
+    db = client[db_name]
     q_collection = db['q']
 
     code_1_list = []  # 获取页面失败
@@ -137,7 +138,7 @@ def getdb_level_doc(level_str, documents):
 # 针对 level表中的列表，进行获取
 def getdb_level(level_str):
     client = MongoClient('mongodb://localhost:27017/')
-    db = client['101']
+    db = client[db_name]
     level_collection = db['level']
 
     document = level_collection.find_one({'level': level_str})

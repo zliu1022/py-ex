@@ -3,13 +3,14 @@
 
 from pymongo import MongoClient
 import re
+from config import db_name
 
 #函数1, 每个集合统计 唯一的 book_id 数量, 所有集合合并后统计 唯一的 book_id 数量
 #函数2 针对每个集合，对每个 book_id： 统计它所有 url_frombook 末尾数字的 最小值和最大值
 
 # 连接MongoDB
 client = MongoClient('mongodb://localhost:27017/')
-db = client['101']
+db = client[db_name]
 
 # 集合名列表
 collections = ['book_1_q', 'book_2_q', 'book_3_q', 'book_4_q', 'book_5_q']

@@ -18,7 +18,7 @@ level_order = [
 
 def statdb_onebook_levelcount(book_str):
     client = MongoClient()
-    db = client['101']
+    db = client[db_name]
     collection = db[book_str]
 
     pipeline = [

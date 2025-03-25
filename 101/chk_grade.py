@@ -11,9 +11,10 @@ grade 集合，结构：
 '''
 
 from pymongo import MongoClient
+from config import db_name
 
 client = MongoClient("mongodb://localhost:27017/")
-db = client["101"]
+db = client[db_name]
 grade_collection = db["grade"]
 
 # 聚合查询，统计重复的 (level_str, url_no)

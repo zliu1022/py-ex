@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from config import db_name
+
 '''
 建立新集合 grade
 对于 level集合，每一个文档，把内部的list数组，重新建立成一个数组元素一个文档的机构
@@ -14,7 +16,7 @@ from pymongo import MongoClient
 
 # 连接 MongoDB
 client = MongoClient("mongodb://localhost:27017/")  # 根据实际情况修改连接信息
-db = client["101"]  # 选择数据库
+db = client[db_name]  # 选择数据库
 level_collection = db["level"]  # 选择原集合
 grade_collection = db["grade"]  # 目标集合
 

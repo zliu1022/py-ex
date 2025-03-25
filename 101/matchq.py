@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from pymongo import MongoClient
+from config import db_name
 
 '''
 读取mongodb，x库，q表，里面存放的是围棋死活题
@@ -162,7 +163,7 @@ def canonicalize_positions(prepos):
 
 def process_all_documents():
     client = MongoClient('mongodb://localhost:27017/')
-    db = client['101']  # Replace with your database name
+    db = client[db_name]  # Replace with your database name
     collection = db['q']  # Replace with your collection name
 
     documents = list(collection.find({}))

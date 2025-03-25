@@ -12,12 +12,12 @@ import json
 import base64
 from matchq import canonicalize_positions
 from bson import ObjectId
-from config import site_name, base_url, cache_dir
+from config import site_name, base_url, cache_dir, db_name
 
 def login(username):
     # MongoDB连接参数
     mongo_client = MongoClient("mongodb://localhost:27017/")
-    db = mongo_client["101"]
+    db = mongo_client[db_name]
     login_collection = db["login"]
 
     # 创建用户名唯一索引（如果不存在）
@@ -139,9 +139,9 @@ def get_url(session, url):
         return None
 
 def decode_prepos(c, r):
-    # 101333 = atob("MTAx") + (obj['c']+1)
+    # one0one333 = atob("MTAx") + (obj['c']+1)
     r_str = str(r + 1)
-    salt = "101" + r_str + r_str + r_str
+    salt = db_name + r_str + r_str + r_str
     
     n = base64.b64decode(c).decode('utf-8')
     l = 0
@@ -293,7 +293,7 @@ def resp_json(resp, level_str, no):
 # 分析title_id和url_no不一致，更新level集合
 def insert_level_urlno(level_str, url_no):
     client = MongoClient()
-    db = client['101']
+    db = client[db_name]
     collection = db['level']
 
     docs = collection.find({'level': level_str})
@@ -329,7 +329,7 @@ def dict_diff(old, new, path=''):
 
 def inc_getqnum(username):
     mongo_client = MongoClient("mongodb://localhost:27017/")
-    db = mongo_client["101"]
+    db = mongo_client[db_name]
     login_collection = db["login"]
     ret = login_collection.update_one(
         {'username': username},
@@ -341,7 +341,7 @@ def inc_getqnum(username):
 
 def update_q(doc):
     client = MongoClient("mongodb://localhost:27017/")
-    db = client['101']
+    db = client[db_name]
     collection = db['q']
     #collection.create_index('no', unique=True)
 

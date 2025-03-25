@@ -8,15 +8,6 @@ from tkinter import messagebox
 import sys
 from bson import ObjectId
 
-# Function to convert Go board coordinates (e.g., 'cs') to (row, column)
-def prepos_coord_to_position(coord):
-    columns = 'abcdefghijklmnopqrst'
-    col_letter, row_letter = coord[0], coord[1]
-    col = columns.index(col_letter)
-    row = columns.index(row_letter)
-    row = board_size - row - 1  # Adjust row index to match the display
-    return row, col
-
 def coord_to_position(coord):
     columns = 'abcdefghijklmnopqrst'
     col_letter, row_letter = coord[1], coord[0]
@@ -235,19 +226,13 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         url_no = sys.argv[1]
         problems_cursor = collection.find({"publicid": int(url_no)})
-
-        #obj_id_str = sys.argv[1]
-        #problems_cursor = collection.find({"_id": ObjectId(obj_id_str)})
     else:
-        problems_cursor = collection.find({"status":2})
-        #problems_cursor = collection.find({"qtype": "死活题"})
+        problems_cursor = collection.find({"qtype": "死活题", "status":2})
     problems = list(problems_cursor)
-    print(len(problems))
 
     # Check if any problems are found
     if not problems:
         raise Exception("No problems found with url_no.")
-        quit()
 
     # Initialize GUI
     root = tk.Tk()

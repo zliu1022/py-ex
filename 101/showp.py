@@ -6,6 +6,7 @@ from pymongo import MongoClient
 import tkinter as tk
 from tkinter import messagebox
 
+# Function to convert Go board coordinates (e.g., 'cs') to (row, column)
 def coord_to_position(coord):
     columns = 'abcdefghijklmnopqrst'
     col_letter, row_letter = coord[1], coord[0]
@@ -57,8 +58,39 @@ def show_error_message():
     tk.Label(error_window, text="错误！(Incorrect!)", font=('Arial', 16)).pack(padx=20, pady=20)
     error_window.after(2000, error_window.destroy)
 
+def get_group(row, col):
+    color = board[row][col]['color']
+    group = set()
+    stack = [(row, col)]
+    while stack:
+        r, c = stack.pop()
+        if (r, c) not in group:
+            group.add((r, c))
+            # Check the four neighbors
+            for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < board_size and 0 <= nc < board_size:
+                    if board[nr][nc] is not None and board[nr][nc]['color'] == color:
+                        stack.append((nr, nc))
+    return group
+
+def has_liberties(group):
+    for r, c in group:
+        for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < board_size and 0 <= nc < board_size:
+                if board[nr][nc] is None:
+                    return True
+    return False
+
+def remove_group(group):
+    for r, c in group:
+        canvas.delete(board[r][c]['stone'])
+        canvas.delete(board[r][c]['label'])
+        board[r][c] = None
+
 def on_board_click(event):
-    global current_color, move_number, user_moves
+    global current_color, move_number, user_moves, black_captures, white_captures
     x_click = event.x - margin
     y_click = event.y - margin
     if x_click < -cell_size / 2 or y_click < -cell_size / 2 or x_click > canvas_size - margin or y_click > canvas_size - margin:
@@ -102,11 +134,44 @@ def on_board_click(event):
         show_error_message()
         return  # Allow the user to try again without changing state
 
-    # Place the stone
+    # Place the stone tentatively
     stone = draw_stone(row, col, current_color)
     label = canvas.create_text(margin + col * cell_size, margin + row * cell_size, text=str(move_number), fill='red')
-    user_stones.append((stone, label))
-    board[row][col] = current_color
+    board[row][col] = {'color': current_color, 'stone': stone, 'label': label}
+
+    # Perform captures
+    opponent_color = 'white' if current_color == 'black' else 'black'
+    captured_stones = 0
+
+    # Check adjacent positions for opponent stones
+    for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+        nr, nc = row + dr, col + dc
+        if 0 <= nr < board_size and 0 <= nc < board_size:
+            if board[nr][nc] is not None and board[nr][nc]['color'] == opponent_color:
+                opponent_group = get_group(nr, nc)
+                if not has_liberties(opponent_group):
+                    remove_group(opponent_group)
+                    captured_stones += len(opponent_group)
+                    # 记录提子数量
+                    if current_color == 'black':
+                        black_captures += len(opponent_group)
+                    else:
+                        white_captures += len(opponent_group)
+
+    # Now check if own group has liberties
+    own_group = get_group(row, col)
+    if not has_liberties(own_group):
+        # Invalid move: self-capture not allowed
+        # Remove the placed stone
+        canvas.delete(board[row][col]['stone'])
+        canvas.delete(board[row][col]['label'])
+        board[row][col] = None
+        show_error_message()
+        return
+
+    # The move is valid, proceed
+
+    # Update move number and user moves
     user_moves.append(coord)
     move_number += 1
 
@@ -139,15 +204,14 @@ def on_board_click(event):
         hint_items.append(draw_hint(coord))
 
 def clear_board():
-    global board, user_moves, user_stones, move_number, current_color, hint_items
+    global board, user_moves, move_number, current_color, hint_items, black_captures, white_captures
     # Clear all stones from the canvas
     for row in range(board_size):
         for col in range(board_size):
-            board[row][col] = None
-    for stone, label in user_stones:
-        canvas.delete(stone)
-        canvas.delete(label)
-    user_stones.clear()
+            if board[row][col] is not None:
+                canvas.delete(board[row][col]['stone'])
+                canvas.delete(board[row][col]['label'])
+                board[row][col] = None
     # Clear hints
     for item in hint_items:
         canvas.delete(item)
@@ -157,6 +221,8 @@ def clear_board():
     user_moves = []
     move_number = 1
     current_color = 'black'  # Default to black, will be set in load_problem()
+    black_captures = 0
+    white_captures = 0
 
 def load_problem():
     global problem, prepos, blackfirst, level, answers, current_color, info_label, board
@@ -195,8 +261,10 @@ def load_problem():
             x = margin + col * cell_size
             y = margin + row * cell_size
             r = cell_size / 2 - 2
-            stone = canvas.create_oval(x - r, y - r, x + r, y + r, fill='black' if color == 'b' else 'white', tags='preset_stone')
-            board[row][col] = color
+            stone_color = 'black' if color == 'b' else 'white'
+            stone = canvas.create_oval(x - r, y - r, x + r, y + r, fill=stone_color, tags='preset_stone')
+            label = None  # 预置的棋子没有标号
+            board[row][col] = {'color': stone_color, 'stone': stone, 'label': label}
 
     # Display hint for the correct moves
     # Get the first move from the first answer as a hint
@@ -221,12 +289,12 @@ if __name__ == "__main__":
     collection = db['q']
 
     # Filter for "qtype": "死活题" and retrieve problems
-    problems_cursor = collection.find({"qtype": "死活题", "status":2})
+    problems_cursor = collection.find({"qtype": "死活题"})
     problems = list(problems_cursor)
 
     # Check if any problems are found
     if not problems:
-        raise Exception("No problems found with url_no.")
+        raise Exception("No problems found with qtype '死活题'.")
 
     # Initialize GUI
     root = tk.Tk()
@@ -251,7 +319,6 @@ if __name__ == "__main__":
     # Initialize variables to store game state
     board = [[None for _ in range(board_size)] for _ in range(board_size)]
     user_moves = []
-    user_stones = []
     current_color = None
     move_number = 1
     hint_items = []
@@ -261,6 +328,9 @@ if __name__ == "__main__":
     answers = []
     problem = {}
     info_label = None
+    black_captures = 0
+    white_captures = 0
+
 
     next_button = tk.Button(root, text="下一题 (Next Problem)", command=on_next_problem)
     next_button.pack(pady=5)
@@ -272,4 +342,3 @@ if __name__ == "__main__":
     load_problem()
 
     root.mainloop()
-

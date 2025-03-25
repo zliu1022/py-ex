@@ -30,7 +30,7 @@ def count_level_status_2_sorted():
     collection = db['q']
 
     pipeline = [
-        {"$match": {"status": 2}},
+        {"$match": {"status": 2, "qtype":"死活题"}},
         {"$group": {"_id": "$level", "count": {"$sum": 1}}}
     ]
 

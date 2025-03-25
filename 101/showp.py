@@ -234,8 +234,7 @@ def load_problem():
     blackfirst = problem.get('blackfirst', True)
     level = problem.get('level', 'N/A')
     answers = problem.get('answers', [])
-    problem_no = problem.get('url_no', 'N/A')
-    salt_r = problem.get('r', 'N/A')
+    problem_no = problem.get('publicie', 'N/A')
     ty = problem.get('qtype', 'N/A')
 
     # Clear the board and reset variables
@@ -245,7 +244,7 @@ def load_problem():
     current_color = 'black' if blackfirst else 'white'
 
     # Update window title
-    root.title(f"Level {level} - {ty} - {'Black' if blackfirst else 'White'} first - No.{problem_no} - {salt_r}")
+    root.title(f"Level {level} - {ty} - {'Black' if blackfirst else 'White'} first - No.{problem_no}")
 
     # Update info label
     if info_label:

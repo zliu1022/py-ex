@@ -25,38 +25,39 @@ class SourceIPAdapter(HTTPAdapter):
         kwargs['source_address'] = (self.source_ip, 0)
         return super().init_poolmanager(*args, **kwargs)
 
-# office
-eth_ip  = '192.168.8.46'
-wifi_ip = '192.168.4.9'
+if __name__ == "__main__":
+    # office
+    eth_ip  = '192.168.8.46'
+    wifi_ip = '192.168.4.9'
 
-# home
-eth_ip = '172.16.0.2'
-wifi_ip = '192.168.3.24'
+    # home
+    #eth_ip = '172.16.0.2'
+    #wifi_ip = '192.168.3.24'
 
-# 选择走有线 or Wi-Fi
-source_ip_list = [
-    {'type':'eth', 'ip':eth_ip}, 
-    {'type':'wifi','ip':wifi_ip}
-]
+    # 选择走有线 or Wi-Fi
+    source_ip_list = [
+        {'type':'eth', 'ip':eth_ip}, 
+        {'type':'wifi','ip':wifi_ip}
+    ]
 
-for ip in source_ip_list:
-    print(ip)
-    source_ip = ip['ip']
+    for ip in source_ip_list:
+        print(ip)
+        source_ip = ip['ip']
 
-    try:
-        # 新建 Session，绑定 IP
-        session = requests.Session()
-        adapter = SourceIPAdapter(source_ip)
-        session.mount('http://', adapter)
-        session.mount('https://', adapter)
+        try:
+            # 新建 Session，绑定 IP
+            session = requests.Session()
+            adapter = SourceIPAdapter(source_ip)
+            session.mount('http://', adapter)
+            session.mount('https://', adapter)
 
-        # 测试请求，看看出口 IP
-        resp = session.get('https://api.ipify.org?format=json')
-    except Exception as e:
-        print(e)
+            # 测试请求，看看出口 IP
+            resp = session.get('https://api.ipify.org?format=json')
+        except Exception as e:
+            print(e)
+            print()
+            continue
+
+        print(f'出口 IP ({source_ip}) 返回结果: {resp.json()}')
         print()
-        continue
-
-    print(f'出口 IP ({source_ip}) 返回结果: {resp.json()}')
-    print()
 

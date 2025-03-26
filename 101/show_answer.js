@@ -58,15 +58,29 @@ for (let i = 0; i < g_qq.answers.length; i++) {
     const ans = g_qq.answers[i];
 
     if (ans.ty == 1 && ans.st == 2) {
+        // 创建一个段落来显示当前答案的所有坐标
         const ansParagraph = document.createElement('p');
-        
+        // 遍历 ans.pts 中的所有点
         for (let j = 0; j < ans.pts.length; j++) {
             const coord = ans.pts[j];
             const move = convertCoordinate(coord);
 
-            ansParagraph.innerHTML += move + ' ';
+            // 创建一个 span 来容纳每个坐标
+            const moveSpan = document.createElement('span');
+            moveSpan.innerText = move + ' ';
+
+            if (j % 2 === 0) {
+                // 当 j 为偶数时，应用特殊样式
+                moveSpan.style.fontWeight = 'bold'; // 字体加粗
+                moveSpan.style.backgroundColor = 'black'; // 背景色为黑色
+                moveSpan.style.color = 'white'; // 字体颜色为白色
+            }
+
+            // 将 span 添加到段落中
+            ansParagraph.appendChild(moveSpan);
         }
 
+        // 添加到输出容器中
         outputContainer.appendChild(ansParagraph);
     }
 }

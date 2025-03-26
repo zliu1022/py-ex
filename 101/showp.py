@@ -266,7 +266,7 @@ def load_problem():
     current_color = 'black' if blackfirst else 'white'
 
     # Update window title
-    root.title(f"Level {level} - {ty} - {'Black' if blackfirst else 'White'} first - No.{problem_no}")
+    root.title(f"Level {level} - {ty} - {'黑' if blackfirst else '白'}先 - No.{problem_no}")
 
     # Update info label
     if info_label:

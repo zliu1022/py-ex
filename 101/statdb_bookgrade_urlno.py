@@ -10,8 +10,8 @@ def stat_unique_urlno():
     client = MongoClient("mongodb://localhost:27017/")
     db = client[db_name]
 
-    #book_collections = ['book_1_q', 'book_2_q', 'book_3_q', 'book_4_q', 'book_5_q']
-    book_collections = ['book_5_q']
+    book_collections = ['book_1_q', 'book_2_q', 'book_3_q', 'book_4_q', 'book_5_q']
+    #book_collections = ['book_5_q']
 
     unique_url_nos = set()
 
@@ -66,8 +66,8 @@ def stat_book_level(unique_url_nos):
     db = client[db_name]
 
     # List of book collection names
-    #book_collections = ['book_1_q', 'book_2_q', 'book_3_q', 'book_4_q', 'book_5_q']
-    book_collections = ['book_5_q']
+    book_collections = ['book_1_q', 'book_2_q', 'book_3_q', 'book_4_q', 'book_5_q']
+    #book_collections = ['book_5_q']
 
     # Define the custom sort order for 'url_level's
     url_level_order = ['15K', '14K', '13K', '12K', '11K', '10K', '9K', '8K', '7K', '6K', '5K', '4K',

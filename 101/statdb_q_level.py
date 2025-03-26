@@ -46,10 +46,15 @@ def count_level_status_2_sorted():
     # 将结果转为字典方便查找
     result_dict = {r['_id']: r['count'] for r in results}
 
+    print(f"| level | count | 死活题 | 总数 |")
+    print(f"| --- | --- | --- | --- |")
     # 根据排序顺序输出
     for level in level_order:
         count = result_dict.get(level, 0)
-        print(f"level: {level}, count: {count}")
+
+        ret = collection.find({"status": 2, "qtype":"死活题", "status":2, "level":level})
+        data_list = [doc.get('_id') for doc in ret]
+        print(f"| {level} | {count} | {len(data_list)} |  |")
 
 
 if __name__ == "__main__":

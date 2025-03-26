@@ -11,7 +11,7 @@ from tkinter import messagebox
 from config import db_name
 
 class GoBoard:
-    def __init__(self, canvas, size=19, canvas_size=600, margin=20):
+    def __init__(self, canvas, size=19, canvas_size=600, margin=50):
         self.canvas = canvas
         self.size = size
         self.canvas_size = canvas_size
@@ -27,6 +27,30 @@ class GoBoard:
             # Horizontal lines
             y = self.margin + i * self.cell_size
             self.canvas.create_line(self.margin, y, self.canvas_size - self.margin, y)
+
+        self._draw_coordinates()
+
+    def _draw_coordinates(self):
+        """ 绘制棋盘坐标 """
+        columns = 'ABCDEFGHJKLMNOPQRST'
+        for i in range(self.size):
+            # 左侧坐标
+            x_left = self.margin / 2
+            y = self.margin + i * self.cell_size
+            self.canvas.create_text(x_left, y, text=str(19 - i))
+            
+            # 右侧坐标
+            x_right = self.canvas_size - self.margin / 2
+            self.canvas.create_text(x_right, y, text=str(19 - i))
+            
+            # 顶部坐标
+            x = self.margin + i * self.cell_size
+            y_top = self.margin / 2
+            self.canvas.create_text(x, y_top, text=columns[i])
+            
+            # 底部坐标
+            y_bottom = self.canvas_size - self.margin / 2
+            self.canvas.create_text(x, y_bottom, text=columns[i])
 
     def coord_to_position(self, coord):
         columns = 'abcdefghijklmnopqrst'
@@ -113,7 +137,7 @@ class GoGame:
         self.blackfirst = self.problem.get('blackfirst', True)
         self.level = self.problem.get('level', 'N/A')
         self.answers = self.problem.get('answers', [])
-        problem_no = self.problem.get('publicie', 'N/A')
+        problem_no = self.problem.get('publicid', 'N/A')
         ty = self.problem.get('qtype', 'N/A')
 
         self.reset_game()
@@ -146,7 +170,13 @@ class GoGame:
         self.board.clear_board()
         self.user_moves = []
         self.move_number = 1
-        self.hint_items = []
+
+        # Clear previous hints
+        for item in self.hint_items:
+            self.board.canvas.delete(item)
+        self.hint_items.clear()
+        #self.hint_items = []
+
         self.black_captures = 0
         self.white_captures = 0
 
@@ -233,7 +263,7 @@ class GoGame:
         label = self.board.canvas.create_text(
             self.board.margin + col * self.board.cell_size,
             self.board.margin + row * self.board.cell_size,
-            text=str(self.move_number), fill='red')
+            text=str(self.move_number), fill='white')
         self.board.board[row][col] = {'color': self.current_color, 'stone': stone, 'label': label}
 
         # Perform captures
@@ -307,7 +337,7 @@ class GoApp:
         self.canvas.pack()
 
         # Create game board
-        self.board = GoBoard(self.canvas)
+        self.board = GoBoard(self.canvas, size=19, canvas_size=600, margin=50)
         self.board.draw_board()
 
         # Create game instance

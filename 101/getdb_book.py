@@ -10,19 +10,28 @@ from config import db_name, base_url
 from datetime import datetime
 from ip import SourceIPAdapter
 
-def wait_qcounter(counter, rest_num=150):
+def wait_qcounter(counter):
+    '''
+    l1_counter, l1_low, l1_high = 1, 15, 120   # 短：快速打开很多；看一个打开一个
+    l2_counter, l2_wait         = 25, 300      # 中
+    l3_counter, l3_wait         = 500, 8*3600  # 1天
+    '''
+    l1_counter, l1_low, l1_high = 1, 25, 45                              # 短：快速打开很多；看一个打开一个
+    l2_counter, l2_wait         = 75, 300                                # 中
+    l3_counter_low, l3_counter_high, l3_wait         = 500, 600, 8*3600  # 1天
     counter += 1
-    if counter == 1500:
-        wait_time = 8*3600
-        print(f"Reached 1500. Waiting for {wait_time}s")
+    l3_counter = random.randint(l3_counter_low, l3_counter_high)
+    if counter >= l3_counter:
+        wait_time = l3_wait
+        print(f"Reached {l3_counter} Waiting for {wait_time}s")
         time.sleep(wait_time)
-    if counter % 125 == 0:
-        wait_time = 300
-        print(f"Reached 125. Waiting for {wait_time}s")
+    if counter % l2_counter == 0:
+        wait_time = l2_wait
+        print(f"Reached {l2_counter}. Waiting for {wait_time}s")
         time.sleep(wait_time)
         counter = 0
     else:
-        wait_time = random.randint(15, 90)
+        wait_time = random.randint(l1_low, l1_high)
         print(f"... {wait_time}s")
         time.sleep(wait_time)
     return counter
@@ -47,8 +56,9 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
     book_q_collection = db[book_q_str]
 
     # 找到book_id，没成功抓取的url_frombook
-    documents = book_q_collection.find({'book_id': book_id, 'status': { '$ne': 2 }}, {'_id': 0, 'url_frombook': 1}).sort('url_frombook', 1)
-    data_list = [doc.get('url_frombook') for doc in documents]
+    documents = book_q_collection.find({'book_id': book_id, 'status': { '$ne': 2 }}, {'_id': 0, 'url_no':1, 'url_frombook': 1}).sort('url_frombook', 1)
+    #data_list = [doc.get('url_frombook') for doc in documents]
+    data_list = [{'url_no': doc.get('url_no'), 'url_frombook': doc.get('url_frombook')} for doc in documents]
     if len(data_list) == 0:
         print(f"No document found with {book_id}")
         return
@@ -59,8 +69,17 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
     result = book_collection.update_one({'id': book_id}, {'$set': {'status': 'doing'}})
     print(f"book_{book_str} id {book_id}: doing/LOCKED!!! {result}")
 
+    q_collection = db['q']
     cur_no = 0
-    for url_frombook in data_list:
+    #for url_frombook in data_list:
+    for data_item in data_list:
+        url_no = data_item['url_no']
+        url_frombook = data_item['url_frombook']
+        # 提高命中率,假定url_no就是publicid
+        ret = q_collection.find_one({'publicid': int(url_no)})
+        if ret:
+            continue
+
         cur_no += 1
         #print(f'{book_q_str} {book_id} {url_frombook} {cur_no}th')
         print(f'{url_frombook} {cur_no}th')

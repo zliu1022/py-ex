@@ -31,7 +31,7 @@ def login(mongo_client, username):
         session_time_str = login_data.get('timestamp')
         if session_time_str:
             session_time = datetime.strptime(session_time_str, '%Y-%m-%d %H:%M:%S')
-            if datetime.now() - session_time < timedelta(days=1):
+            if datetime.now() - session_time < timedelta(days=999):
                 # 从存储的cookies中重建session
                 session_cookies = login_data.get('cookies')
                 if session_cookies:

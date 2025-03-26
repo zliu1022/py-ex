@@ -158,7 +158,7 @@ def on_board_click(event):
 
     # Place the stone tentatively
     stone = draw_stone(row, col, current_color)
-    label = canvas.create_text(margin + col * cell_size, margin + row * cell_size, text=str(move_number), fill='red')
+    label = canvas.create_text(margin + col * cell_size, margin + row * cell_size, text=str(move_number), fill='white')
     board[row][col] = {'color': current_color, 'stone': stone, 'label': label}
 
     # Perform captures
@@ -256,7 +256,7 @@ def load_problem():
     blackfirst = problem.get('blackfirst', True)
     level = problem.get('level', 'N/A')
     answers = problem.get('answers', [])
-    problem_no = problem.get('publicie', 'N/A')
+    problem_no = problem.get('publicid', 'N/A')
     ty = problem.get('qtype', 'N/A')
 
     # Clear the board and reset variables

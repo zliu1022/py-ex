@@ -54,12 +54,20 @@ outputContainer.id = 'output-container';
 outputContainer.style.width = '100%';
 outputContainer.style.fontSize = '24px';
 outputContainer.style.marginBottom = '10px';
+let answerCounter = 1;
 for (let i = 0; i < g_qq.answers.length; i++) {
     const ans = g_qq.answers[i];
 
     if (ans.ty == 1 && ans.st == 2) {
         // 创建一个段落来显示当前答案的所有坐标
         const ansParagraph = document.createElement('p');
+
+        // 添加序号
+        const indexSpan = document.createElement('span');
+        indexSpan.innerText = `序号 ${answerCounter}：`; // 您可以根据需要调整序号格式
+        indexSpan.style.fontWeight = 'bold';
+        ansParagraph.appendChild(indexSpan);
+
         // 遍历 ans.pts 中的所有点
         for (let j = 0; j < ans.pts.length; j++) {
             const coord = ans.pts[j];
@@ -82,6 +90,9 @@ for (let i = 0; i < g_qq.answers.length; i++) {
 
         // 添加到输出容器中
         outputContainer.appendChild(ansParagraph);
+
+        // 序号加一
+        answerCounter++;
     }
 }
 document.body.insertBefore(outputContainer, document.body.firstChild);

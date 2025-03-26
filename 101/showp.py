@@ -323,8 +323,8 @@ if __name__ == "__main__":
     if not problems:
         raise Exception("No problems found")
 
-    canvas_size = 600
-    margin = 20  # Margin around the board
+    canvas_size = 800
+    margin = 40  # Margin around the board
     board_size = 19
     cell_size = (canvas_size - 2 * margin) / (board_size - 1)
 

@@ -28,8 +28,10 @@ class GoGame:
 
     def load_problem(self, index=None):
         if index is None:
-            self.current_problem = random.choice(self.problems)
+            self.current_problem_index = random.randint(0, len(self.problems) - 1)
+            self.current_problem = self.problems[self.current_problem_index]
         else:
+            self.current_problem_index = index
             self.current_problem = self.problems[index]
 
         self.reset_game()

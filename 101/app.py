@@ -66,9 +66,17 @@ class GoApp:
         # 加载题目列表
         self.populate_problem_list()
 
+        # 创建按钮容器 Frame，使按钮并排放置
+        self.button_frame = tk.Frame(root)
+        self.button_frame.pack(pady=5)
+
+        # Previous problem button
+        self.prev_button = tk.Button(self.button_frame, text="上一题 (Previous Problem)", command=self.prev_problem)
+        self.prev_button.pack(side=tk.LEFT, padx=5)
+
         # Next problem button
-        self.next_button = tk.Button(root, text="下一题 (Next Problem)", command=self.next_problem)
-        self.next_button.pack(pady=5)
+        self.next_button = tk.Button(self.button_frame, text="下一题 (Next Problem)", command=self.next_problem)
+        self.next_button.pack(side=tk.LEFT, padx=5)
 
         # Bind the click event
         self.canvas.bind("<Button-1>", self.on_board_click)
@@ -80,6 +88,9 @@ class GoApp:
         self.banner = None
         self.banner_text = None
         self.pending_action_after_banner = None
+
+        # 更新按钮状态
+        self.update_buttons_state()
 
     def show_message_on_board(self, message):
         # 创建上方横幅的矩形，高度为棋盘的1/4
@@ -161,6 +172,9 @@ class GoApp:
             self.board.clear_board()
             self.board.place_preset_stones(self.game.current_problem.prepos)
 
+            # 更新按钮状态
+            self.update_buttons_state()
+
     def update_problem_info(self):
         """更新题目信息显示"""
         problem_info = {
@@ -172,6 +186,10 @@ class GoApp:
         self.root.title(
             f"Level {problem_info['level']} - {problem_info['type']} - "
             f"{problem_info['color']} first - No.{problem_info['problem_no']}"
+        )
+        self.info_label.config(
+            text=f"Level: {problem_info['level']} | "
+            f"{problem_info['color']} plays first | No.{problem_info['problem_no']}"
         )
 
     def on_board_click(self, event):
@@ -212,19 +230,49 @@ class GoApp:
         error_window.after(2000, error_window.destroy)
 
     def next_problem(self):
-        problem_info = self.game.load_problem()
-        self.info_label.config(
-            text=f"Level: {problem_info['level']} | "
-            f"{problem_info['color']} plays first | No.{problem_info['problem_no']}"
-        )
+        if self.game.current_problem_index < len(self.game.problems) - 1:
+            # 加载下一题
+            self.game.load_problem(index=self.game.current_problem_index + 1)
+            self.update_problem_info()
+            self.board.clear_board()
+            self.board.place_preset_stones(self.game.current_problem.prepos)
 
-        # Update the board display
-        self.update_problem_info()
-        # Update the Listbox selection to correspond to the current problem
-        self.listbox.selection_clear(0, tk.END)
-        self.listbox.selection_set(self.game.current_problem_index)
-        self.listbox.activate(self.game.current_problem_index)
-        self.listbox.see(self.game.current_problem_index)
+            # 更新列表选择
+            self.listbox.selection_clear(0, tk.END)
+            self.listbox.selection_set(self.game.current_problem_index)
+            self.listbox.activate(self.game.current_problem_index)
+            self.listbox.see(self.game.current_problem_index)
+
+            # 更新按钮状态
+            self.update_buttons_state()
+
+    def prev_problem(self):
+        if self.game.current_problem_index > 0:
+            # 加载前一题
+            self.game.load_problem(index=self.game.current_problem_index - 1)
+            self.update_problem_info()
+            self.board.clear_board()
+            self.board.place_preset_stones(self.game.current_problem.prepos)
+
+            # 更新列表选择
+            self.listbox.selection_clear(0, tk.END)
+            self.listbox.selection_set(self.game.current_problem_index)
+            self.listbox.activate(self.game.current_problem_index)
+            self.listbox.see(self.game.current_problem_index)
+
+            # 更新按钮状态
+            self.update_buttons_state()
+
+    def update_buttons_state(self):
+        if self.game.current_problem_index <= 0:
+            self.prev_button.config(state=tk.DISABLED)
+        else:
+            self.prev_button.config(state=tk.NORMAL)
+
+        if self.game.current_problem_index >= len(self.game.problems) - 1:
+            self.next_button.config(state=tk.DISABLED)
+        else:
+            self.next_button.config(state=tk.NORMAL)
 
 if __name__ == "__main__":
     root = tk.Tk()

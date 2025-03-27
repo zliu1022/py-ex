@@ -235,7 +235,7 @@ class GoGame:
         # Check if the position is unoccupied
         if self.board.board[row][col] is not None:
             messagebox.showwarning("Invalid move", "That position is occupied.")
-            return False
+            return 'invalid_move'
 
         # Get expected coordinates for the current move number
         expected_coords = self.get_expected_coords(self.move_number)
@@ -251,7 +251,7 @@ class GoGame:
                 break
 
         if not match_found:
-            return False
+            return 'incorrect'  # 返回'错误'状态
 
         # Place the stone tentatively
         stone = self.board.draw_stone(row, col, self.current_color)
@@ -289,7 +289,7 @@ class GoGame:
             self.board.canvas.delete(self.board.board[row][col]['stone'])
             self.board.canvas.delete(self.board.board[row][col]['label'])
             self.board.board[row][col] = None
-            return False
+            return 'invalid_move'
 
         # The move is valid, proceed
         self.user_moves.append(coord)
@@ -310,9 +310,7 @@ class GoGame:
             if self.user_moves == answer_moves[:len(self.user_moves)]:
                 matched_answers.append(answer)
                 if len(self.user_moves) == len(answer_moves):
-                    messagebox.showinfo("Result", "正确！(Correct!)")
-                    # Prepare for next problem or reset
-                    return True  # End the game
+                    return 'correct'  # 返回'正确'状态
                 break  # Found a matching answer
 
         # Display hints for the next expected moves
@@ -320,7 +318,7 @@ class GoGame:
         for coord in next_expected_coords:
             self.hint_items.append(self.board.draw_hint(coord))
 
-        return True
+        return 'continue'  # 返回'继续'状态
 
 class GoApp:
     def __init__(self, root):
@@ -379,6 +377,58 @@ class GoApp:
         # Load the initial problem
         self.next_problem()
 
+        # 横幅
+        self.banner = None
+        self.banner_text = None
+        self.pending_action_after_banner = None
+
+    def show_message_on_board(self, message):
+        # 创建覆盖棋盘的矩形
+        x0, y0 = 0, 0
+        x1, y1 = self.canvas_size, self.canvas_size
+        self.banner = self.canvas.create_rectangle(
+            x0, y0, x1, y1, fill='yellow', stipple='gray50'
+        )
+        # 在中心显示消息
+        self.banner_text = self.canvas.create_text(
+            x1 / 2, y1 / 2,
+            text=message, font=('Arial', 48), fill='red'
+        )
+        # 5秒后移除横幅
+        self.root.after(5000, self.remove_banner)
+
+    def remove_banner(self):
+        if self.banner:
+            self.canvas.delete(self.banner)
+            self.canvas.delete(self.banner_text)
+            self.banner = None
+            self.banner_text = None
+        # 根据需要执行后续操作
+        if self.pending_action_after_banner == 'next_problem':
+            self.next_problem()
+        elif self.pending_action_after_banner == 'reset_problem':
+            self.reset_problem()
+        self.pending_action_after_banner = None
+
+    def show_correct_message(self):
+        self.show_message_on_board("正确")
+        # 在 info_label 中追加显示“正确”
+        self.info_label.config(text=self.info_label.cget("text") + " 正确")
+        self.pending_action_after_banner = 'next_problem'  # 横幅消失后进入下一题
+
+    def show_incorrect_message(self):
+        self.show_message_on_board("错误")
+        # 在 info_label 中追加显示“错误”
+        self.info_label.config(text=self.info_label.cget("text") + " 错误")
+        self.pending_action_after_banner = 'reset_problem'  # 横幅消失后重置题目
+
+    def reset_problem(self):
+        # 重新加载当前题目
+        self.game.load_problem(index=self.game.current_problem_index)
+        self.update_problem_info()
+        self.board.clear_board()
+        self.board.place_preset_stones(self.game.current_problem.prepos)
+
     def populate_problem_list(self):
         """填充题目列表"""
         self.listbox.delete(0, tk.END)  # 清空旧列表
@@ -429,8 +479,17 @@ class GoApp:
             return
 
         # Try to make the move
-        if not self.game.make_move(row, col):
-            self.show_error_message()
+        result = self.game.make_move(row, col)
+        if result == 'invalid_move':
+            # 可以选择提示无效操作，这里省略
+            pass
+        elif result == 'incorrect':
+            self.show_incorrect_message()
+        elif result == 'correct':
+            self.show_correct_message()
+        elif result == 'continue':
+            # 游戏继续，不需要额外操作
+            pass
 
     def show_error_message(self):
         error_window = tk.Toplevel(self.root)

@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import random
 from pymongo import MongoClient
 import tkinter as tk
@@ -348,7 +345,7 @@ class GoApp:
         self.board = GoBoard(self.canvas, size=19, canvas_size=self.canvas_size, margin=50)
         self.board.draw_board()
 
-        # 题目列表区域 (右侧) ------------------------------------------------------------
+        # 题目列表区域 (右侧)
         self.problem_list_frame = tk.Frame(self.main_frame, width=200)
         #self.problem_list_frame.grid(row=0, column=1, sticky=tk.N+tk.S, padx=10, pady=10)
         self.problem_list_frame.grid(row=0, column=1, sticky=tk.NSEW, padx=10, pady=10)
@@ -381,7 +378,7 @@ class GoApp:
         self.info_label = tk.Label(root, text="")
         self.info_label.pack()
 
-        # 加载题目列表 ------------------------------------------------------------
+        # 加载题目列表
         self.populate_problem_list()
 
         # Next problem button

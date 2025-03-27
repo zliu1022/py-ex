@@ -52,7 +52,7 @@ console.log('转换后的坐标:', move); // 输出: 'O17'
 const outputContainer = document.createElement('div');
 outputContainer.id = 'output-container';
 outputContainer.style.width = '100%';
-outputContainer.style.fontSize = '24px';
+outputContainer.style.fontSize = '18px';
 outputContainer.style.marginBottom = '10px';
 let answerCounter = 1;
 for (let i = 0; i < g_qq.answers.length; i++) {

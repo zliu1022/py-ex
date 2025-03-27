@@ -101,6 +101,10 @@ class GoBoard:
                 stone = self.canvas.create_oval(x - r, y - r, x + r, y + r, fill=stone_color, tags='preset_stone')
                 self.board[row][col] = {'color': stone_color, 'stone': stone, 'label': None}
 
+    def get_actual_height(self):
+        """返回包含坐标标签的实际高度"""
+        return self.canvas_size + self.margin  # 棋盘高度 + 坐标标签空间
+
 class GoGame:
     def __init__(self, board):
         self.board = board
@@ -331,14 +335,43 @@ class GoApp:
         self.root = root
         self.root.title("Go Problem Viewer")
 
+        # 创建主容器
+        self.main_frame = tk.Frame(root)
+        self.main_frame.pack(fill=tk.BOTH, expand=True)
+
         # Create canvas
         self.canvas_size = 600
-        self.canvas = tk.Canvas(root, width=self.canvas_size, height=self.canvas_size)
-        self.canvas.pack()
+        self.canvas = tk.Canvas(self.main_frame, width=self.canvas_size, height=self.canvas_size)
+        self.canvas.grid(row=0, column=0, padx=10, pady=10)
 
         # Create game board
-        self.board = GoBoard(self.canvas, size=19, canvas_size=600, margin=50)
+        self.board = GoBoard(self.canvas, size=19, canvas_size=self.canvas_size, margin=50)
         self.board.draw_board()
+
+        # 题目列表区域 (右侧) ------------------------------------------------------------
+        self.problem_list_frame = tk.Frame(self.main_frame, width=200)
+        #self.problem_list_frame.grid(row=0, column=1, sticky=tk.N+tk.S, padx=10, pady=10)
+        self.problem_list_frame.grid(row=0, column=1, sticky=tk.NSEW, padx=10, pady=10)
+
+        # 计算列表合适的高度（行数）
+        board_total_height = self.board.canvas_size  # 获取棋盘总高度（800）
+        line_height = 20  # 根据字体大小估算每行高度
+        listbox_rows = int(board_total_height / line_height) - 2  # 留出边距
+
+        # 滚动条
+        self.scrollbar = tk.Scrollbar(self.problem_list_frame)
+        self.listbox = tk.Listbox(
+            self.problem_list_frame,
+            yscrollcommand=self.scrollbar.set,
+            width=25,
+            height=listbox_rows,
+            font=('Arial', 12)
+        )
+        self.scrollbar.config(command=self.listbox.yview)
+
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.listbox.bind('<<ListboxSelect>>', self.on_problem_selected)
 
         # Create game instance
         self.game = GoGame(self.board)
@@ -347,6 +380,9 @@ class GoApp:
         # Info label
         self.info_label = tk.Label(root, text="")
         self.info_label.pack()
+
+        # 加载题目列表 ------------------------------------------------------------
+        self.populate_problem_list()
 
         # Next problem button
         self.next_button = tk.Button(root, text="下一题 (Next Problem)", command=self.next_problem)
@@ -357,6 +393,56 @@ class GoApp:
 
         # Load the initial problem
         self.next_problem()
+
+    def adjust_listbox_height(self):
+        """动态调整列表高度"""
+        # 获取棋盘实际绘制高度（包含坐标）
+        board_height = self.board.canvas.winfo_height()
+        
+        # 计算每行像素高度（取实际渲染值）
+        self.listbox.update_idletasks()
+        line_pixels = self.listbox.bbox(0)[3] if self.listbox.size() > 0 else 20
+        
+        # 计算合适行数
+        new_height = max(1, int(board_height / line_pixels) - 1)
+        self.listbox.config(height=new_height)
+
+        # 更新布局
+        self.problem_list_frame.grid_propagate(False)
+        self.problem_list_frame.config(height=board_height)
+
+    def populate_problem_list(self):
+        """填充题目列表"""
+        self.listbox.delete(0, tk.END)  # 清空旧列表
+        for idx, problem in enumerate(self.game.problems):
+            problem_no = problem.get('publicid', f'Unknown_{idx}')
+            difficulty = problem.get('level', 'N/A')
+            self.listbox.insert(tk.END, f"[{difficulty}] {problem_no}")
+
+    def on_problem_selected(self, event):
+        """处理题目选择事件"""
+        selection = event.widget.curselection()
+        if selection:
+            index = selection[0]
+            self.game.load_problem(index)
+            self.update_problem_info()
+            self.board.clear_board()
+            self.board.place_preset_stones(self.game.prepos)
+
+        self.adjust_listbox_height()  # 每次加载题目后调整
+
+    def update_problem_info(self):
+        """更新题目信息显示"""
+        problem_info = {
+            'level': self.game.level,
+            'color': 'Black' if self.game.blackfirst else 'White',
+            'problem_no': self.game.problem.get('publicie', 'N/A'),
+            'type': self.game.problem.get('qtype', 'N/A')
+        }
+        self.root.title(
+            f"Level {problem_info['level']} - {problem_info['type']} - "
+            f"{problem_info['color']} first - No.{problem_info['problem_no']}"
+        )
 
     def on_board_click(self, event):
         x_click = event.x - self.board.margin

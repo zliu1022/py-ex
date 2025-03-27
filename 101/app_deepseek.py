@@ -102,6 +102,26 @@ class GoBoard:
         """返回包含坐标标签的实际高度"""
         return self.canvas_size + self.margin  # 棋盘高度 + 坐标标签空间
 
+class GoProblem:
+    def __init__(self, problem_data=None):
+        self.problem_data = problem_data or {}
+        self.prepos = self.problem_data.get('prepos', {})
+        self.blackfirst = self.problem_data.get('blackfirst', True)
+        self.level = self.problem_data.get('level', 'N/A')
+        self.answers = self.problem_data.get('answers', [])
+        self.publicid = self.problem_data.get('publicid', 'N/A')
+        self.ty = self.problem_data.get('qtype', 'N/A')
+
+    @staticmethod
+    def load_problems_from_db(criteria):
+        client = MongoClient('mongodb://localhost:27017/')
+        db = client[db_name]
+        collection = db['q']
+        problems_cursor = collection.find(criteria)
+        problems_data = list(problems_cursor)
+        problems = [GoProblem(problem_data) for problem_data in problems_data]
+        return problems
+
 class GoGame:
     def __init__(self, board):
         self.board = board
@@ -109,49 +129,33 @@ class GoGame:
         self.current_color = None
         self.move_number = 1
         self.hint_items = []
-        self.prepos = {}
-        self.blackfirst = True
-        self.level = 'N/A'
-        self.answers = []
-        self.problem = {}
         self.black_captures = 0
         self.white_captures = 0
         self.problems = []
+        self.current_problem = None
         self.current_problem_index = -1
 
     def load_problems(self):
-        client = MongoClient('mongodb://localhost:27017/')
-        db = client[db_name]
-        collection = db['q']
-        problems_cursor = collection.find({"status": 2, "qtype": "死活题", "level": "9K"})
-        self.problems = list(problems_cursor)
+        self.problems = GoProblem.load_problems_from_db({"status": 2, "qtype": "死活题", "level": "9K"})
         if not self.problems:
             raise Exception("No problems found")
 
     def load_problem(self, index=None):
         if index is None:
-            self.problem = random.choice(self.problems)
+            self.current_problem = random.choice(self.problems)
         else:
-            self.problem = self.problems[index]
-
-        self.prepos = self.problem.get('prepos', {})
-        self.blackfirst = self.problem.get('blackfirst', True)
-        self.level = self.problem.get('level', 'N/A')
-        self.answers = self.problem.get('answers', [])
-        problem_no = self.problem.get('publicid', 'N/A')
-        ty = self.problem.get('qtype', 'N/A')
+            self.current_problem = self.problems[index]
 
         self.reset_game()
-
-        self.current_color = 'black' if self.blackfirst else 'white'
+        self.current_color = 'black' if self.current_problem.blackfirst else 'white'
 
         # Place preset stones
-        self.board.place_preset_stones(self.prepos)
+        self.board.place_preset_stones(self.current_problem.prepos)
 
         # Display hint for the first move
         first_move = None
-        if self.answers:
-            for ans in self.answers:
+        if self.current_problem.answers:
+            for ans in self.current_problem.answers:
                 if ans['ty'] == 1 and ans['st'] == 2:
                     first_move = ans['p'][0]
                     break
@@ -161,10 +165,10 @@ class GoGame:
             self.hint_items.append(self.board.draw_hint(first_move))
 
         return {
-            'level': self.level,
-            'color': 'Black' if self.blackfirst else 'White',
-            'problem_no': problem_no,
-            'type': ty
+            'level': self.current_problem.level,
+            'color': 'Black' if self.current_problem.blackfirst else 'White',
+            'problem_no': self.current_problem.publicid,
+            'type': self.current_problem.ty
         }
 
     def reset_game(self):
@@ -176,7 +180,6 @@ class GoGame:
         for item in self.hint_items:
             self.board.canvas.delete(item)
         self.hint_items.clear()
-        #self.hint_items = []
 
         self.black_captures = 0
         self.white_captures = 0
@@ -215,14 +218,14 @@ class GoGame:
 
     def get_expected_coords(self, move_number):
         expected_coords = set()
-        for answer in self.answers:
+        for answer in self.current_problem.answers:
             if len(answer['p']) >= move_number:
                 expected_coords.add(answer['p'][move_number - 1])
         return expected_coords
 
     def get_expected_next_coords(self, user_moves):
         expected_coords = set()
-        for answer in self.answers:
+        for answer in self.current_problem.answers:
             if answer['p'][:len(user_moves)] == user_moves:
                 if len(answer['p']) > len(user_moves):
                     expected_coords.add(answer['p'][len(user_moves)])
@@ -242,17 +245,8 @@ class GoGame:
 
         for exp_coord in expected_coords:
             exp_row, exp_col = self.board.coord_to_position(exp_coord)
-            x_expected = exp_col * self.board.cell_size
-            y_expected = exp_row * self.board.cell_size
-            x_click = col * self.board.cell_size
-            y_click = row * self.board.cell_size
-            dx = x_click - x_expected
-            dy = y_click - y_expected
-            distance = (dx ** 2 + dy ** 2) ** 0.5
-            if distance <= tolerance:
-                # Correct move found within tolerance
-                row, col = exp_row, exp_col  # Correct the position to the expected one
-                coord = exp_coord  # Use the expected coordinate
+            if (exp_row, exp_col) == (row, col):
+                coord = exp_coord
                 match_found = True
                 break
 
@@ -261,10 +255,11 @@ class GoGame:
 
         # Place the stone tentatively
         stone = self.board.draw_stone(row, col, self.current_color)
+        label_color = 'white' if self.current_color == 'black' else 'black'
         label = self.board.canvas.create_text(
             self.board.margin + col * self.board.cell_size,
             self.board.margin + row * self.board.cell_size,
-            text=str(self.move_number), fill='white')
+            text=str(self.move_number), fill=label_color)
         self.board.board[row][col] = {'color': self.current_color, 'stone': stone, 'label': label}
 
         # Perform captures
@@ -310,7 +305,7 @@ class GoGame:
 
         # Check if the user's sequence matches any of the answers
         matched_answers = []
-        for answer in self.answers:
+        for answer in self.current_problem.answers:
             answer_moves = answer['p']
             if self.user_moves == answer_moves[:len(self.user_moves)]:
                 matched_answers.append(answer)
@@ -347,13 +342,7 @@ class GoApp:
 
         # 题目列表区域 (右侧)
         self.problem_list_frame = tk.Frame(self.main_frame, width=200)
-        #self.problem_list_frame.grid(row=0, column=1, sticky=tk.N+tk.S, padx=10, pady=10)
         self.problem_list_frame.grid(row=0, column=1, sticky=tk.NSEW, padx=10, pady=10)
-
-        # 计算列表合适的高度（行数）
-        board_total_height = self.board.canvas_size  # 获取棋盘总高度（800）
-        line_height = 20  # 根据字体大小估算每行高度
-        listbox_rows = int(board_total_height / line_height) - 2  # 留出边距
 
         # 滚动条
         self.scrollbar = tk.Scrollbar(self.problem_list_frame)
@@ -361,7 +350,6 @@ class GoApp:
             self.problem_list_frame,
             yscrollcommand=self.scrollbar.set,
             width=25,
-            height=listbox_rows,
             font=('Arial', 12)
         )
         self.scrollbar.config(command=self.listbox.yview)
@@ -391,29 +379,12 @@ class GoApp:
         # Load the initial problem
         self.next_problem()
 
-    def adjust_listbox_height(self):
-        """动态调整列表高度"""
-        # 获取棋盘实际绘制高度（包含坐标）
-        board_height = self.board.canvas.winfo_height()
-        
-        # 计算每行像素高度（取实际渲染值）
-        self.listbox.update_idletasks()
-        line_pixels = self.listbox.bbox(0)[3] if self.listbox.size() > 0 else 20
-        
-        # 计算合适行数
-        new_height = max(1, int(board_height / line_pixels) - 1)
-        self.listbox.config(height=new_height)
-
-        # 更新布局
-        self.problem_list_frame.grid_propagate(False)
-        self.problem_list_frame.config(height=board_height)
-
     def populate_problem_list(self):
         """填充题目列表"""
         self.listbox.delete(0, tk.END)  # 清空旧列表
         for idx, problem in enumerate(self.game.problems):
-            problem_no = problem.get('publicid', f'Unknown_{idx}')
-            difficulty = problem.get('level', 'N/A')
+            problem_no = problem.publicid
+            difficulty = problem.level
             self.listbox.insert(tk.END, f"[{difficulty}] {problem_no}")
 
     def on_problem_selected(self, event):
@@ -424,17 +395,15 @@ class GoApp:
             self.game.load_problem(index)
             self.update_problem_info()
             self.board.clear_board()
-            self.board.place_preset_stones(self.game.prepos)
-
-        self.adjust_listbox_height()  # 每次加载题目后调整
+            self.board.place_preset_stones(self.game.current_problem.prepos)
 
     def update_problem_info(self):
         """更新题目信息显示"""
         problem_info = {
-            'level': self.game.level,
-            'color': 'Black' if self.game.blackfirst else 'White',
-            'problem_no': self.game.problem.get('publicie', 'N/A'),
-            'type': self.game.problem.get('qtype', 'N/A')
+            'level': self.game.current_problem.level,
+            'color': 'Black' if self.game.current_problem.blackfirst else 'White',
+            'problem_no': self.game.current_problem.publicid,
+            'type': self.game.current_problem.ty
         }
         self.root.title(
             f"Level {problem_info['level']} - {problem_info['type']} - "

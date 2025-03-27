@@ -383,19 +383,20 @@ class GoApp:
         self.pending_action_after_banner = None
 
     def show_message_on_board(self, message):
-        # 创建覆盖棋盘的矩形
-        x0, y0 = 0, 0
-        x1, y1 = self.canvas_size, self.canvas_size
+        # 创建上方横幅的矩形，高度为棋盘的1/4
+        banner_lr_margin = 50
+        x0, y0 = banner_lr_margin, self.canvas_size / 4
+        x1, y1 = self.canvas_size-banner_lr_margin, self.canvas_size / 8
         self.banner = self.canvas.create_rectangle(
-            x0, y0, x1, y1, fill='yellow', stipple='gray50'
+            x0, y0, x1, y1, fill='lightblue'  # 选择温和的颜色
         )
-        # 在中心显示消息
+        # 在横幅中心显示消息
         self.banner_text = self.canvas.create_text(
-            x1 / 2, y1 / 2,
-            text=message, font=('Arial', 48), fill='red'
+            x1 / 2, y0/2+y1 / 2,
+            text=message, font=('Arial', 36), fill='black'  # 调整字体大小和颜色
         )
         # 5秒后移除横幅
-        self.root.after(5000, self.remove_banner)
+        self.root.after(3000, self.remove_banner)
 
     def remove_banner(self):
         if self.banner:

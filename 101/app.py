@@ -360,9 +360,19 @@ class GoApp:
         self.game = GoGame(self.board)
         self.game.load_problems()
 
+
+        # 创建一个容器 Frame，用于放置 info_label 和 result_label
+        self.info_frame = tk.Frame(root)
+        self.info_frame.pack(pady=5)
+
         # Info label
-        self.info_label = tk.Label(root, text="")
-        self.info_label.pack()
+        self.info_label = tk.Label(self.info_frame, text="", fg='black', font=('Arial', 12))
+        self.info_label.pack(side='left')
+
+        # Result label
+        self.result_label = tk.Label(self.info_frame, text="", font=('Arial', 14, 'bold'))
+        self.result_label.pack(side='left')
+
 
         # 加载题目列表
         self.populate_problem_list()
@@ -395,7 +405,7 @@ class GoApp:
             x1 / 2, y0/2+y1 / 2,
             text=message, font=('Arial', 36), fill='black'  # 调整字体大小和颜色
         )
-        # 5秒后移除横幅
+        # 3秒后移除横幅
         self.root.after(3000, self.remove_banner)
 
     def remove_banner(self):
@@ -405,23 +415,37 @@ class GoApp:
             self.banner = None
             self.banner_text = None
         # 根据需要执行后续操作
-        if self.pending_action_after_banner == 'next_problem':
-            self.next_problem()
-        elif self.pending_action_after_banner == 'reset_problem':
-            self.reset_problem()
+        #if self.pending_action_after_banner == 'next_problem':
+        #    self.next_problem()
+        #elif self.pending_action_after_banner == 'reset_problem':
+        #    self.reset_problem()
         self.pending_action_after_banner = None
 
+    def update_lable_text(self, new_result):
+        # 替换上次的追加（假设上次追加的内容在最后一个空格之后）
+        text = self.info_label.cget("text")
+        if text.endswith(" 正确") or text.endswith(" 错误"):
+            text = text.rsplit(' ', 1)[0]
+        new_text = text + ' ' + new_result
+        return new_text
+
     def show_correct_message(self):
-        self.show_message_on_board("正确")
+        result_info_text = "正确"
+        self.show_message_on_board(result_info_text)
         # 在 info_label 中追加显示“正确”
-        self.info_label.config(text=self.info_label.cget("text") + " 正确")
-        self.pending_action_after_banner = 'next_problem'  # 横幅消失后进入下一题
+        #self.info_label.config(text=self.info_label.cget("text") + " 正确")
+        #self.pending_action_after_banner = 'next_problem'  # 横幅消失后进入下一题
+
+        self.result_label.config(text=result_info_text, fg='green')
 
     def show_incorrect_message(self):
-        self.show_message_on_board("错误")
+        result_info_text = "错误"
+        self.show_message_on_board(result_info_text)
         # 在 info_label 中追加显示“错误”
-        self.info_label.config(text=self.info_label.cget("text") + " 错误")
-        self.pending_action_after_banner = 'reset_problem'  # 横幅消失后重置题目
+        #self.info_label.config(text=self.info_label.cget("text") + " 错误")
+        #self.pending_action_after_banner = 'reset_problem'  # 横幅消失后重置题目
+
+        self.result_label.config(text=result_info_text, fg='red')
 
     def reset_problem(self):
         # 重新加载当前题目

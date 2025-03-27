@@ -213,14 +213,18 @@ class GoApp:
 
     def next_problem(self):
         problem_info = self.game.load_problem()
-        self.root.title(
-            f"Level {problem_info['level']} - {problem_info['type']} - "
-            f"{problem_info['color']} first - No.{problem_info['problem_no']}"
-        )
         self.info_label.config(
             text=f"Level: {problem_info['level']} | "
             f"{problem_info['color']} plays first | No.{problem_info['problem_no']}"
         )
+
+        # Update the board display
+        self.update_problem_info()
+        # Update the Listbox selection to correspond to the current problem
+        self.listbox.selection_clear(0, tk.END)
+        self.listbox.selection_set(self.game.current_problem_index)
+        self.listbox.activate(self.game.current_problem_index)
+        self.listbox.see(self.game.current_problem_index)
 
 if __name__ == "__main__":
     root = tk.Tk()

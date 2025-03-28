@@ -52,7 +52,7 @@ console.log('转换后的坐标:', move); // 输出: 'O17'
 const outputContainer = document.createElement('div');
 outputContainer.id = 'output-container';
 outputContainer.style.width = '100%';
-outputContainer.style.fontSize = '18px';
+outputContainer.style.fontSize = '12px';
 outputContainer.style.marginBottom = '10px';
 let answerCounter = 1;
 for (let i = 0; i < g_qq.answers.length; i++) {
@@ -75,7 +75,7 @@ for (let i = 0; i < g_qq.answers.length; i++) {
 
             // 创建一个 span 来容纳每个坐标
             const moveSpan = document.createElement('span');
-            moveSpan.innerText = move + ' ';
+            moveSpan.innerText = '(' + (j+1) + ')' + move + ' ';
 
             if (j % 2 === 0) {
                 // 当 j 为偶数时，应用特殊样式

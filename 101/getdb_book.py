@@ -16,11 +16,15 @@ def wait_qcounter(counter):
     l2_counter, l2_wait         = 25, 300      # 中
     l3_counter, l3_wait         = 500, 8*3600  # 1天
     '''
-    l1_counter, l1_low, l1_high = 1, 25, 45                              # 短：快速打开很多；看一个打开一个
-    l2_counter, l2_wait         = 75, 300                                # 中
-    l3_counter_low, l3_counter_high, l3_wait         = 500, 600, 8*3600  # 1天
-    counter += 1
+    l3_counter_low, l3_counter_high, l3_wait         = 300, 500, 8*3600  # 1天，今天训练结束
     l3_counter = random.randint(l3_counter_low, l3_counter_high)
+
+    l2_counter_low, l2_counter_high, l2_wait         = 55, 75, 600       # 中, 稍微休息
+    l2_counter = random.randint(l2_counter_low, l2_counter_high)
+
+    l1_counter, l1_low, l1_high = 1, 10, 45                              # 短：快速打开很多；看一个打开一个
+
+    counter += 1
     if counter >= l3_counter:
         wait_time = l3_wait
         print(f"Reached {l3_counter} Waiting for {wait_time}s")
@@ -29,7 +33,6 @@ def wait_qcounter(counter):
         wait_time = l2_wait
         print(f"Reached {l2_counter}. Waiting for {wait_time}s")
         time.sleep(wait_time)
-        counter = 0
     else:
         wait_time = random.randint(l1_low, l1_high)
         print(f"... {wait_time}s")
@@ -71,6 +74,7 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
 
     q_collection = db['q']
     cur_no = 0
+    new_no = 0
     #for url_frombook in data_list:
     for data_item in data_list:
         url_no = data_item['url_no']
@@ -92,6 +96,10 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
                 code_1_list.append(url_frombook)
             if code == 2:
                 code_2_list.append(url_frombook)
+        else:
+            if result.get('code') == 0:
+                new_no += 1
+                print(f'效率：{100*new_no/cur_no:.0f}%', end=' ')
         getq_counter = wait_qcounter(getq_counter)
 
     result = book_collection.update_one({'id': book_id}, {'$set': {'status': 'ok'}})

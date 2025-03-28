@@ -1,4 +1,4 @@
-function convertCoordinate(coord) {
+function convertCoordinate(coord, size) {
     // 检查 coord.p 是否存在且长度为 2
     if (!coord || !coord.p || typeof coord.p !== 'string' || coord.p.length !== 2) {
         return 'Invalid coord: ' + JSON.stringify(coord);
@@ -41,7 +41,11 @@ function convertCoordinate(coord) {
     // 将 yIndex 转换为棋盘上的行号（19 到 1）
     let row = 19 - yIndex;
     
-    return column + row;
+	if (size != 19) {
+		row = size - (19 - row);
+	}
+	return column + row;
+	
 }
 
 // 测试代码
@@ -68,14 +72,17 @@ for (let i = 0; i < g_qq.answers.length; i++) {
         indexSpan.style.fontWeight = 'bold';
         ansParagraph.appendChild(indexSpan);
 
+		console.log('第', answerCounter, '个');
+
         // 遍历 ans.pts 中的所有点
         for (let j = 0; j < ans.pts.length; j++) {
             const coord = ans.pts[j];
-            const move = convertCoordinate(coord);
+            const move = convertCoordinate(coord, g_qq.lu);
+			console.log(j, move);
 
             // 创建一个 span 来容纳每个坐标
             const moveSpan = document.createElement('span');
-            moveSpan.innerText = '(' + (j+1) + ')' + move + ' ';
+            moveSpan.innerHTML = '(' + (j+1) + ')' + move + '&nbsp;&nbsp;';
 
             if (j % 2 === 0) {
                 // 当 j 为偶数时，应用特殊样式

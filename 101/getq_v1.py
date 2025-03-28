@@ -368,7 +368,7 @@ def update_q_v1(client, doc):
     if old is None:
         collection.insert_one(doc)
         print("插入q表", doc['publicid'])
-        return
+        return 0
 
     # 仅更新提供的字段
     update_data = {k: v for k, v in doc.items() if v is not None}
@@ -396,12 +396,13 @@ def update_q_v1(client, doc):
                 print(f"{field}: 从 {change['old']} 更新为 {change['new']}")
     else:
         print("数据已存在，且无任何变化。")
+    return 1
 
-def resp_json_url_frombook(mongo_client, resp, url_frombook):
+def resp_json_url_frombook(mongo_client, resp_text, url_frombook):
     title_id = None
     title_level = None
     pattern = r"<title>\s*Q-(\d+)\s*-\s*(\S+?)\s*-"
-    match = re.search(pattern, resp.text, re.S)
+    match = re.search(pattern, resp_text, re.S)
     if match:
         title_id = match.group(1)
         title_level = match.group(2)
@@ -411,7 +412,7 @@ def resp_json_url_frombook(mongo_client, resp, url_frombook):
     #re.DOTALL 标志使 . 可以匹配包括换行符在内的所有字符。
     #.*? 是非贪婪匹配，尽可能少地匹配字符，直到找到第一个 };。
     pattern = r'var\s+g_qq\s*=\s*\{.*?\};'
-    match = re.search(pattern, resp.text, re.DOTALL)
+    match = re.search(pattern, resp_text, re.DOTALL)
     if match:
         g_qq_str = match.group()
         json_str = g_qq_str[11:-1] # 去除开头的 var g_qq =，以及最后的分号
@@ -497,10 +498,10 @@ def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
     url = base_url + url_frombook
     response = get_url_v1(session, url)
     if response.status_code == 200:
-        ret = resp_json_url_frombook(mongo_client, response, url_frombook)
+        ret = resp_json_url_frombook(mongo_client, response.text, url_frombook)
         if ret.get('ret'):
             # 成功：更新q表，更新book_n_q表, 不锁定book_n_q表，确保一本book_id只有一个任务
-            update_q_v1(mongo_client, ret.get('data'))
+            retcode = update_q_v1(mongo_client, ret.get('data')) # 0:新增,1:更新
             result = book_q_collection.update_one(
                 {'url_frombook': url_frombook},
                 {'$set': {
@@ -509,7 +510,7 @@ def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
                     'status':   ret.get('data').get('status')
                 }}
             )
-            return {'ret': True, 'data': ret.get('data')}
+            return {'ret': True, 'data': ret.get('data'), 'code': retcode}
         else:
             # 失败：只更新book_n_q表, is_share
             print(f"不共享，{url_frombook}")

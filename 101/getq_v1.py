@@ -274,6 +274,7 @@ def resp_json(mongo_client, resp, level_str, no):
         'qtype':      obj.get('qtypename'),
         'level':      obj.get('levelname'), #level
         'name':       obj.get('name'),
+        'signs':      obj.get('signs'), # 需要同时显示，比如三角形
         'options':    obj.get('options'),
         'answers':    ans,
         'stat':       obj.get('taskresult'),
@@ -367,7 +368,7 @@ def update_q_v1(client, doc):
     # 其他数据不进入q库，写book_q库：404/502等，is_share
     if old is None:
         collection.insert_one(doc)
-        print("插入q表", doc['publicid'])
+        print("插入q表", doc['publicid'], doc['level'])
         return 0
 
     # 仅更新提供的字段
@@ -483,6 +484,7 @@ def resp_json_url_frombook(mongo_client, resp_text, url_frombook):
         'id':         obj.get('id'),
         'title':      obj.get('title'),
         'name':       obj.get('name'),
+        'signs':      obj.get('signs'), # 需要同时显示，比如三角形
         'options':    obj.get('options')
     }
 

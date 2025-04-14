@@ -78,7 +78,7 @@ for (let i = 0; i < g_qq.answers.length; i++) {
         for (let j = 0; j < ans.pts.length; j++) {
             const coord = ans.pts[j];
             const move = convertCoordinate(coord, g_qq.lu);
-			console.log(j, move);
+			console.log((j+1), move);
 
             // 创建一个 span 来容纳每个坐标
             const moveSpan = document.createElement('span');
@@ -103,3 +103,15 @@ for (let i = 0; i < g_qq.answers.length; i++) {
     }
 }
 document.body.insertBefore(outputContainer, document.body.firstChild);
+function saveHTML(filename = 'page.html') {
+  const html = document.documentElement.outerHTML;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename; // 使用传入的文件名
+  a.click(); // 触发下载
+  URL.revokeObjectURL(url);
+}
+saveHTML('q_' + g_qq.publicid + '.html')
+

@@ -5,6 +5,7 @@
 
 from pymongo import MongoClient
 from config import db_name
+import sys
 
 def stat_book_q_status(book_str):
     client = MongoClient('mongodb://localhost:27017/')
@@ -37,7 +38,7 @@ def statdb_book_running_status(book_str):
     cursor = book_5.find({"status": {"$exists": True}}, {"id": 1, "status": 1, "_id": 0})
 
     print("| book_id | status | total | status==2 | other |")
-    print("| --- | --- | --- | --- | --- |")
+    print("| ------- | ------ | ----- | --------- | ----- |")
     for doc in cursor:
         book_id = doc.get('id')
         status = doc.get('status')
@@ -75,11 +76,15 @@ def statdb_book_running_status(book_str):
             continue
             
         # 打印结果
-        print(f"| {book_id} | {status} | {total} | {status_2_count} | ", end='')
+        print(f"| {book_id:>7} | {status:>6} | {total:>5} | {status_2_count:>9} | ", end='')
         for k, v in other_status_counts.items():
             print(f"status: {k} {v} |", end=' ')
         print()
 
 if __name__ == "__main__":
-    statdb_book_running_status('5')
-    stat_book_q_status('5')
+    if len(sys.argv) == 2:
+        book_str = sys.argv[1]
+        statdb_book_running_status(book_str)
+        stat_book_q_status(book_str)
+    else:
+        quit()

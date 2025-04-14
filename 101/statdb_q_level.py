@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from pymongo import MongoClient
+from pprint import pprint
 from config import db_name
 
 # count_qtype_status_2: 统计 status:2的情况下，各种不同的 qtype各有多少个文档
 # count_level_status_2_sorted: 统计 status:2的情况下，各种不同的 level各有多少个文档，
 
+# 根据https://www.101weiqi.com/9K/，手动填写
 level_total = {
     "15K":4752, 
     "14K":5116, 
@@ -45,9 +47,11 @@ def count_qtype_status_2():
 
     results = collection.aggregate(pipeline)
 
-    for r in results:
+    for i,r in enumerate(results):
         print(f"qtype: {r['_id']}, count: {r['count']}")
-        break
+        if i == 5:
+            print('...')
+            break
 
 def count_leveltype_status_2():
     client = MongoClient()  # 默认连接 localhost
@@ -62,9 +66,11 @@ def count_leveltype_status_2():
 
     results = collection.aggregate(pipeline)
 
-    for r in results:
+    for i,r in enumerate(results):
         print(f"level: {r['_id']}, count: {r['count']}")
-        break
+        if i == 5:
+            print('...')
+            break
 
 def count_level_status_2_sorted():
     client = MongoClient()
@@ -85,13 +91,16 @@ def count_level_status_2_sorted():
     total_ok_deadlive = 0
     total = 0
     for level in level_order:
+        # 匹配 status==2，level首字符符合level_order的文档
         ret = collection.find({"status": 2, "level":{"$regex": f"^{level}"}})
-        all_data_list = [doc.get('_id') for doc in ret]
-        count = len(all_data_list)
+        data_list = [doc.get('_id') for doc in ret]
+        count = len(data_list)
 
+        # 匹配 status==2，qtype==死活题level首字符符合level_order的文档
         ret = collection.find({"status": 2, "qtype":"死活题", "level":{"$regex": f"^{level}"}})
         data_list = [doc.get('_id') for doc in ret]
         perc = 100*float(count)/float(level_total.get(level))
+
         print(f"| {level:>5} | {count:>5} | {len(data_list):>6} | {level_total.get(level):>6} | {perc:>5.0f}% |") 
 
         total_ok += count

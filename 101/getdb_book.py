@@ -7,27 +7,44 @@ import time
 import random
 import sys
 from config import db_name, base_url
-from datetime import datetime
+from datetime import datetime, timedelta
 from ip import SourceIPAdapter
 
+def sleep_until_next_day_9am():
+    now = datetime.now()
+    # 定义当天的晚上10点
+    today_10pm = now.replace(hour=22, minute=0, second=0, microsecond=0)
+
+    if now >= today_10pm:
+        # 定义第二天早上6点
+        next_day_6am = (today_10pm + timedelta(days=1)).replace(hour=6, minute=0, second=0, microsecond=0)
+        # 计算需要休眠的秒数
+        sleep_seconds = (next_day_6am - now).total_seconds() + random.randint(300, 600)
+        print(f"{now.strftime('%Y-%m-%d %H:%M:%S')} 已过晚上10点，休眠 {sleep_seconds} 秒")
+        time.sleep(sleep_seconds)
+    else:
+        pass
+
 def wait_qcounter(counter):
+    sleep_until_next_day_9am()
     '''
     l1_counter, l1_low, l1_high = 1, 15, 120   # 短：快速打开很多；看一个打开一个
     l2_counter, l2_wait         = 25, 300      # 中
     l3_counter, l3_wait         = 500, 8*3600  # 1天
     '''
-    l3_counter_low, l3_counter_high, l3_wait         = 300, 500, 8*3600  # 1天，今天训练结束
+    l3_counter_low, l3_counter_high, l3_wait         = 300, 500, 3600  # 1天，今天训练结束
     l3_counter = random.randint(l3_counter_low, l3_counter_high)
 
-    l2_counter_low, l2_counter_high, l2_wait         = 55, 75, 600       # 中, 稍微休息
+    l2_counter_low, l2_counter_high, l2_wait         = 55, 75, 300       # 中, 稍微休息
     l2_counter = random.randint(l2_counter_low, l2_counter_high)
 
     l1_counter, l1_low, l1_high = 1, 10, 45                              # 短：快速打开很多；看一个打开一个
 
     counter += 1
-    if counter >= l3_counter:
+    if counter % l3_counter == 0:
         wait_time = l3_wait
-        print(f"Reached {l3_counter} Waiting for {wait_time}s")
+        now = datetime.now()
+        print(f"Reached {l3_counter} Waiting for {wait_time}s {now.strftime('%Y-%m-%d %H:%M:%S')}")
         time.sleep(wait_time)
     if counter % l2_counter == 0:
         wait_time = l2_wait
@@ -45,9 +62,9 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
         print("登录失败")
         quit()
         return
-    adapter = SourceIPAdapter(source_ip)
-    session.mount('http://', adapter)
-    session.mount('https://', adapter)
+    #adapter = SourceIPAdapter(source_ip)
+    #session.mount('http://', adapter)
+    #session.mount('https://', adapter)
 
     start_t = time.time()
     code_1_list = []  # 获取页面失败
@@ -82,6 +99,7 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
         # 提高命中率,假定url_no就是publicid
         ret = q_collection.find_one({'publicid': int(url_no)})
         if ret:
+            #print(f'重复 {url_no}')
             continue
 
         cur_no += 1
@@ -102,6 +120,7 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
                 print(f'效率：{100*new_no/cur_no:.0f}%', end=' ')
         getq_counter = wait_qcounter(getq_counter)
 
+    # 设置 book_n中，book_id的 status字段为ok，即完成抓取
     result = book_collection.update_one({'id': book_id}, {'$set': {'status': 'ok'}})
     print(f"book_{book_str} id {book_id}: ok {result}")
 
@@ -137,6 +156,8 @@ def getdb_book(source_ip, username, book_str):
         getdb_bookid(client, source_ip, username, book_str, book_id)
 
         time.sleep(random.randint(30, 120))
+
+        # 找下一个book_n 中不存在 status字段的book, 即没有抓取过的book
         query = {
             '$or': [
                 {'status': {'$exists': False}},
@@ -159,9 +180,9 @@ if __name__ == "__main__":
         if session is None:
             print("登录失败")
             quit()
-        adapter = SourceIPAdapter(source_ip)
-        session.mount('http://', adapter)
-        session.mount('https://', adapter)
+        #adapter = SourceIPAdapter(source_ip)
+        #session.mount('http://', adapter)
+        #session.mount('https://', adapter)
 
         # get one url_frombook
         book_q_str = 'book_' + book_str + '_q'

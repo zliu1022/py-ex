@@ -34,6 +34,13 @@ level_total = {
     "7D":691
 }
 
+# 自定义排序顺序
+level_order = [
+    "15K", "14K", "13K", "12K", "11K", "10K",
+    "9K", "8K", "7K", "6K", "5K", "4K", "3K", "2K", "1K",
+    "1D", "2D", "3D", "4D", "5D", "6D", "7D"
+]
+
 def count_qtype_status_2():
     client = MongoClient()  # 默认连接 localhost
     db = client[db_name]
@@ -48,7 +55,7 @@ def count_qtype_status_2():
     results = collection.aggregate(pipeline)
 
     for i,r in enumerate(results):
-        print(f"qtype: {r['_id']}, count: {r['count']}")
+        print(f"{r['_id']} {r['count']}")
         if i == 5:
             print('...')
             break
@@ -58,31 +65,26 @@ def count_leveltype_status_2():
     db = client[db_name]
     collection = db['q']
 
-    pipeline = [
-        {"$match": {"status": 2}},
-        {"$group": {"_id": "$level", "count": {"$sum": 1}}},
-        {"$sort": {"count": -1}}  # 可选：按数量降序排序
-    ]
 
-    results = collection.aggregate(pipeline)
+    for level in level_order:
+        pipeline = [
+            {"$match": {"status": 2, "level":{"$regex": f"^{level}"}}},
+            {"$group": {"_id": "$level", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}  # 可选：按数量降序排序
+        ]
 
-    for i,r in enumerate(results):
-        print(f"level: {r['_id']}, count: {r['count']}")
-        if i == 5:
-            print('...')
-            break
+        results = collection.aggregate(pipeline)
+
+        total = 0
+        for i,r in enumerate(results):
+            print(f"{r['_id']:>4} {r['count']:>4} | ", end='')
+            total += r['count']
+        print(f'{total}')
 
 def count_level_status_2_sorted():
     client = MongoClient()
     db = client[db_name]
     collection = db['q']
-
-    # 自定义排序顺序
-    level_order = [
-        "15K", "14K", "13K", "12K", "11K", "10K",
-        "9K", "8K", "7K", "6K", "5K", "4K", "3K", "2K", "1K",
-        "1D", "2D", "3D", "4D", "5D", "6D", "7D"
-    ]
 
     print(f"| level | count | 死活题 | 总数   | 完成率 |")
     print(f"| ----- | ----- | ------ | ------ | ------ |")

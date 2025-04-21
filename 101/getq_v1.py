@@ -387,7 +387,7 @@ def update_q_v1(client, doc):
     # 计算差异
     differences = dict_diff(old, new)
     if differences:
-        print("以下字段已被更新：")
+        print("以下字段已被更新", doc['publicid'], doc['level'])
         for field, change in differences.items():
             if field in {'stat.fail_nums', 'stat.ok_nums', 'r', 'xv'}:
                 continue

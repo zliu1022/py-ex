@@ -4,6 +4,7 @@
 from pymongo import MongoClient
 from pprint import pprint
 from config import db_name
+import wcwidth
 
 # count_qtype_status_2: 统计 status:2的情况下，各种不同的 qtype各有多少个文档
 # count_level_status_2_sorted: 统计 status:2的情况下，各种不同的 level各有多少个文档，
@@ -46,6 +47,10 @@ def count_qtype_status_2():
     db = client[db_name]
     collection = db['q']
 
+    ret = collection.find({"status": 2})
+    data_list = [doc.get('_id') for doc in ret]
+    total = len(data_list)
+
     pipeline = [
         {"$match": {"status": 2}},
         {"$group": {"_id": "$qtype", "count": {"$sum": 1}}},
@@ -55,8 +60,10 @@ def count_qtype_status_2():
     results = collection.aggregate(pipeline)
 
     for i,r in enumerate(results):
-        print(f"{r['_id']} {r['count']}")
-        if i == 5:
+        display_width = wcwidth.wcswidth(r['_id'])
+        padding = 10 - display_width  # 假设我们希望总宽度为10
+        print(f"{i+1:>2} {r['_id']}{' ' * padding} | {r['count']:>6} | {100*r['count']/total:>5.1f}%")
+        if i == 25:
             print('...')
             break
 
@@ -65,12 +72,11 @@ def count_leveltype_status_2():
     db = client[db_name]
     collection = db['q']
 
-
     for level in level_order:
         pipeline = [
             {"$match": {"status": 2, "level":{"$regex": f"^{level}"}}},
             {"$group": {"_id": "$level", "count": {"$sum": 1}}},
-            {"$sort": {"count": -1}}  # 可选：按数量降序排序
+            {"$sort": {"_id": 1}}  # 可选：按数量降序排序
         ]
 
         results = collection.aggregate(pipeline)
@@ -94,9 +100,7 @@ def count_level_status_2_sorted():
     total = 0
     for level in level_order:
         # 匹配 status==2，level首字符符合level_order的文档
-        ret = collection.find({"status": 2, "level":{"$regex": f"^{level}"}})
-        data_list = [doc.get('_id') for doc in ret]
-        count = len(data_list)
+        count = collection.count_documents({"status": 2, "level":{"$regex": f"^{level}"}})
 
         # 匹配 status==2，qtype==死活题level首字符符合level_order的文档
         ret = collection.find({"status": 2, "qtype":"死活题", "level":{"$regex": f"^{level}"}})

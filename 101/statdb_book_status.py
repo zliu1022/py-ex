@@ -122,14 +122,14 @@ def statdb_all():
         q_total += total_docs
         q_total_ok += status2_docs
 
-        if doing_doc.get('id') is not None: 
+        if doing_doc is not None: 
             doing_total = collection.count_documents({'book_id': doing_doc['id']})
             doing_ok = collection.count_documents({'book_id': doing_doc['id'], 'status': 2})
             print(f'{doing_doc['id']:>7} | {doing_ok:>6} | {doing_total:>5} |')
         else:
             print()
 
-    print(f'| total | {book_total_ok:>7} | {book_total:>7} | {book_total_ok/book_total:>5.1f}% | {q_total_ok:>7} | {q_total:>7} | {q_total_ok/q_total:>5.1f}% |')
+    print(f'| total | {book_total_ok:>7} | {book_total:>7} | {book_total_ok/book_total*100:>5.1f}% | {q_total_ok:>7} | {q_total:>7} | {q_total_ok/q_total*100:>5.1f}% |')
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:

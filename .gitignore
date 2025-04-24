@@ -2,3 +2,4 @@
 .DS_Store
 /101/.cache
 /101/__pycache__
+/rag/lancedb

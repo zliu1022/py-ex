@@ -92,8 +92,8 @@ def count_level_status_2_sorted():
     db = client[db_name]
     collection = db['q']
 
-    print(f"| level | count | 死活题 | 总数   | 完成率 |")
-    print(f"| ----- | ----- | ------ | ------ | ------ |")
+    print(f"| level | count  | 死活题 | 总数   | 完成率 |")
+    print(f"| ----- | ------ | ------ | ------ | ------ |")
     # 根据排序顺序输出
     total_ok = 0
     total_ok_deadlive = 0
@@ -107,14 +107,14 @@ def count_level_status_2_sorted():
         data_list = [doc.get('_id') for doc in ret]
         perc = 100*float(count)/float(level_total.get(level))
 
-        print(f"| {level:>5} | {count:>5} | {len(data_list):>6} | {level_total.get(level):>6} | {perc:>5.0f}% |") 
+        print(f"| {level:>5} | {count:>6} | {len(data_list):>6} | {level_total.get(level):>6} | {perc:>5.0f}% |") 
 
         total_ok += count
         total_ok_deadlive += len(data_list)
         total += level_total.get(level)
 
     perc = 100*float(total_ok)/float(total)
-    print(f"| total | {total_ok} | {total_ok_deadlive:>6} | {total:>6} | {perc:>5.0f}% |") 
+    print(f"| total | {total_ok:>6} | {total_ok_deadlive:>6} | {total:>6} | {perc:>5.0f}% |") 
 
 if __name__ == "__main__":
     print("status == 2, 各种qtype的题目数量")

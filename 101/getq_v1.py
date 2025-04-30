@@ -371,6 +371,9 @@ def update_q_v1(client, doc):
         print("插入q表", doc['publicid'], doc['level'])
         return 0
 
+    # 20250430, 新网上线，不再更新以前拿到的数据了
+    return 4
+
     # 仅更新提供的字段
     update_data = {k: v for k, v in doc.items() if v is not None}
     new = collection.find_one_and_update(
@@ -489,6 +492,99 @@ def resp_json_url_frombook(mongo_client, resp_text, url_frombook):
 
     return {'ret': True, 'data': doc}
 
+# new web
+def resp_json_url_frombook_v2(mongo_client, resp_text, url_frombook):
+    title_id = None
+    title_level = None
+    pattern = r"<title>\s*Q-(\d+)\s*-\s*(\S+?)\s*-"
+    match = re.search(pattern, resp_text, re.S)
+    if match:
+        title_id = match.group(1)
+        title_level = match.group(2)
+        print('html提取 id和level', title_id, title_level)
+
+    # 提取js变量
+    #re.DOTALL 标志使 . 可以匹配包括换行符在内的所有字符。
+    #.*? 是非贪婪匹配，尽可能少地匹配字符，直到找到第一个 };。
+    pattern = r'var\s+qqdata\s*=\s*\{.*?\};'
+    match = re.search(pattern, resp_text, re.DOTALL)
+    if match:
+        g_qq_str = match.group()
+        json_str = g_qq_str[13:-1] # 去除开头的 var g_qq =，以及最后的分号
+        try:
+            obj = json.loads(json_str)
+        except json.JSONDecodeError:
+            print(f'Failed to decode json: {json_str}')
+            quit()
+            return {'ret': False, 'code': 2}
+    else:
+        print(f'Failed to find g_qq: {url_frombook}')
+        return {'ret': False, 'code': 1}
+
+    if obj.get('is_public') == False:
+        print(f'Not public {url_frombook} {title_id}')
+        return {'ret': False, 'code': 3}
+
+    if obj.get('status') != 2:
+        # status：0审核，1淘汰，2入库, 大量!=2可能异常
+        print(f'Info: status != 2 {url_frombook}')
+
+    prepos = decode_prepos(obj.get('c'), obj.get('r'))
+
+    # 对每个字符串进行字符位置交换
+    if obj.get('xv') and obj.get('xv') % 3 != 0:
+        swapped_prepos = [[s[1] + s[0] if len(s) == 2 else s for s in sublist] for sublist in prepos]
+        prepos = swapped_prepos
+
+    prepos_json = {   
+        'b': prepos[0],
+        'w': prepos[1]
+    }
+    stones_key = canonicalize_positions(prepos_json)
+    stones_key_list = [list(item) for item in stones_key]
+    stones_key_json = json.dumps(stones_key_list, sort_keys=True)
+
+    ans = []
+    for an in obj['answers']:
+        if an['ty'] == 1 or an['ty'] == 2 and an['st'] == 2:
+            anseq = []
+            for p in an['pts']:
+                anseq.append(p['p'])
+            e = {
+                'ty': an['ty'],
+                'st': an['st'],
+                'p':  anseq
+            }
+            ans.append(e)
+
+    doc = {
+        'publicid':   obj.get('publicid'),  #唯一id，但不一定能通过level/id访问
+        'status':     obj.get('status'),    # 0未入库，1被淘汰，2正常
+        'level':      obj.get('levelname'), #level
+        'qtype':      obj.get('qtypename'),
+        'blackfirst': obj.get('blackfirst'),
+        'c':          obj.get('c'),
+        'r':          obj.get('r'),
+        'xv':         obj.get('xv'),
+        'prepos':     prepos_json, 
+        'min_pp':     stones_key_json,
+        'answers':    ans,
+        'stat':       {"ok_total": obj.get('yes_count'), "fail_total":obj.get('no_count')},
+        'similar':    obj.get('sms_count'),
+        'bookinfos':    obj.get('bookinfos'),
+        'size':       obj.get('lu'),
+        'title_id':   title_id,
+        'id':         obj.get('id'),
+        'title':      obj.get('title'),
+        'name':       obj.get('name'),
+        'signs':      obj.get('signs'), # 棋盘显示，三角形
+        'options':    obj.get('options'), # 选择题选项
+        'xuandians':  obj.get('xuandians'), # 棋盘上的选点
+        'version':    '20250430'
+    }
+
+    return {'ret': True, 'data': doc}
+
 #q库唯一索引只有minpp
 #从url_level, url_no抓取，就更新url_level, url_no
 #从url_frombook抓取，就更新url_frombook
@@ -499,7 +595,7 @@ def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
     url = base_url + url_frombook
     response = get_url_v1(session, url)
     if response.status_code == 200:
-        ret = resp_json_url_frombook(mongo_client, response.text, url_frombook)
+        ret = resp_json_url_frombook_v2(mongo_client, response.text, url_frombook)
         if ret.get('ret'):
             # 成功：更新q表，更新book_n_q表, 不锁定book_n_q表，确保一本book_id只有一个任务
             retcode = update_q_v1(mongo_client, ret.get('data')) # 0:新增,1:更新

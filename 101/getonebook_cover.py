@@ -111,8 +111,9 @@ def getonebook_cover(html_content):
 from pprint import pprint
 if __name__ == "__main__":
     bookcover_list = [
+        'book/62635_cover.html',
         #"book/中级班练习题.html",
-        'book/21744_cover.html',
+        #'book/21744_cover.html',
         #'book/28238_cover.html',
         #'book/64239_cover_nocomplete.html',
         #'book/52398_cover_emptytitle.html',

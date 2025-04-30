@@ -425,12 +425,11 @@ def resp_json_url_frombook(mongo_client, resp_text, url_frombook):
             return {'ret': False, 'code': 2}
     else:
         print(f'Failed to find g_qq: {url_frombook}')
-        quit()
         return {'ret': False, 'code': 1}
 
     if obj.get('is_public') == False:
         print(f'Not public {url_frombook} {title_id}')
-        return {'ret': False, 'data': None}
+        return {'ret': False, 'code': 3}
 
     if obj.get('status') != 2:
         # status：0审核，1淘汰，2入库, 大量!=2可能异常
@@ -518,9 +517,9 @@ def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
             print(f"不共享，{url_frombook}")
             result = book_q_collection.update_one(
                 {'url_frombook': url_frombook},
-                {'$set': {'status': 700}}
+                {'$set': {'status': 600 + ret.get('code')*100}}
             )
-            return {'ret': False, 'code': 2, 'message':'不共享'}
+            return {'ret': False, 'code': 1 + ret.get('code'), 'message':'不共享'}
     else:
         # 失败：只更新book_n_q表
         print(f"获取页面失败，{url_frombook}")

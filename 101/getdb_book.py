@@ -68,7 +68,8 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
 
     start_t = time.time()
     code_1_list = []  # 获取页面失败
-    code_2_list = []  # 不共享
+    code_2_list = []  # fail to get g_qq
+    code_3_list = []  # 不共享
     getq_counter = 0
 
     db = client[db_name]
@@ -114,6 +115,10 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
                 code_1_list.append(url_frombook)
             if code == 2:
                 code_2_list.append(url_frombook)
+                if len(code_2_list) >=2:
+                    quit()
+            if code == 3:
+                code_3_list.append(url_frombook)
         else:
             if result.get('code') == 0:
                 new_no += 1
@@ -126,7 +131,8 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
 
     end_t = time.time()
     print("获取页面失败（code=1）列表：", code_1_list)
-    print("不共享      （code=2）列表：", code_2_list)
+    print("g_qq        （code=2）列表：", code_2_list)
+    print("不共享      （code=3）列表：", code_3_list)
     print(f'book_{book_str} id {book_id} {cur_no} done')
     print('cost {:5.2f}s'.format(end_t - start_t))
     print('------------------------------------------------------------')

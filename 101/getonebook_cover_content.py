@@ -50,6 +50,11 @@ def getonebook_cover_content(html_content):
 
 from pprint import pprint
 if __name__ == '__main__':
+    #新网站
+    #book_complete_htmlname = 'book/43441_cover_56114.html'
+    #book_complete_htmlname = 'book/48773_cover_71845.html'
+
+    #旧网站
     book_complete_htmlname = 'book/62635_cover_121970.html'
     with open(book_complete_htmlname, "r", encoding="utf-8") as file:
         html_content = file.read()

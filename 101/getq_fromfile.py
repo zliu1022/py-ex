@@ -15,6 +15,8 @@ from bson import ObjectId
 from config import site_name, base_url, cache_dir, db_name, headers_get, headers_login
 import time
 from getq_v1 import resp_json_url_frombook, update_q_v1
+from getq_v1 import resp_json_url_frombook_v2
+from pprint import pprint
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
@@ -29,7 +31,7 @@ if __name__ == "__main__":
         html_content = file.read()
 
     url_frombook = ''
-    ret = resp_json_url_frombook(client, html_content, url_frombook)
+    ret = resp_json_url_frombook_v2(client, html_content, url_frombook)
     if ret.get('ret'):
         retcode = update_q_v1(client, ret.get('data')) # 0:新增,1:更新
     else:

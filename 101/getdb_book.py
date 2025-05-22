@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from pymongo import MongoClient
-from getq_v1 import login, getq_url_frombook, inc_getqnum
+from getq_v1 import login, getq_url_frombook, inc_getqnum, getq_url_frombook_from_q
 import time
 import random
 import sys
@@ -13,7 +13,7 @@ from ip import SourceIPAdapter
 def sleep_until_next_day_9am():
     now = datetime.now()
     # 定义当天的晚上10点
-    today_10pm = now.replace(hour=22, minute=0, second=0, microsecond=0)
+    today_10pm = now.replace(hour=22, minute=30, second=0, microsecond=0)
 
     if now >= today_10pm:
         # 定义第二天早上6点
@@ -68,25 +68,28 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
 
     start_t = time.time()
     code_1_list = []  # 获取页面失败
-    code_2_list = []  # fail to get g_qq
-    code_3_list = []  # 不共享
+    code_2_list = []  # fail to find g_qq (maybe not login)
+    code_3_list = []  # decode fail, getq 就退出，很严重，json内容找错了
+    code_4_list = []  # 不共享
     getq_counter = 0
 
     db = client[db_name]
     book_q_str = 'book_' + book_str + '_q'
     book_q_collection = db[book_q_str]
+    book_collection = db["book_" + book_str]
 
     # 找到book_id，没成功抓取的url_frombook
-    documents = book_q_collection.find({'book_id': book_id, 'status': { '$ne': 2 }}, {'_id': 0, 'url_no':1, 'url_frombook': 1}).sort('url_frombook', 1)
+    documents = book_q_collection.find({'book_id': book_id, 'status': { '$nin': [0,1,2] }}, {'_id': 0, 'url_no':1, 'url_frombook': 1}).sort('url_frombook', 1)
     #data_list = [doc.get('url_frombook') for doc in documents]
     data_list = [{'url_no': doc.get('url_no'), 'url_frombook': doc.get('url_frombook')} for doc in documents]
     if len(data_list) == 0:
         print(f"No document found with {book_id}")
+        result = book_collection.update_one({'id': book_id}, {'$set': {'status': 'ok'}})
+        print(f"book_{book_str} id {book_id}: ok {result}")
         return
     print(f'bookid {book_id} {len(data_list)} urls (status!=2) ')
 
     # 在book库，锁定book_id
-    book_collection = db["book_" + book_str]
     result = book_collection.update_one({'id': book_id}, {'$set': {'status': 'doing'}})
     print(f"book_{book_str} id {book_id}: doing/LOCKED!!! {result}")
 
@@ -95,34 +98,41 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
     new_no = 0
     #for url_frombook in data_list:
     for data_item in data_list:
-        url_no = data_item['url_no']
+        url_no = data_item.get('url_no')
         url_frombook = data_item['url_frombook']
+
         # 提高命中率,假定url_no就是publicid
-        ret = q_collection.find_one({'publicid': int(url_no)})
-        if ret:
-            #print(f'重复 {url_no}')
-            continue
+        if url_no is not None and url_no != '':
+            ret = q_collection.find_one({'publicid': int(url_no)})
+            if ret:
+                #print(f'重复 {url_no}')
+                continue
 
         cur_no += 1
         #print(f'{book_q_str} {book_id} {url_frombook} {cur_no}th')
-        print(f'{url_frombook} {cur_no}th')
+        print(f'{url_frombook} {url_no} {cur_no}th', end=' ')
         result = getq_url_frombook(client, session, book_q_str, url_frombook)
         inc_getqnum(client, username)
 
         if result.get('ret') == False:
             code = result.get('code')
-            if code == 1:
+            if code == 1: # 页面抓取失败
                 code_1_list.append(url_frombook)
-            if code == 2:
+            if code == 2: # 找不到 g_qq, 可能没登录
                 code_2_list.append(url_frombook)
                 if len(code_2_list) >=2:
                     quit()
-            if code == 3:
+            if code == 3: # decode g_qq 失败,不会到这儿
                 code_3_list.append(url_frombook)
+            if code == 4: # not public
+                url_from_q = '/q/' + str(url_no) + '/'
+                result = getq_url_frombook_from_q(client, session, book_q_str, url_frombook, url_from_q)
+                print('retry getq_url_frombook_from_q', result.get('ret'))
         else:
+            # 成功时，0不重复，1重复
             if result.get('code') == 0:
                 new_no += 1
-                print(f'效率：{100*new_no/cur_no:.0f}%', end=' ')
+            print(f'效率：{100*new_no/cur_no:.0f}%', end=' ')
         getq_counter = wait_qcounter(getq_counter)
 
     # 设置 book_n中，book_id的 status字段为ok，即完成抓取
@@ -133,6 +143,7 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
     print("获取页面失败（code=1）列表：", code_1_list)
     print("g_qq        （code=2）列表：", code_2_list)
     print("不共享      （code=3）列表：", code_3_list)
+    print("不共享      （code=3）列表：", code_4_list)
     print(f'book_{book_str} id {book_id} {cur_no} done')
     print('cost {:5.2f}s'.format(end_t - start_t))
     print('------------------------------------------------------------')
@@ -173,6 +184,19 @@ def getdb_book(source_ip, username, book_str):
         documents = book_collection.find(query, {'id': 1, '_id': 0})
         data_list = [doc.get('id') for doc in documents]
 
+def getdb_book_404(source_ip, username, book_str):
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client[db_name]
+    book_q_col_404 = db[f'book_{book_str}_q_404']
+
+    docs = book_q_col_404.find({'status': {'$nin':[0,1,2]}},  {'book_id': 1})
+    book_404_set = set()
+    for doc in docs:
+        book_404_set.add(doc.get('book_id'))
+
+    for book_id in book_404_set:
+        getdb_bookid(client, source_ip, username, book_str, book_id)
+
 if __name__ == "__main__":
     client = MongoClient('mongodb://localhost:27017/')
     if len(sys.argv) == 6:
@@ -211,6 +235,7 @@ if __name__ == "__main__":
 
         # get one book
         getdb_book(source_ip, username, book_str)
+        #getdb_book_404(source_ip, username, book_str)
         print('getdb book', username, book_str, 'done')
     else:
         print('getdb_book.py source_ip username book_str book_id url_frombook')

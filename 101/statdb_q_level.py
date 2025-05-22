@@ -9,7 +9,7 @@ import wcwidth
 # count_qtype_status_2: 统计 status:2的情况下，各种不同的 qtype各有多少个文档
 # count_level_status_2_sorted: 统计 status:2的情况下，各种不同的 level各有多少个文档，
 
-# 根据https://www.101weiqi.com/9K/，手动填写
+# 手动填写
 level_total = {
     "15K":4752, 
     "14K":5116, 
@@ -92,6 +92,10 @@ def count_level_status_2_sorted():
     db = client[db_name]
     collection = db['q']
 
+    total_ok = collection.count_documents({"status": 2})
+    total_ok_deadlive = collection.count_documents({"status": 2, "qtype":"死活题"})
+    print(f"| total | {total_ok:>6} | {total_ok_deadlive:>6} |") 
+
     print(f"| level | count  | 死活题 | 总数   | 完成率 |")
     print(f"| ----- | ------ | ------ | ------ | ------ |")
     # 根据排序顺序输出
@@ -117,10 +121,12 @@ def count_level_status_2_sorted():
     print(f"| total | {total_ok:>6} | {total_ok_deadlive:>6} | {total:>6} | {perc:>5.0f}% |") 
 
 if __name__ == "__main__":
+    '''
     print("status == 2, 各种qtype的题目数量")
     count_qtype_status_2()
     print("status == 2, 各种level的题目数量")
     count_leveltype_status_2()
+    '''
     print("status == 2, level规范后的题目总数、死活题数量")
     count_level_status_2_sorted()
 

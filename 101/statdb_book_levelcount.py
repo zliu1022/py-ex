@@ -45,11 +45,11 @@ if __name__ == "__main__":
         ret = statdb_onebook_levelcount(book_str)
         all_levelcount[book_str] = ret
 
-    print("| level | book_1_q | book_2_q | book_3_q | book_4_q | book_5_q | 求和 |")
-    print("| --- | --- | --- | --- | --- | --- | --- |")
+    print("| level | book_1_q | book_2_q | book_3_q | book_4_q | book_5_q |  求和  |")
+    print("| ----- | -------- | -------- | -------- | -------- | -------- | ------ |")
     sumcount = {}
     for l in level_order:
-        print('|', l, end=' | ')
+        print(f'|{l:>6}', end=' | ')
         count = 0
         for b in book_list:
             count += all_levelcount[b][l]
@@ -57,11 +57,11 @@ if __name__ == "__main__":
                 sumcount[b] += all_levelcount[b][l]
             else:
                 sumcount[b] = all_levelcount[b][l]
-            print(all_levelcount[b][l], end=' | ')
-        print(count)
+            print(f'{all_levelcount[b][l]:>8}', end=' | ')
+        print(f'{count:>6} |')
 
     print('| ', '求和', end=' | ')
     for b in book_list:
-        print(sumcount[b], end=' | ')
+        print(f'{sumcount[b]:>8}', end=' | ')
     print()
 

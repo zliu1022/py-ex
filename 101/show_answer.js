@@ -59,8 +59,8 @@ outputContainer.style.width = '100%';
 outputContainer.style.fontSize = '12px';
 outputContainer.style.marginBottom = '10px';
 let answerCounter = 1;
-for (let i = 0; i < g_qq.answers.length; i++) {
-    const ans = g_qq.answers[i];
+for (let i = 0; i < qqdata.answers.length; i++) {
+    const ans = qqdata.answers[i];
 
     if (ans.ty == 1 && ans.st == 2) {
         // 创建一个段落来显示当前答案的所有坐标
@@ -77,7 +77,7 @@ for (let i = 0; i < g_qq.answers.length; i++) {
         // 遍历 ans.pts 中的所有点
         for (let j = 0; j < ans.pts.length; j++) {
             const coord = ans.pts[j];
-            const move = convertCoordinate(coord, g_qq.lu);
+            const move = convertCoordinate(coord, qqdata.lu);
 			console.log((j+1), move);
 
             // 创建一个 span 来容纳每个坐标
@@ -113,5 +113,5 @@ function saveHTML(filename = 'page.html') {
   a.click(); // 触发下载
   URL.revokeObjectURL(url);
 }
-saveHTML('q_' + g_qq.publicid + '.html')
+saveHTML('q_' + qqdata.publicid + '.html')
 

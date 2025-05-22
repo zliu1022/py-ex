@@ -42,6 +42,12 @@ def login(mongo_client, username):
                     session.cookies = jar
                     print(f"使用存储的session，用户名：{username}。")
                     return session
+                else:
+                    print('no cookies from login collection')
+            else:
+                print(datetime.now())
+                print(session_time)
+                print('datetime.now() - session_time >= 999days')
         else:
             print("存储的session已过期，重新登录。")
     else:
@@ -68,6 +74,8 @@ def login(mongo_client, username):
             logged_in_username = curuser_input.get('value')
             print(f"登录成功，用户名：{logged_in_username}")
             print("登录成功，保存session。")
+            print('session', session)
+            print('cookies', session.cookies)
             # 提取cookie并保存到MongoDB
             session_cookies = []
             for cookie in session.cookies:
@@ -371,8 +379,9 @@ def update_q_v1(client, doc):
         print("插入q表", doc['publicid'], doc['level'])
         return 0
 
-    # 20250430, 新网上线，不再更新以前拿到的数据了
-    return 4
+    # 20250430, 新网上线，不再更新以前拿到的数据了, 返回成功，但是code==1
+    print("已经存在", old['_id'])
+    return 1
 
     # 仅更新提供的字段
     update_data = {k: v for k, v in doc.items() if v is not None}
@@ -492,6 +501,29 @@ def resp_json_url_frombook(mongo_client, resp_text, url_frombook):
 
     return {'ret': True, 'data': doc}
 
+def hard_match(resp_text):
+    start_index = resp_text.find('var qqdata = ')
+    if start_index != -1:
+        # Step 2: Find the starting index of the JSON object (after the '=' sign)
+        json_start = resp_text.find('{', start_index)
+        # Step 3: Keep track of the braces to find the matching closing brace
+        brace_count = 1
+        index = json_start + 1
+        while brace_count > 0 and index < len(resp_text):
+            if resp_text[index] == '{':
+                brace_count += 1
+            elif resp_text[index] == '}':
+                brace_count -= 1
+            index += 1
+        # Step 4: Extract the JSON string
+        json_str = resp_text[json_start:index]
+        # Step 5: Load the JSON data
+        qqdata = json.loads(json_str)
+    else:
+        print(resp_text)
+        qqdata = None
+    return qqdata
+
 # new web
 def resp_json_url_frombook_v2(mongo_client, resp_text, url_frombook):
     title_id = None
@@ -519,6 +551,7 @@ def resp_json_url_frombook_v2(mongo_client, resp_text, url_frombook):
             return {'ret': False, 'code': 2}
     else:
         print(f'Failed to find g_qq: {url_frombook}')
+        print(resp_text)
         return {'ret': False, 'code': 1}
 
     if obj.get('is_public') == False:
@@ -610,7 +643,7 @@ def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
             return {'ret': True, 'data': ret.get('data'), 'code': retcode}
         else:
             # 失败：只更新book_n_q表, is_share
-            print(f"不共享，{url_frombook}")
+            print(f"resp_json fail {url_frombook} {ret.get('code')}")
             result = book_q_collection.update_one(
                 {'url_frombook': url_frombook},
                 {'$set': {'status': 600 + ret.get('code')*100}}
@@ -619,6 +652,46 @@ def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
     else:
         # 失败：只更新book_n_q表
         print(f"获取页面失败，{url_frombook}")
+        # 这个有bug，可能出现多个相同的url_frombook
+        result = book_q_collection.update_one(
+            {'url_frombook': url_frombook},
+            {'$set': {'status': response.status_code}}
+        )
+        return {'ret': False, 'code': 1, 'message':'获取页面失败'}
+
+# 当url_frombook抓取失败时(隐藏或是删除），直接通过/q/url_no去抓取
+def getq_url_frombook_from_q(mongo_client, session, book_q_str, url_frombook, url_from_q):
+    db = mongo_client[db_name]
+    book_q_collection = db[book_q_str]
+
+    url = base_url + url_from_q
+    response = get_url_v1(session, url)
+    if response.status_code == 200:
+        ret = resp_json_url_frombook_v2(mongo_client, response.text, url_frombook)
+        if ret.get('ret'):
+            # 成功：更新q表，更新book_n_q表, 不锁定book_n_q表，确保一本book_id只有一个任务
+            retcode = update_q_v1(mongo_client, ret.get('data')) # 0:新增,1:更新
+            result = book_q_collection.update_one(
+                {'url_frombook': url_frombook},
+                {'$set': {
+                    'publicid': ret.get('data').get('publicid'), 
+                    'min_pp':   ret.get('data').get('min_pp'), 
+                    'status':   ret.get('data').get('status')
+                }}
+            )
+            return {'ret': True, 'data': ret.get('data'), 'code': retcode}
+        else:
+            # 失败：只更新book_n_q表, is_share
+            print(f"resp_json fail {url_frombook} {url_from_q} {ret.get('code')}")
+            result = book_q_collection.update_one(
+                {'url_frombook': url_frombook},
+                {'$set': {'status': 600 + ret.get('code')*100}}
+            )
+            return {'ret': False, 'code': 1 + ret.get('code'), 'message':'不共享'}
+    else:
+        # 失败：只更新book_n_q表
+        print(f"获取页面失败，{url_frombook} {url_from_q}")
+        # 这个有bug，可能出现多个相同的url_frombook
         result = book_q_collection.update_one(
             {'url_frombook': url_frombook},
             {'$set': {'status': response.status_code}}

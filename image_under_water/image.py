@@ -3,161 +3,133 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
-# Define refractive indices
-n_water = 1.333  # Refractive index of water
-n_air = 1.000    # Refractive index of air
+# Refractive indices
+n_air = 1.000
+n_water = 1.333
 
-# Define water surface position
+# Positions
 z_water_surface = 0
+object_depth = -5  # Depth of the object below the water surface
+eye_height = 5     # Height of the eye above the water surface
 
-# Define position of the object underwater
-object_point = np.array([0, 0, -5])  # (x, y, z)
+# Define positions
+object_point = np.array([0, object_depth])  # (x, z)
+eye_position = np.array([0, eye_height])
 
-# Define the position of the eye
-eye_position = np.array([0, 0, 5])
+# Field of view and number of rays
+fov = np.pi / 3  # 60 degrees field of view
+num_rays = 20    # Number of rays to plot
 
-# Define the directions of the light rays emitted from the object point (with various angles)
-theta = np.linspace(-np.pi/4, np.pi/4, 200)  # Increased number of rays
-phi = np.linspace(-np.pi/4, np.pi/4, 200)    # Increased number of rays
+# Generate angles within the field of view
+theta = np.linspace(-fov / 2, fov / 2, num_rays)
 
-# Create the figure
-fig = plt.figure(figsize=(10, 8))
-ax = fig.add_subplot(111, projection='3d')
+# Create figure
+fig, ax = plt.subplots(figsize=(10, 8))
 
 # Plot water surface
-xx, yy = np.meshgrid(np.linspace(-10, 10, 10), np.linspace(-10, 10, 10))
-zz = np.zeros_like(xx) + z_water_surface
-ax.plot_surface(xx, yy, zz, alpha=0.3, color='cyan')
+ax.axhline(y=z_water_surface, color='blue', linestyle='-', linewidth=2, label='Water Surface')
 
-# Plot the underwater object point
-ax.scatter(object_point[0], object_point[1], object_point[2], color='red', s=100, label='Underwater Object')
+# Plot object and eye
+ax.plot(object_point[0], object_point[1], 'ro', markersize=10, label='Underwater Object')
+ax.plot(eye_position[0], eye_position[1], 'go', markersize=10, label='Eye Position')
 
-# Plot the eye position
-ax.scatter(eye_position[0], eye_position[1], eye_position[2], color='green', s=100, label='Eye Position')
+# Initialize virtual image points list
+virtual_image_points = []
 
-# Initialize list to store virtual image points
-virtual_points = []
-
-# Loop over each light ray
+# Loop over each ray
 for t in theta:
-    for p in phi:
-        # Calculate the direction vector of the light ray in water
-        direction_in_water = np.array([
-            np.sin(t)*np.cos(p),
-            np.sin(t)*np.sin(p),
-            np.cos(t)
-        ])
-        direction_in_water = direction_in_water / np.linalg.norm(direction_in_water)
+    # Direction vector of the ray in air (from eye to water surface)
+    direction_in_air = np.array([
+        np.sin(t),    # Horizontal component
+        -np.cos(t)    # Vertical component (negative because ray goes down)
+    ])
+    direction_in_air = direction_in_air / np.linalg.norm(direction_in_air)
 
-        # Calculate intersection point with water surface
-        # Parametric equation: r = object_point + s * direction_in_water
-        # Solve for s such that z = z_water_surface
-        if direction_in_water[2] == 0:
-            continue
-        s = (z_water_surface - object_point[2]) / direction_in_water[2]
-        if s <= 0:
-            continue  # The ray does not reach the water surface
-        intersection_point = object_point + s * direction_in_water
+    # Calculate intersection with water surface
+    s = (z_water_surface - eye_position[1]) / direction_in_air[1]
+    if s <= 0:
+        continue  # Ray does not intersect the water surface in front of the eye
+    intersection_point = eye_position + s * direction_in_air
 
-        # Calculate incidence angle theta1
-        cos_theta1 = abs(direction_in_water[2])  # cos(theta1) = |direction_in_water[2]|
-        sin_theta1 = np.sqrt(1 - cos_theta1**2)
-        theta1 = np.arccos(cos_theta1)
+    # Calculate angle of incidence
+    cos_theta1 = -direction_in_air[1]  # Negative because normal is upward
+    sin_theta1 = np.sqrt(1 - cos_theta1**2)
 
-        # Use Snell's Law to calculate refraction angle theta2
-        sin_theta2 = (n_water / n_air) * sin_theta1
-        # Total internal reflection check
-        if sin_theta2 > 1:
-            continue  # Total internal reflection occurs, skip this ray
-        theta2 = np.arcsin(sin_theta2)
-        cos_theta2 = np.cos(theta2)
+    # Apply Snell's Law to find the angle of refraction
+    sin_theta2 = (n_air / n_water) * sin_theta1
+    if abs(sin_theta2) > 1:
+        continue  # Total internal reflection (should not occur from air to water)
+    cos_theta2 = np.sqrt(1 - sin_theta2**2)
 
-        # Calculate refracted ray direction in air
-        # Adjust the x and y components based on the ratio of sin(theta2)/sin(theta1)
-        if sin_theta1 != 0:
-            ratio = sin_theta2 / sin_theta1
-            direction_in_air = np.array([
-                direction_in_water[0] * ratio,
-                direction_in_water[1] * ratio,
-                np.sign(direction_in_water[2]) * cos_theta2
-            ])
-        else:
-            direction_in_air = np.array([0, 0, np.sign(direction_in_water[2]) * cos_theta2])
-        direction_in_air = direction_in_air / np.linalg.norm(direction_in_air)
+    # Direction of refracted ray in water
+    direction_in_water = np.array([
+        (n_air / n_water) * direction_in_air[0],
+        -cos_theta2   # Negative because ray continues downwards in water
+    ])
+    direction_in_water = direction_in_water / np.linalg.norm(direction_in_water)
 
-        # Ensure that the refracted ray is going upwards
-        if direction_in_air[2] <= 0:
-            continue
+    # Calculate intersection with the underwater object depth
+    t_object = (object_point[1] - intersection_point[1]) / direction_in_water[1]
+    if t_object <= 0:
+        continue  # The refracted ray does not reach the object
+    point_on_object = intersection_point + t_object * direction_in_water
 
-        # Check if the refracted ray reaches the eye
-        delta = eye_position - intersection_point
-        t_eye = np.dot(delta, direction_in_air) / np.dot(direction_in_air, direction_in_air)
-        if t_eye <= 0:
-            continue  # Refracted ray does not reach the eye
+    # Plot incident ray in air
+    ax.plot(
+        [eye_position[0], intersection_point[0]],
+        [eye_position[1], intersection_point[1]],
+        color='orange',
+        linewidth=2
+    )
 
-        # Calculate the point on the refracted ray that is closest to the eye position
-        point_on_ray = intersection_point + t_eye * direction_in_air
-        distance_to_eye = np.linalg.norm(point_on_ray - eye_position)
-        if distance_to_eye > 0.1:  # Adjust the tolerance as needed
-            continue
+    # Plot refracted ray in water
+    ax.plot(
+        [intersection_point[0], point_on_object[0]],
+        [intersection_point[1], point_on_object[1]],
+        color='blue',
+        linewidth=2
+    )
 
-        # Plot the underwater light ray
-        ax.plot(
-            [object_point[0], intersection_point[0]],
-            [object_point[1], intersection_point[1]],
-            [object_point[2], intersection_point[2]],
-            color='blue', linewidth=1
-        )
+    # Extend the incident ray backward to find the virtual image
+    t_virtual = (object_point[1] - intersection_point[1]) / direction_in_air[1]
+    virtual_point = intersection_point + t_virtual * direction_in_air
+    virtual_image_points.append(virtual_point)
 
-        # Plot the refracted ray in air
-        ax.plot(
-            [intersection_point[0], eye_position[0]],
-            [intersection_point[1], eye_position[1]],
-            [intersection_point[2], eye_position[2]],
-            color='orange', linewidth=1
-        )
+    # Plot the extension of the incident ray (virtual ray) as a dashed line
+    ax.plot(
+        [intersection_point[0], virtual_point[0]],
+        [intersection_point[1], virtual_point[1]],
+        color='gray',
+        linestyle='dashed',
+        linewidth=1
+    )
 
-        # Extend the refracted ray backward to find the virtual image
-        t_virtual = - (intersection_point[2] - object_point[2]) / direction_in_air[2]
-        if t_virtual >= 0:
-            virtual_point = intersection_point + t_virtual * direction_in_air
-            virtual_points.append(virtual_point)
+# Plot all virtual image points
+virtual_image_points = np.array(virtual_image_points)
+if virtual_image_points.size > 0:
+    ax.plot(
+        virtual_image_points[:,0],
+        virtual_image_points[:,1],
+        'm*',
+        markersize=10,
+        label='Virtual Image'
+    )
 
-            # Plot the extension of the refracted ray (dashed line)
-            ax.plot(
-                [intersection_point[0], virtual_point[0]],
-                [intersection_point[1], virtual_point[1]],
-                [intersection_point[2], virtual_point[2]],
-                color='gray', linestyle='dashed', linewidth=10
-            )
+# Labels and title
+ax.set_xlabel('Horizontal Position (X)')
+ax.set_ylabel('Vertical Position (Z)')
+ax.set_title('Refraction at Water Surface and Virtual Image Formation')
 
-# Plot virtual image points
-if virtual_points:
-    virtual_points = np.array(virtual_points)
-    ax.scatter(virtual_points[:,0], virtual_points[:,1], virtual_points[:,2], color='purple', s=50, label='Virtual Image')
+# Legend
+ax.legend(loc='upper right')
 
-# Set axis labels
-ax.set_xlabel('X Axis')
-ax.set_ylabel('Y Axis')
-ax.set_zlabel('Z Axis')
+# Axes limits
+ax.set_xlim(-6, 6)
+ax.set_ylim(-6, 6)
 
-# Set title
-ax.set_title('3D Image Formation According to Snell\'s Law')
-
-# Set legend
-handles, labels = ax.get_legend_handles_labels()
-by_label = dict(zip(labels, handles))
-ax.legend(by_label.values(), by_label.keys())
-
-# Set display range
-ax.set_xlim(-7, 7)
-ax.set_ylim(-7, 7)
-ax.set_zlim(-10, 10)
-
-# Show grid
+# Grid
 ax.grid(True)
 
-# Show the figure
+# Show plot
 plt.show()

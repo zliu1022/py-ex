@@ -41,13 +41,14 @@ def statdb_book_running_status(book_str):
     print(f'总共 {count_all} 本书，已抓取 {count_ok} 本书')
 
     # 查询book_5集合中有status字段的文档
-    cursor = book_5.find({"status": {"$exists": True}}, {"id": 1, "status": 1, "_id": 0})
+    #cursor = book_5.find({"status": {"$exists": True}}, {"id": 1, "status": 1, "_id": 0})
+    cursor = book_5.find({'$or': [{"status": {"$exists": False}},{'status':'doing'}]}, {"id": 1, "status": 1, "_id": 0})
 
     print("| book_id | status | total | status==2 | other |")
     print("| ------- | ------ | ----- | --------- | ----- |")
     for doc in cursor:
         book_id = doc.get('id')
-        status = doc.get('status')
+        status = doc.get('status', 'none')
 
         # 在book_5_q集合中查询book_id等于id的文档，并统计各种status的数量
         pipeline = [
@@ -77,8 +78,8 @@ def statdb_book_running_status(book_str):
         '''
 
         #if status == "ok": # 跳过这些：下载过一遍，跳过q中已有publicid
-        if status == "ok" and total == status_2_count: # 跳过这些：全部下载过一遍
-            continue
+        #if status == "ok" and total == status_2_count: # 跳过这些：全部下载过一遍
+        #    continue
             
         # 打印结果
         print(f"| {book_id:>7} | {status:>6} | {total:>5} | {status_2_count:>9} | ", end='')
@@ -94,7 +95,7 @@ def statdb_all():
     book_total_ok = 0
     q_total = 0
     q_total_ok = 0
-    print("| level | book_ok |  total  |   ok%  |   q_ok  |  total  |   ok%  |  doing  |   ok   | total |")
+    print("| level | book_ok |  total  |   ok%  |  0,1,2  | url_no  |   ok%  |  doing  |   ok   | total |")
     print("| ----- | ------- | ------- | ------ | ------- | ------- | ------ | ------- | ------ | ----- |")
     for n in range(1, 6):
         collection_name = f'book_{n}'
@@ -112,8 +113,11 @@ def statdb_all():
 
         collection_name = f'book_{n}_q'
         collection = db[collection_name]
-        total_docs = collection.count_documents({})
-        status2_docs = collection.count_documents({'status': 2})
+
+        #total_docs = collection.count_documents({})
+        total_docs = len(collection.distinct("url_no"))
+
+        status2_docs = collection.count_documents({'status': {'$in':[0,1,2]}})
         if total_docs > 0:
             proportion = status2_docs / total_docs * 100
         else:

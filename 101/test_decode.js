@@ -4,13 +4,13 @@
 // qqdata.clone_prepos = 'amtsHxNobG0='
 // qqdata.ru = 2
 // 465d79e91635251efe228883c2fc4d66.js
-// f_decode(qqdata.clone_prepos, "101"+qqdata.ru+qqdata.ru+qqdata.ru)
-// f_decode(qqdata.c, "101"+qqdata.r+qqdata.r+qqdata.r)
+// f_decode(qqdata.clone_prepos, "???"+qqdata.ru+qqdata.ru+qqdata.ru)
+// f_decode(qqdata.c, "???"+qqdata.r+qqdata.r+qqdata.r)
 
 /* 调用
 createNewGame() {
 ...
-this.game = QipanAPI.buildTimu101(e, this.$store.qipan.qqdata, "light" === s ? "kttheme" : "bwtheme", !0, 20 * i, (t => {
+this.game = QipanAPI.buildTimu???(e, this.$store.qipan.qqdata, "light" === s ? "kttheme" : "bwtheme", !0, 20 * i, (t => {
 	this.radio = t;
 	this.onResize(!0)
 }

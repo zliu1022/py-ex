@@ -68,9 +68,10 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
 
     start_t = time.time()
     code_1_list = []  # 获取页面失败
-    code_2_list = []  # fail to find g_qq (maybe not login)
-    code_3_list = []  # decode fail, getq 就退出，很严重，json内容找错了
+    code_2_list = []  # 未登录
+    code_3_list = []  # 解析错，很严重，json内容找错了
     code_4_list = []  # 不共享
+    code_5_list = []  # 题目删除跳转，或被封杀
     getq_counter = 0
 
     db = client[db_name]
@@ -118,16 +119,25 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
             code = result.get('code')
             if code == 1: # 页面抓取失败
                 code_1_list.append(url_frombook)
-            if code == 2: # 找不到 g_qq, 可能没登录
+            if code == 2: # 找不到 g_qq, 没登录，立即退出
                 code_2_list.append(url_frombook)
-                if len(code_2_list) >=2:
-                    quit()
+                quit()
             if code == 3: # decode g_qq 失败,不会到这儿
                 code_3_list.append(url_frombook)
+                quit()
             if code == 4: # not public
-                url_from_q = '/q/' + str(url_no) + '/'
-                result = getq_url_frombook_from_q(client, session, book_q_str, url_frombook, url_from_q)
-                print('retry getq_url_frombook_from_q', result.get('ret'))
+                code_4_list.append(url_frombook)
+                quit()
+                #url_from_q = '/q/' + str(url_no) + '/'
+                #result = getq_url_frombook_from_q(client, session, book_q_str, url_frombook, url_from_q)
+                #print('retry getq_url_frombook_from_q', result.get('ret'))
+            if code == 5: # 题目删除的跳转，或者被封杀（/q/会跳到登录页)
+                # 对应status 1000
+                code_5_list.append(url_frombook)
+                quit()
+                #url_from_q = '/q/' + str(url_no) + '/'
+                #result = getq_url_frombook_from_q(client, session, book_q_str, url_frombook, url_from_q)
+                #print('跳转retry getq_url_frombook_from_q', result.get('ret'))
         else:
             # 成功时，0不重复，1重复
             if result.get('code') == 0:
@@ -142,8 +152,9 @@ def getdb_bookid(client, source_ip, username, book_str, book_id):
     end_t = time.time()
     print("获取页面失败（code=1）列表：", code_1_list)
     print("g_qq        （code=2）列表：", code_2_list)
-    print("不共享      （code=3）列表：", code_3_list)
-    print("不共享      （code=3）列表：", code_4_list)
+    print("解码错      （code=3）列表：", code_3_list)
+    print("不共享      （code=4）列表：", code_4_list)
+    print("跳转，被封杀（code=5）列表：", code_5_list)
     print(f'book_{book_str} id {book_id} {cur_no} done')
     print('cost {:5.2f}s'.format(end_t - start_t))
     print('------------------------------------------------------------')

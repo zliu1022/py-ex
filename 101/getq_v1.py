@@ -380,11 +380,13 @@ def update_q_v1(client, doc):
         return 0
 
     # 20250430, 新网上线，不再更新以前拿到的数据了, 返回成功，但是code==1
-    print("已经存在", old['_id'])
-    return 1
+    # 20250526, 新网上线，增加clone_pos,clone_prepos,luozis,taskresult，继续更新
+    print("已经存在", old['_id'], old.get('url_no'), old.get('publicid'), doc['publicid'])
 
     # 仅更新提供的字段
     update_data = {k: v for k, v in doc.items() if v is not None}
+    # 确保唯一进行比对，完整的publicid需要从各个book_n_q中收集
+    update_data.pop('publicid', None)
     new = collection.find_one_and_update(
         filter=filter,
         update={"$set": update_data},
@@ -551,8 +553,19 @@ def resp_json_url_frombook_v2(mongo_client, resp_text, url_frombook):
             return {'ret': False, 'code': 2}
     else:
         print(f'Failed to find g_qq: {url_frombook}')
-        print(resp_text)
-        return {'ret': False, 'code': 1}
+        if '"islogin": true' in resp_text:
+            # 题目删除的跳转网页，或者被封杀但保持了登录状态
+            return {'ret': False, 'code': 4}
+        else:
+            if '密码不能全部是数字' in resp_text:
+                # 未登录网页: 登录失效（1个月），被封杀后访问/q/
+                print('找到：密码不能全部是数字')
+                print(resp_text)
+            else:
+                # 题目删除的跳转网页，或者被封杀但保持了登录状态
+                print('没找到：密码不能全部是数字')
+                print(resp_text)
+            return {'ret': False, 'code': 1}
 
     if obj.get('is_public') == False:
         print(f'Not public {url_frombook} {title_id}')
@@ -590,6 +603,43 @@ def resp_json_url_frombook_v2(mongo_client, resp_text, url_frombook):
             }
             ans.append(e)
 
+    if obj.get('clone_prepos') is not None:
+        print('r', obj.get('r'), 'ru', obj.get('ru'))
+        print('clone_prepos', obj.get('clone_prepos'))
+        clone_prepos = decode_prepos(obj.get('clone_prepos'), obj.get('ru'))
+        '''
+        # 对每个字符串进行字符位置交换
+        if obj.get('xv') and obj.get('xv') % 3 != 0:
+            swapped_clone_prepos = [[s[1] + s[0] if len(s) == 2 else s for s in sublist] for sublist in clone_prepos]
+            clone_prepos = swapped_clone_prepos
+        '''
+        if len(clone_prepos) == 0:
+            clone_prepos_json = {   
+                'b': [],
+                'w': []
+            }
+        else:
+            clone_prepos_json = {   
+                'b': clone_prepos[0],
+                'w': clone_prepos[1]
+            }
+    else:
+        clone_prepos_json = None
+
+    if obj.get('clone_pos') is not None:
+        print('r', obj.get('r'))
+        print('clone_pos', obj.get('clone_pos'))
+        clone_pos = decode_prepos(obj.get('clone_pos'), obj.get('ru'))
+        '''
+        # 对每个字符串进行字符位置交换
+        if obj.get('xv') and obj.get('xv') % 3 != 0:
+            swapped_clone_pos = [[s[1] + s[0] if len(s) == 2 else s for s in sublist] for sublist in clone_pos]
+            clone_pos = swapped_clone_pos
+        '''
+        clone_pos_json = clone_pos
+    else:
+        clone_pos_json = None
+
     doc = {
         'publicid':   obj.get('publicid'),  #唯一id，但不一定能通过level/id访问
         'status':     obj.get('status'),    # 0未入库，1被淘汰，2正常
@@ -613,7 +663,13 @@ def resp_json_url_frombook_v2(mongo_client, resp_text, url_frombook):
         'signs':      obj.get('signs'), # 棋盘显示，三角形
         'options':    obj.get('options'), # 选择题选项
         'xuandians':  obj.get('xuandians'), # 棋盘上的选点
-        'version':    '20250430'
+
+        'clone_prepos':  clone_prepos_json, # 模仿题的初始棋子
+        'clone_pos':     clone_pos_json, # 模仿题的模仿棋步
+        'desc':          obj.get('desc'), # 描述
+        'luozis':        obj.get('luozis'), # 落子题的落子位置，配合desc
+        'taskresult':    obj.get('taskresult'), # 不同级别做题的成功率
+        'version':       '20250526'
     }
 
     return {'ret': True, 'data': doc}
@@ -646,9 +702,9 @@ def getq_url_frombook(mongo_client, session, book_q_str, url_frombook):
             print(f"resp_json fail {url_frombook} {ret.get('code')}")
             result = book_q_collection.update_one(
                 {'url_frombook': url_frombook},
-                {'$set': {'status': 600 + ret.get('code')*100}}
+                {'$set': {'status': 600 + ret.get('code')*100}} # 700未登录,800解析错,900不共享,1000跳转或封杀
             )
-            return {'ret': False, 'code': 1 + ret.get('code'), 'message':'不共享'}
+            return {'ret': False, 'code': 1 + ret.get('code'), 'message':'1获取页面失败 2未登录 3解析错 4不共享 5跳转或封杀'}
     else:
         # 失败：只更新book_n_q表
         print(f"获取页面失败，{url_frombook}")

@@ -147,14 +147,16 @@ def comp_unique_book_ids_url_no():
             #    continue
 
             # 每一本book，没有获取过的url_no, 且不在q库 publicid集合中
-            ret = book_n_q_col.distinct('url_no', filter={'book_id': book_id, 'status':{'$exists':False}})
+            #ret = book_n_q_col.distinct('url_no', filter={'book_id': book_id, 'status':{'$exists':False}})
+            ret = book_n_q_col.distinct('url_no', filter={'book_id': book_id, 'status':{'$nin':[0,1,2]}})
+
             url_nos = set([int(item) for item in ret if item != ""])
             url_no_nin_pubid = url_nos - publicid_set
 
             if len(url_no_nin_pubid) != 0:
                 print(f'book_{n} {book_id} {len(url_nos)} {len(url_no_nin_pubid)} ...{url_no_nin_pubid}')
 
-                #book_n_col.update_one({"id": book_id}, {"$unset": {"status": ""}})
+                book_n_col.update_one({"id": book_id}, {"$unset": {"status": ""}})
 
                 total += 1
                 continue

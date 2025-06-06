@@ -121,12 +121,10 @@ def count_level_status_2_sorted():
     print(f"| total | {total_ok:>6} | {total_ok_deadlive:>6} | {total:>6} | {perc:>5.0f}% |") 
 
 if __name__ == "__main__":
-    '''
     print("status == 2, 各种qtype的题目数量")
     count_qtype_status_2()
     print("status == 2, 各种level的题目数量")
     count_leveltype_status_2()
-    '''
     print("status == 2, level规范后的题目总数、死活题数量")
     count_level_status_2_sorted()
 

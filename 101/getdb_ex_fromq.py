@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# 针对book_ex 的url_no，检查q，book_n 里的publicid
+# 找不到的只能通过 /q/访问，要慎重
+
 from pymongo import MongoClient, ReturnDocument
 from getq_v1 import login, getq_url_frombook, inc_getqnum, getq_url_frombook_from_q, get_url_v1, resp_json_url_frombook_v2, update_q_v1
 import time
@@ -15,6 +18,14 @@ from pprint import pprint
 from getq_fromq import getq_fromq
 from getdb_book import wait_qcounter
 
+book_ex_id_list = [
+  41653, 41654, 41655, 42156,
+  42163, 42175, 42907, 42908,
+  42909, 42920, 42921, 42922,
+  42983, 42984, 42985, 42986,
+  42987, 42988, 42989, 42990,
+  42991, 42992
+]
 def getdb_ex_onebook(client, session, book_id):
     db = client[db_name]
     book_ex_q_col = db['book_ex_q']
@@ -65,14 +76,12 @@ def getdb_ex_onebook(client, session, book_id):
                 print(f"找到 {book_id} {url_no} {url_frombook} ->", r) 
                 pass
             else:
-                print(f'没找到 {book_id} {url_no} {url_frombook} status != 2', result)
+                print(f'找到 {book_id} {url_no} {url_frombook} 但是status != 2', result)
                 if count>=5:
                     quit()
                 count+=1
         else:
             print(f'没找到 {book_id} {url_no}, 只能直接访问 q')
-            quit()
-            '''
             ret = getq_fromq(client, session, url_no)
             if ret is not None:
                 result = book_ex_q_col.update_one(
@@ -84,7 +93,6 @@ def getdb_ex_onebook(client, session, book_id):
                     }}
                 )
             getq_counter = wait_qcounter(getq_counter)
-            '''
 
 if __name__ == "__main__":
     client = MongoClient('mongodb://localhost:27017/')
@@ -97,5 +105,5 @@ if __name__ == "__main__":
         book_id = int(sys.argv[2])
         getdb_ex_onebook(client, session, book_id)
     else:
-        quit()
+        print(book_ex_id_list)
 

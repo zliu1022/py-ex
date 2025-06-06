@@ -33,17 +33,17 @@ def count_lines_in_file(file_path):
 
 def print_markdown_table(file_stats):
     """打印Markdown格式的表格"""
-    print("| 文件名          | 代码行 | 注释行 | 空行 |")
-    print("|------------------|--------|--------|------|")
+    print("| 文件名                         | 代码行 | 注释行 | 空行 |")
+    print("|--------------------------------|--------|--------|------|")
     for file_stat in file_stats:
-        print(f"| {file_stat['name']:15s} | {file_stat['code']:6d} | {file_stat['comment']:6d} | {file_stat['empty']:4d} |")
-    print("|------------------|--------|--------|------|")
+        print(f"| {file_stat['name']:>30s} | {file_stat['code']:>6d} | {file_stat['comment']:>6d} | {file_stat['empty']:>4d} |")
+    print("|--------------------------------|--------|--------|------|")
 
     total_code = sum(stat['code'] for stat in file_stats)
     total_comment = sum(stat['comment'] for stat in file_stats)
     total_empty = sum(stat['empty'] for stat in file_stats)
 
-    print(f"| 总计            | {total_code:6d} | {total_comment:6d} | {total_empty:4d} |")
+    print(f"| 总计                           | {total_code:>6d} | {total_comment:>6d} | {total_empty:>4d} |")
 
 def code_lines_count(path):
     """统计整个目录及子目录中所有Python文件的代码行数、注释行数和空行数"""

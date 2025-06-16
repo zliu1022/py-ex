@@ -169,17 +169,12 @@ def statdb_xy_range():
     draw_distribution_xy_range(x_range, y_range)
 
 def draw_distribution_xy_range(x, y):
-    # Count the occurrences of each integer value in x and y, ensuring the range covers 0 to 18
-    counts_x = np.bincount(x, minlength=21)
-    counts_y = np.bincount(y, minlength=21)
+    # Count the occurrences of each integer value in x and y, ensuring the range covers 0 to 19
+    counts_x = np.bincount(x, minlength=20)
+    counts_y = np.bincount(y, minlength=20)
 
-    # Create an array of integer values from 0 to 18
-    bins = np.arange(21)
-
-    # Print counts for each integer value
-    print("Counts for each integer value:")
-    for i in bins:
-        print(f"Integer Value: {i}, Counts: x={counts_x[i]}, y={counts_y[i]}")
+    # Create an array of integer values from 0 to 19
+    bins = np.arange(20)
 
     # Calculate cumulative counts
     cum_counts_x = np.cumsum(counts_x)
@@ -192,9 +187,15 @@ def draw_distribution_xy_range(x, y):
     cum_percent_y = cum_counts_y / total_counts_y * 100
 
     # Print cumulative percentages for each integer value
-    print("\nCumulative percentages up to each integer value:")
+    print("n-n|  cnt_x |  cnt_y |  cum_x |  cum_y |  x_perc |  y_perc |")
+    print("---|--------|--------|--------|--------|---------|---------|")
+    x_total = 0
+    y_total = 0
     for i in bins:
-        print(f"Integer Value: {i}, Cumulative Percentage <= {i}: x={cum_percent_x[i]:.2f}%, y={cum_percent_y[i]:.2f}%")
+        x_total += counts_x[i]
+        y_total += counts_y[i]
+        print(f"{i:>2} | {counts_x[i]:>6} | {counts_y[i]:>6} | {x_total:>6} | {y_total:>6}", end=' | ')
+        print(f"{cum_percent_x[i]:>6.2f}% | {cum_percent_y[i]:>6.2f}% |")
 
     # Set the width of each bar
     bar_width = 0.4

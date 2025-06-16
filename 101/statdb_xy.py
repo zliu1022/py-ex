@@ -99,6 +99,9 @@ def statdb_q():
         print(f"no {doc.get('no')}, r {doc.get('r')}", end=' ')
         statdb_q_xy(doc)
 
+# 根据筛选条件criteria
+# 统计题目中x的最小值、最大值，y的最小值、最大值
+# 统计题目中棋子在x或y上的范围，即针对每一题统计x最大值-x最小值，并统计不同的范围在全部题目中的分布
 def statdb_xy_range():
     # Connect to the MongoDB server (update the URI as needed)
     client = MongoClient('mongodb://localhost:27017/')  # Adjust host and port if necessary

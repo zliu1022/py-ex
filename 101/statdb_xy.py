@@ -147,8 +147,8 @@ def statdb_xy_range():
                 x_max = max(x_list)
                 y_min = min(y_list)
                 y_max = max(y_list)
-                x_range.append(x_max-x_min)
-                y_range.append(y_max-y_min)
+                x_range.append(x_max-x_min+1)
+                y_range.append(y_max-y_min+1)
             except json.JSONDecodeError as e:
                 print(f"JSON decode error in document {doc['_id']}: {e}")
         else:
@@ -170,11 +170,16 @@ def statdb_xy_range():
 
 def draw_distribution_xy_range(x, y):
     # Count the occurrences of each integer value in x and y, ensuring the range covers 0 to 18
-    counts_x = np.bincount(x, minlength=19)
-    counts_y = np.bincount(y, minlength=19)
+    counts_x = np.bincount(x, minlength=21)
+    counts_y = np.bincount(y, minlength=21)
 
     # Create an array of integer values from 0 to 18
-    bins = np.arange(19)
+    bins = np.arange(21)
+
+    # Print counts for each integer value
+    print("Counts for each integer value:")
+    for i in bins:
+        print(f"Integer Value: {i}, Counts: x={counts_x[i]}, y={counts_y[i]}")
 
     # Calculate cumulative counts
     cum_counts_x = np.cumsum(counts_x)
@@ -185,6 +190,11 @@ def draw_distribution_xy_range(x, y):
     total_counts_y = counts_y.sum()
     cum_percent_x = cum_counts_x / total_counts_x * 100
     cum_percent_y = cum_counts_y / total_counts_y * 100
+
+    # Print cumulative percentages for each integer value
+    print("\nCumulative percentages up to each integer value:")
+    for i in bins:
+        print(f"Integer Value: {i}, Cumulative Percentage <= {i}: x={cum_percent_x[i]:.2f}%, y={cum_percent_y[i]:.2f}%")
 
     # Set the width of each bar
     bar_width = 0.4

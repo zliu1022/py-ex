@@ -381,7 +381,7 @@ def update_q_v1(client, doc):
 
     # 20250430, 新网上线，不再更新以前拿到的数据了, 返回成功，但是code==1
     # 20250526, 新网上线，增加clone_pos,clone_prepos,luozis,taskresult，继续更新
-    print("已经存在", old['_id'], old.get('url_no'), old.get('publicid'), doc['publicid'])
+    print(f"已经存在_id/url_no/publicid {old['_id']} {old.get('url_no')} {old.get('publicid')} 新publicid {doc['publicid']}")
 
     # 仅更新提供的字段
     update_data = {k: v for k, v in doc.items() if v is not None}
